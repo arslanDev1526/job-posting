@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { createClient } from '@supabase/supabase-js'
-const supabaseUrl = 'https://blnncmgalhqgaetzdtms.supabase.co'
-const supabaseKey =" eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsbm5jbWdhbGhxZ2FldHpkdG1zIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMjQwNDIxOSwiZXhwIjoyMDI3OTgwMjE5fQ.OwcosZCrJxCYQaqE6L9eGdXsN4oZGK4xQYUE3-ragBA"
-const supabase = createClient(supabaseUrl, supabaseKey)
+import { createClient } from "@supabase/supabase-js";
+const supabaseUrl = "https://blnncmgalhqgaetzdtms.supabase.co";
+const supabaseKey =
+  " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsbm5jbWdhbGhxZ2FldHpkdG1zIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMjQwNDIxOSwiZXhwIjoyMDI3OTgwMjE5fQ.OwcosZCrJxCYQaqE6L9eGdXsN4oZGK4xQYUE3-ragBA";
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const JobApply = () => {
-
   const skillOptions = [
     "JavaScript",
     "Python",
@@ -65,12 +65,12 @@ const JobApply = () => {
     source: "",
     professionalExperience: "",
   });
-  
+
   const [isSkillDropdownOpen, setIsSkillDropdownOpen] = useState(false);
   const [isGenderDropdownOpen, setIsGenderDropdownOpen] = useState(false);
   const [isSourceOpen, setIsSourceOpen] = useState(false);
 
-const[errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
 
   const hanldeInputChange = (e) => {
     const { name, value } = e.target;
@@ -78,7 +78,7 @@ const[errors, setErrors] = useState({});
       ...formData,
       [name]: value,
     });
-    setErrors({...errors, [name]: undefined})
+    setErrors({ ...errors, [name]: undefined });
   };
 
   const handleSkillOption = (option) => {
@@ -88,6 +88,8 @@ const[errors, setErrors] = useState({});
         ? formData.skills.filter((skill) => skill !== option)
         : [...formData.skills, option],
     });
+    setErrors({ ...errors, skills: undefined });
+
   };
 
   const closeOpenMenues = (e) => {
@@ -107,7 +109,7 @@ const[errors, setErrors] = useState({});
     }
     if (
       isSourceOpen &&
-      !dropdownMenue.current?.contains(e.target) && 
+      !dropdownMenue.current?.contains(e.target) &&
       !e.target.closest(".sourceDropdown")
     ) {
       setIsSourceOpen(false);
@@ -133,52 +135,68 @@ const[errors, setErrors] = useState({});
   };
 
   const handleOptionSource = (source) => {
-    setFormData({ 
+    setFormData({
       ...formData,
-      source: source
-    })
+      source: source,
+    });
+    setErrors({ ...errors, source: undefined });
     setIsSourceOpen(false);
   };
 
   const handleOptionClick = (gender) => {
-    setFormData({ 
+    setFormData({
       ...formData,
-      gender: gender
-    })
+      gender: gender,
+    });
+    setErrors({ ...errors, gender: undefined });
     setIsGenderDropdownOpen(false);
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let hasError = false;
     const newErrors = {};
-    for(const input in formData){ 
-      if(!formData[input]) { 
+    for (const input in formData) {
+      if (!formData[input]) {
         hasError = true;
-        newErrors[input] = "This field is required"
+        newErrors[input] = "This field is required";
       }
+    }
+
+    if (formData.skills.length === 0) {
+      hasError = true;
+      newErrors['skills'] = 'At least one skill is required';
+    }
+
+    if (formData.gender.length === 0) {
+      hasError = true;
+      newErrors['gender'] = 'At least one gender is required';
+    }
+
+    
+    if (formData.source.length === 0) {
+      hasError = true;
+      newErrors['source'] = 'At least one source is required';
     }
 
     setErrors(newErrors);
 
-    if(!hasError) { 
-      try { 
-        const {data , error} = await supabase
-        .from("applications_data")
-        .insert(formData);
-    
+    if (!hasError) {
+      try {
+        const { data, error } = await supabase
+          .from("applications_data")
+          .insert(formData);
+
         if (data) {
-          console.error('Error inserting data:', error);
+          console.error("Error inserting data:", error);
         } else {
-          console.log('Data inserted successfully:', data);
+          console.log("Data inserted successfully:", data);
         }
-      }
-      catch (error) {
-        console.error('Unexpected error:', error);
+      } catch (error) {
+        console.error("Unexpected error:", error);
       }
     }
-   
   };
 
   return (
@@ -206,16 +224,24 @@ const[errors, setErrors] = useState({});
             <input
               type="text"
               id="fullname_input"
-              class={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${errors.fullName ? 'border-red-500' : 'border-gray-500'}`}
+              class={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none peer ${
+                errors.fullName
+                  ? "border-red-500"
+                  : "focus:ring-0 focus:border-blue-600"
+              }`}
               placeholder=" "
               name="fullName"
               onChange={hanldeInputChange}
               value={formData.fullName}
             />
-            {console.log(errors.fullName ,"full") }
+            {console.log(errors.fullName, "full")}
             <label
               for="fullname_input"
-              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              class={`absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2  peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
+                errors.fullName
+                  ? "peer-focus:px-2 peer-focus:text-red-600"
+                  : "peer-focus:px-2 peer-focus:text-blue-600"
+              }`}
             >
               Full name
             </label>
@@ -224,7 +250,11 @@ const[errors, setErrors] = useState({});
             <input
               type="email"
               id="email_input"
-              class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class={`${
+                errors.email
+                  ? "border-red-500"
+                  : "focus:ring-0 focus:border-blue-600"
+              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none peer`}
               placeholder=" "
               name="email"
               value={formData.email}
@@ -232,7 +262,11 @@ const[errors, setErrors] = useState({});
             />
             <label
               for="email_input"
-              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              class={`${
+                errors.email
+                  ? "peer-focus:px-2 peer-focus:text-red-600"
+                  : "peer-focus:px-2 peer-focus:text-blue-600"
+              } absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Email
             </label>
@@ -241,7 +275,11 @@ const[errors, setErrors] = useState({});
             <input
               type="number"
               id="phone_input"
-              class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class={`${
+                errors.phone
+                  ? "border-red-500"
+                  : "focus:ring-0 focus:border-blue-600"
+              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none peer`}
               placeholder=" "
               name="phone"
               value={formData.phone}
@@ -249,8 +287,13 @@ const[errors, setErrors] = useState({});
             />
             <label
               for="phone_input"
-              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              class={`${
+                errors.phone
+                  ? "peer-focus:px-2 peer-focus:text-red-600"
+                  : "peer-focus:px-2 peer-focus:text-blue-600"
+              } absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
+             
               Phone
             </label>
           </div>
@@ -258,7 +301,11 @@ const[errors, setErrors] = useState({});
             <input
               type="text"
               id="address_input"
-              class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class={`${
+                errors.address
+                  ? "border-red-500"
+                  : "focus:ring-0 focus:border-blue-600"
+              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none peer`}
               placeholder=" "
               name="address"
               value={formData.address}
@@ -266,7 +313,12 @@ const[errors, setErrors] = useState({});
             />
             <label
               for="address_input"
-              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+             
+              class={`${
+                errors.address
+                  ? "peer-focus:px-2 peer-focus:text-red-600"
+                  : "peer-focus:px-2 peer-focus:text-blue-600"
+              } absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Address
             </label>
@@ -275,7 +327,11 @@ const[errors, setErrors] = useState({});
             <input
               type="text"
               id="city_input"
-              class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class={`${
+                errors.city
+                  ? "border-red-500"
+                  : "focus:ring-0 focus:border-blue-600"
+              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none peer`}
               placeholder=" "
               name="city"
               value={formData.city}
@@ -283,7 +339,11 @@ const[errors, setErrors] = useState({});
             />
             <label
               for="city_input"
-              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              class={`${
+                errors.city
+                  ? "peer-focus:px-2 peer-focus:text-red-600"
+                  : "peer-focus:px-2 peer-focus:text-blue-600"
+              } absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               City
             </label>
@@ -293,14 +353,22 @@ const[errors, setErrors] = useState({});
             <input
               type="text"
               id="skill_input"
-              class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class={`${
+                errors.skills
+                  ? "border-red-500"
+                  : "focus:ring-0 focus:border-blue-600"
+              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none peer`}
               placeholder=" "
               onClick={handleSkillDropdown}
               value={formData.skills}
             />
             <label
               for="skill_input"
-              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              class={`${
+                errors.skills
+                  ? "peer-focus:px-2 peer-focus:text-red-600"
+                  : "peer-focus:px-2 peer-focus:text-blue-600"
+              } absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Skills
             </label>
@@ -327,7 +395,11 @@ const[errors, setErrors] = useState({});
             <input
               type="text"
               id="gender_input"
-              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className={`${
+                errors.gender
+                  ? "border-red-500"
+                  : "focus:ring-0 focus:border-blue-600"
+              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none peer`}
               placeholder=" "
               name="gender"
               onClick={handleGenderDropdown}
@@ -336,7 +408,12 @@ const[errors, setErrors] = useState({});
             />
             <label
               for="gender_input"
-              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-1 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+             
+              className={`${
+                errors.gender
+                  ? "peer-focus:px-2 peer-focus:text-red-600"
+                  : "peer-focus:px-2 peer-focus:text-blue-600"
+              } absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-1 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Gender
             </label>
@@ -359,7 +436,11 @@ const[errors, setErrors] = useState({});
             <input
               type="text"
               id="source_input"
-              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className={`${
+                errors.source
+                  ? "border-red-500"
+                  : "focus:ring-0 focus:border-blue-600"
+              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none peer`}
               placeholder=" "
               name="source"
               onClick={handleSourceDropdown}
@@ -368,7 +449,11 @@ const[errors, setErrors] = useState({});
             />
             <label
               for="source_input"
-              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              className={`${
+                errors.source
+                  ? "peer-focus:px-2 peer-focus:text-red-600"
+                  : "peer-focus:px-2 peer-focus:text-blue-600"
+              } absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Source
             </label>
@@ -391,7 +476,11 @@ const[errors, setErrors] = useState({});
             <input
               type="text"
               id="experience_input"
-              class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              class={`${
+                errors.professionalExperience
+                  ? "border-red-500"
+                  : "focus:ring-0 focus:border-blue-600"
+              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none peer`}
               placeholder=" "
               name="professionalExperience"
               value={formData.professionalExperience}
@@ -399,7 +488,11 @@ const[errors, setErrors] = useState({});
             />
             <label
               for="experience_input"
-              class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              class={`${
+                errors.professionalExperience
+                  ? "peer-focus:px-2 peer-focus:text-red-600"
+                  : "peer-focus:px-2 peer-focus:text-blue-600"
+              } absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Professional Experience
             </label>
@@ -409,7 +502,11 @@ const[errors, setErrors] = useState({});
             <button className="bg-gray-600 px-5 py-1 rounded-lg text-white">
               Cancel
             </button>
-            <button onClick={handleSubmit} type="submit" className="bg-green-500 px-5 py-1 rounded-lg text-white">
+            <button
+              onClick={handleSubmit}
+              type="submit"
+              className="bg-green-500 px-5 py-1 rounded-lg text-white"
+            >
               Save
             </button>
           </div>
