@@ -31,7 +31,7 @@ function App() {
     </div> */}
     <JobApply/>
 
-    <FileUpload/>
+    {/* <FileUpload/> */}
    
     </>
   )

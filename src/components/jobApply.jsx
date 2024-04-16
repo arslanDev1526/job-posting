@@ -5,6 +5,8 @@ const supabaseKey =
   " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsbm5jbWdhbGhxZ2FldHpkdG1zIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMjQwNDIxOSwiZXhwIjoyMDI3OTgwMjE5fQ.OwcosZCrJxCYQaqE6L9eGdXsN4oZGK4xQYUE3-ragBA";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+import FileUpload from "../components/fileUpload"
+
 const JobApply = () => {
   const skillOptions = [
     "JavaScript",
@@ -204,21 +206,8 @@ const JobApply = () => {
       <div>
         <h2 className="text-center my-5 text-2xl">Job Application</h2>
         <form className="flex gap-4 flex-col items-center">
-          <div className="border border-dotted border-gray-400 rounded-md py-6 w-5/6 flex justify-center">
-            <label
-              htmlFor="cv-upload"
-              className="p-2 rounded border cursor-pointer bg-gray-500 text-white mx-3"
-            >
-              Upload CV
-            </label>
-            <input
-              id="cv-upload"
-              type="file"
-              className="hidden"
-              // onChange={handleDocumentUpload}
-              accept=".pdf,.doc,.docx"
-            />
-          </div>
+
+          <FileUpload/>
 
           <div class="relative w-5/6">
             <input
@@ -361,6 +350,7 @@ const JobApply = () => {
               placeholder=" "
               onClick={handleSkillDropdown}
               value={formData.skills}
+              onChange={hanldeInputChange}
             />
             <label
               for="skill_input"
@@ -374,7 +364,7 @@ const JobApply = () => {
             </label>
 
             {isSkillDropdownOpen && (
-              <ul className="skillDropdown absolute top-full left-0 w-full border border-gray-300 bg-white shadow-lg z-10">
+              <ul className="skillDropdown absolute top-full left-0 w-full border border-gray-300 bg-white shadow-lg z-10 h-48 overflow-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-200">
                 {skillOptions.map((option, index) => (
                   <li
                     key={index}
