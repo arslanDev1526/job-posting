@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Filter from "./components/filter"
 import CardsData from "./components/cardsData"
 import JobApply from "./components/jobApply";
+import FileUpload from "./components/fileUpload";
 
 function App() {
   
@@ -29,6 +30,7 @@ function App() {
 
     </div> */}
     <JobApply/>
+
    
     </>
   )
