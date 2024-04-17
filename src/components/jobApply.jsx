@@ -574,7 +574,7 @@ const JobApply = () => {
             </label>
           </div>
 
-          <div className="w-5/6 flex gap-3 justify-end">
+          <div className="w-5/6 flex gap-3 justify-end py-5 ">
             <button className="bg-gray-600 px-5 py-1 rounded-lg text-white">
               Cancel
             </button>
