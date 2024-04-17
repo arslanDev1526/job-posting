@@ -233,7 +233,6 @@ const JobApply = () => {
           .insert(formData);
 
         setLoading(false);
-        toast.success("Applied Successfully");
         if (insertError) {
           console.log("Error inserting data:", insertError);
           toast.error("Error loading data!");
@@ -241,7 +240,7 @@ const JobApply = () => {
         }
 
         console.log("Data inserted successfully:", insertData);
-
+        toast.success("Applied Successfully");
         setFormData({
           fullName: "",
           email: "",
