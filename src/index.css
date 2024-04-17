@@ -5,19 +5,19 @@
 @import 'flowbite/dist/flowbite.min.css';
 
 .skillDropdown::-webkit-scrollbar {
-    width: 20px;
+    width: 10px;
   }
   
   /* Track */
   .skillDropdown::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey; 
-    border-radius: 10px;
+    border-radius: 5px;
   }
    
   /* Handle */
   .skillDropdown::-webkit-scrollbar-thumb {
     background: rgb(88, 161, 88); 
-    border-radius: 10px;
+    border-radius: 5px;
   }
   
   /* Handle on hover */
