@@ -5,7 +5,11 @@ const supabaseKey =
   " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsbm5jbWdhbGhxZ2FldHpkdG1zIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMjQwNDIxOSwiZXhwIjoyMDI3OTgwMjE5fQ.OwcosZCrJxCYQaqE6L9eGdXsN4oZGK4xQYUE3-ragBA";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-import FileUpload from "../components/fileUpload"
+import FileUpload from "../components/fileUpload";
+import Loader from "./loader";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const JobApply = () => {
   const skillOptions = [
@@ -71,8 +75,25 @@ const JobApply = () => {
   const [isSkillDropdownOpen, setIsSkillDropdownOpen] = useState(false);
   const [isGenderDropdownOpen, setIsGenderDropdownOpen] = useState(false);
   const [isSourceOpen, setIsSourceOpen] = useState(false);
-
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+
+  const simulateUpload = async () => {
+    setProgress(0);
+    for (let i = 0; i <= 100; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 30));
+      setProgress(i);
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    setErrors({ ...errors, selected: undefined });
+    simulateUpload();
+  };
 
   const hanldeInputChange = (e) => {
     const { name, value } = e.target;
@@ -91,7 +112,6 @@ const JobApply = () => {
         : [...formData.skills, option],
     });
     setErrors({ ...errors, skills: undefined });
-
   };
 
   const closeOpenMenues = (e) => {
@@ -168,46 +188,116 @@ const JobApply = () => {
 
     if (formData.skills.length === 0) {
       hasError = true;
-      newErrors['skills'] = 'At least one skill is required';
+      newErrors["skills"] = "At least one skill is required";
     }
 
     if (formData.gender.length === 0) {
       hasError = true;
-      newErrors['gender'] = 'At least one gender is required';
+      newErrors["gender"] = "At least one gender is required";
     }
 
-    
     if (formData.source.length === 0) {
       hasError = true;
-      newErrors['source'] = 'At least one source is required';
+      newErrors["source"] = "At least one source is required";
+    }
+
+    if (!selectedFile) {
+      hasError = true;
+      newErrors["selected"] = "At least one selected file is required";
     }
 
     setErrors(newErrors);
 
+    console.log(errors, "errors");
+    console.log(newErrors, "newErrors");
+    console.log(errors.selectedFile, "selectedFile error");
+    console.log(errors.fullName, "fullnME error");
+
     if (!hasError) {
       try {
-        const { data, error } = await supabase
+        setLoading(true);
+
+        const { data, error } = await supabase.storage
+          .from("cv_data")
+          .upload(`applicants_cv/${selectedFile.name}`, selectedFile);
+
+        if (error) {
+          console.log("Error uploading file:", error);
+          // return;
+        }
+
+        console.log(formData, "formData");
+
+        const { data: insertData, error: insertError } = await supabase
           .from("applications_data")
           .insert(formData);
 
-        if (data) {
-          console.error("Error inserting data:", error);
-        } else {
-          console.log("Data inserted successfully:", data);
+        setLoading(false);
+        toast.success("Applied Successfully");
+        if (insertError) {
+          console.log("Error inserting data:", insertError);
+          toast.error("Error loading data!");
+          return;
         }
+
+        console.log("Data inserted successfully:", insertData);
+
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          address: "",
+          city: "",
+          skills: [],
+          gender: "",
+          source: "",
+          professionalExperience: "",
+        });
+
+        setSelectedFile(null);
       } catch (error) {
         console.error("Unexpected error:", error);
       }
     }
+
+    console.log(selectedFile, "selectedFile");
   };
 
   return (
     <>
+      {loading ? <Loader /> : null}
       <div>
         <h2 className="text-center my-5 text-2xl">Job Application</h2>
         <form className="flex gap-4 flex-col items-center">
+          {/* <FileUpload/> */}
+          <div className="flex items-center justify-center w-5/6">
+            <div
+              className={`border border-dotted  rounded-md flex flex-col justify-center w-full h-32 ${
+                errors.selected ? "border-red-500" : "border-gray-500"
+              }`}
+            >
+              <input
+                id="cv-upload"
+                type="file"
+                className={
+                  progress === 100
+                    ? "text-blue-400 mx-auto"
+                    : "text-grey-400 mx-auto"
+                }
+                onChange={handleFileChange}
+                accept=".pdf,.doc,.docx"
+              />
 
-          <FileUpload/>
+              {progress > 0 && progress < 100 && (
+                <div className=" rounded-lg px-4 mt-5">
+                  <div
+                    className="h-2 bg-green-500"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
 
           <div class="relative w-5/6">
             <input
@@ -223,7 +313,6 @@ const JobApply = () => {
               onChange={hanldeInputChange}
               value={formData.fullName}
             />
-            {console.log(errors.fullName, "full")}
             <label
               for="fullname_input"
               class={`absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2  peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
@@ -282,7 +371,6 @@ const JobApply = () => {
                   : "peer-focus:px-2 peer-focus:text-blue-600"
               } absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
-             
               Phone
             </label>
           </div>
@@ -302,7 +390,6 @@ const JobApply = () => {
             />
             <label
               for="address_input"
-             
               class={`${
                 errors.address
                   ? "peer-focus:px-2 peer-focus:text-red-600"
@@ -398,7 +485,6 @@ const JobApply = () => {
             />
             <label
               for="gender_input"
-             
               className={`${
                 errors.gender
                   ? "peer-focus:px-2 peer-focus:text-red-600"
@@ -495,12 +581,14 @@ const JobApply = () => {
             <button
               onClick={handleSubmit}
               type="submit"
-              className="bg-green-500 px-5 py-1 rounded-lg text-white"
+              className="bg-green-500 px-5 py-1 rounded-lg text-white cursor-pointer"
+              disabled={loading}
             >
-              Save
+              {loading ? "Loading" : "Save"}
             </button>
           </div>
         </form>
+        <ToastContainer />
       </div>
     </>
   );

@@ -34,3 +34,7 @@ input::file-selector-button {
     border-radius: 3px;
     background-color: rgb(88, 161, 88);
   }
+
+  .Toastify__toast-container { 
+    position: absolute;
+  }

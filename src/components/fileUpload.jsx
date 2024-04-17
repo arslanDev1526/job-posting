@@ -7,7 +7,7 @@ function FileUpload() {
   const simulateUpload = async () => {
     setProgress(0);
     for (let i = 0; i <= 100; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 15));
+      await new Promise((resolve) => setTimeout(resolve, 40));
       setProgress(i);
     }
   };
