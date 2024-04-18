@@ -59,6 +59,7 @@ const JobApply = () => {
   ];
   const genderOptions = ["Male", "Female", "other"];
   const dropdownMenue = useRef(null);
+  const inputRef = useRef(null);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -174,6 +175,9 @@ const JobApply = () => {
     setIsGenderDropdownOpen(false);
   };
 
+  console.log(selectedFile, "beforeselectedFile");
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -241,6 +245,9 @@ const JobApply = () => {
 
         console.log("Data inserted successfully:", insertData);
         toast.success("Applied Successfully");
+        setSelectedFile(null);
+        inputRef.current.value = null;
+        setProgress(0);
         setFormData({
           fullName: "",
           email: "",
@@ -253,19 +260,19 @@ const JobApply = () => {
           professionalExperience: "",
         });
 
-        setSelectedFile(null);
+        console.log(selectedFile, "selectedFile");
+
       } catch (error) {
         console.error("Unexpected error:", error);
       }
     }
 
-    console.log(selectedFile, "selectedFile");
   };
 
   return (
     <>
       {loading ? <Loader /> : null}
-      <div>
+      <div className={`${loading ? "blur-[1px] pointer-events-none": ""}`}>
         <h2 className="text-center my-5 text-2xl">Job Application</h2>
         <form className="flex gap-4 flex-col items-center">
           {/* <FileUpload/> */}
@@ -283,6 +290,7 @@ const JobApply = () => {
                 }`}
                 onChange={handleFileChange}
                 accept=".pdf,.doc,.docx"
+                ref={inputRef}
               />
 
               {progress > 0 && progress < 100 && (
