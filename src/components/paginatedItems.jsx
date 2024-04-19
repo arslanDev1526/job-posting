@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
+import { useNavigate } from 'react-router-dom';
 
 const Items = ({ currentItems,searchedJob,filterTags }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = (id) => {
+    navigate(`/detail/${id}`)
+  }
   console.log("searchedJob:", searchedJob);
   return (
     <>
@@ -20,8 +26,8 @@ const Items = ({ currentItems,searchedJob,filterTags }) => {
   .filter((filteredItem) => {
     return filteredItem.post_name.toLowerCase().includes(searchedJob.toLowerCase());
   })
-  .map((item, index) => (
-    <div key={index} className="bg-white shadow-md p-4 rounded-md">
+  .map((item) => (
+    <div key={item.id} onClick={()=> handleCardClick(item.id)} className="bg-white shadow-md p-4 rounded-md">
       <h2 className="text-xl font-bold mb-2">{item.post_name}</h2>
       <p className="text-gray-600 mb-2">{item.positions}</p>
       <p className="text-gray-600 mb-2">{item.department}</p>

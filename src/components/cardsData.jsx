@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext  } from "react";
 import { CiSearch } from "react-icons/ci";
 import PaginatedItems from "./paginatedItems";
+import DataContext from "../contexts/dataContext";
 
-import { createClient } from '@supabase/supabase-js'
-const supabaseUrl = 'https://blnncmgalhqgaetzdtms.supabase.co'
-const supabaseKey =" eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsbm5jbWdhbGhxZ2FldHpkdG1zIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMjQwNDIxOSwiZXhwIjoyMDI3OTgwMjE5fQ.OwcosZCrJxCYQaqE6L9eGdXsN4oZGK4xQYUE3-ragBA"
-const supabase = createClient(supabaseUrl, supabaseKey)
+// import { createClient } from '@supabase/supabase-js'
+// const supabaseUrl = 'https://blnncmgalhqgaetzdtms.supabase.co'
+// const supabaseKey =" eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsbm5jbWdhbGhxZ2FldHpkdG1zIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMjQwNDIxOSwiZXhwIjoyMDI3OTgwMjE5fQ.OwcosZCrJxCYQaqE6L9eGdXsN4oZGK4xQYUE3-ragBA"
+// const supabase = createClient(supabaseUrl, supabaseKey)
 
 
 
@@ -175,7 +176,8 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 // ];
 
 const CardsData = ({filterTags}) => {
-  const [data, setData] = useState([]);
+const data = useContext(DataContext);
+  // const [data, setData] = useState([]);
   const [visibleCards, setVisibleCards] = useState(9);
   const [currentPage, setCurrentPage] = useState(0);
   const[searchedJob, setSearchedJob] = useState("");
@@ -186,20 +188,20 @@ setSearchedJob(e.target.value);
   }
 
 
-  useEffect(() => {
-    async function fetchTodos() {
-      // Fetch todos from Supabase database
-      const { data, error } = await supabase.from("job_data").select();
-      console.log(data);
-      if (error) {
-        console.error('Error fetching todos:', error.message);
-      } else {
-        setData(data);
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchTodos() {
+  //     // Fetch todos from Supabase database
+  //     const { data, error } = await supabase.from("job_data").select();
+  //     console.log(data,"cardsData");
+  //     if (error) {
+  //       console.error('Error fetching todos:', error.message);
+  //     } else {
+  //       setData(data);
+  //     }
+  //   }
 
-    fetchTodos();
-  }, []);
+  //   fetchTodos();
+  // }, []);
 
   const handleDropdownChange = (e) => {
     const selectedValue = parseInt(e.target.value);
