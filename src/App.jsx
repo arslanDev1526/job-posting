@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import {BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Filter from "./components/filter"
 import CardsData from "./components/cardsData"
 import JobApply from "./components/jobApply";
 import FileUpload from "./components/fileUpload";
+import { DataProvider } from "./contexts/dataContext";
+import DetailJobPage from "./components/detailJobPage";
 
 function App() {
   
@@ -20,16 +23,32 @@ function App() {
 
   return (
     <>
-{/* 
-   <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-row md:space-x-4">
-        <Filter filterTags={filterTags} filterHandler={filterHandler}  />
-      <CardsData filterTags={filterTags} />
+    <Router> 
+    <DataProvider>
+  <div> 
+    <Routes> 
 
-      </div>
+      <Route path="/" element={<CardsData filterTags={filterTags} />} />
+      <Route path="/detail/:id" element={<DetailJobPage/>} />
+    {/* <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row md:space-x-4">
+          <Filter filterTags={filterTags} filterHandler={filterHandler}  />
+        <CardsData filterTags={filterTags} />
 
-    </div> */}
-    <JobApply/>
+        <Route path="/" exact compon />
+  
+        </div>
+  
+      </div>  */}
+    </Routes>
+ 
+  </div>
+ 
+   </DataProvider>
+    </Router>
+
+ 
+    {/* <JobApply/> */}
 
    
     </>
