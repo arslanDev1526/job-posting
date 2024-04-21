@@ -1,12 +1,28 @@
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from 'react-router-dom';
+import supabase from "../config/client.jsx"
 
-const Items = ({ currentItems,searchedJob,filterTags }) => {
+const Items = ({currentItems,searchedJob,filterTags }) => {
+  
   const navigate = useNavigate();
 
-  const handleCardClick = (id) => {
-    navigate(`/detail/${id}`)
+  const handleCardClick = async(id) => {
+    try { 
+      const { data, error} = await supabase
+      .from('job_data')
+      .select("*")
+      .eq('id', id)
+      .single();
+      if(error) { 
+        throw error;
+      }
+      console.log(data,"single data")
+    navigate(`/detail/${id}`, {state: {item:data}})
+
+    } catch (error) { 
+      console.log(error, "error");
+    }
   }
   console.log("searchedJob:", searchedJob);
   return (
@@ -38,31 +54,24 @@ const Items = ({ currentItems,searchedJob,filterTags }) => {
   );
 };
 
-// PaginatedItems component to handle pagination
 const PaginatedItems = ({ items, itemsPerPage, searchedJob ,filterTags }) => {
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Calculate number of pages
   const pageCount = Math.ceil(items.length / itemsPerPage);
 
-  // Calculate start and end indices of current page
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  // Slice the items array to get current page items
   const currentItems = items.slice(startIndex, endIndex);
 
-  // Handle page change event
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
 
   return (
     <>
-      {/* Render current items */}
       <Items currentItems={currentItems} searchedJob={searchedJob} filterTags={filterTags} />
 
-      {/* Pagination component */}
       <ReactPaginate
         previousLabel={"< Previous"}
         nextLabel={"Next >"}
