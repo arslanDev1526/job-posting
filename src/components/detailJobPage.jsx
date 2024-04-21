@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
-import DataContext from "../contexts/dataContext";
+import React from "react";
+import { useParams,useLocation } from "react-router-dom";
 import HeaderImg from "../assets/images/webpack.png";
 import Logo from "../assets/images/logoo.png";
 
 const DetailJobPage = () => {
   const {id} = useParams();
-  const data = useContext(DataContext);
-  const item = data.find((item) => item.id === parseInt(id));
+  const location = useLocation();
+  const { item } = location.state || {};
 
   if (!item) {
     return <div>Item not found!</div>;
@@ -102,29 +101,6 @@ const DetailJobPage = () => {
         ))}
       </div>
     </>
-    //     <div>
-    //     <h2>{item.positions}</h2>
-    //     {item.detail && Array.isArray(item.detail) && (
-    //       <div>
-    //         {item.detail.map((info, index) => (
-    //           <div key={index}>
-    //             <div>{info.description}</div>
-    //             <div>{info.howToApply}</div>
-    //           </div>
-    //         ))}
-    //       </div>
-    //     )}
-    //     <h2>Benefits</h2>
-    //     {item.benefits && Array.isArray(item.benefits) && (
-    //       <ul>
-    //         {item.benefits.map((benefit, index) => (
-    //           <li key={index}>{benefit}</li>
-    //         ))}
-    //       </ul>
-    //     )}
-    //     <p>{item.description}</p>
-    //     {/* Display other details as needed */}
-    //   </div>
   );
 };
 
