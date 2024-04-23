@@ -6,6 +6,7 @@ import JobApply from "./components/jobApply";
 import FileUpload from "./components/fileUpload";
 import { DataProvider } from "./contexts/dataContext";
 import DetailJobPage from "./components/detailJobPage";
+import Navbar from "./components/navbar";
 
 function App() {
   
@@ -26,6 +27,8 @@ function App() {
     <Router> 
     <DataProvider>
   <div> 
+  <Navbar/>
+
     <Routes> 
 
       <Route path="/" element={<CardsData filterTags={filterTags} />} />
