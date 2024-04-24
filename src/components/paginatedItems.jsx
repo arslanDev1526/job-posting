@@ -4,9 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import supabase from "../config/client.jsx"
 
 const Items = ({currentItems,searchedJob,filterTags }) => {
+  const[isHovered, setIsHovered] = useState(false);
   
   const navigate = useNavigate();
 
+  const hoverMe = () => {
+    setIsHovered(true);
+  };
+
+  const unHoverMe = () => {
+    setIsHovered(false);
+  };
   const handleCardClick = async(id) => {
     try { 
       const { data, error} = await supabase
@@ -43,11 +51,14 @@ const Items = ({currentItems,searchedJob,filterTags }) => {
     return filteredItem.post_name.toLowerCase().includes(searchedJob.toLowerCase());
   })
   .map((item) => (
-    <div key={item.id} onClick={()=> handleCardClick(item.id)} className="bg-white shadow-md p-4 rounded-md">
-      <h2 className="text-xl font-bold mb-2">{item.post_name}</h2>
-      <p className="text-gray-600 mb-2">{item.positions}</p>
-      <p className="text-gray-600 mb-2">{item.department}</p>
-      <p className="text-gray-600">{item.address}</p>
+    <div  
+    onMouseEnter={hoverMe}
+    onMouseLeave={unHoverMe} key={item.id} onClick={()=> handleCardClick(item.id)} className="bg-white shadow-md p-4 rounded-md max-w-sm w-80 flex flex-col items-center border border-red-600 cursor-pointer">
+      <h2 className={`text-lg font-semibold text-center text-blue-600 ${isHovered ? 'text-green-300' : ''}`}>{item.post_name}</h2>
+      <p className="text-gray-600 mt-5">{item.positions}</p>
+      <span className={`h-[2.5px] w-20 bg-gray-300 mt-5 ${isHovered ? 'bg-green-300': ''}`}></span>
+      <p className="text-gray-600 mt-5">{item.department}</p>
+      <p className="text-gray-400 text-center">{item.address}</p>
     </div>
   ))}
   </>
