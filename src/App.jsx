@@ -6,6 +6,7 @@ import JobApply from "./components/jobApply";
 import FileUpload from "./components/fileUpload";
 import { DataProvider } from "./contexts/dataContext";
 import DetailJobPage from "./components/detailJobPage";
+import Navbar from "./components/navbar/navbar.jsx";
 
 function App() {
   
@@ -26,10 +27,12 @@ function App() {
     <Router> 
     <DataProvider>
   <div> 
+  <Navbar/>
+
     <Routes> 
 
-      <Route path="/" element={<CardsData filterTags={filterTags} />} />
-      <Route path="/detail/:id" element={<DetailJobPage/>} />
+      {/* <Route path="/" element={<CardsData filterTags={filterTags} />} /> */}
+      {/* <Route path="/detail/:id" element={<DetailJobPage/>} /> */}
     {/* <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row md:space-x-4">
           <Filter filterTags={filterTags} filterHandler={filterHandler}  />
