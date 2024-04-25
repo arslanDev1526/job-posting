@@ -6,7 +6,7 @@ import supabase from "../config/client.jsx";
 const Items = ({ currentItems, searchedJob, filterTags }) => {
   const [isHovered, setIsHovered] = useState(null);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const hoverMe = (id) => {
     setIsHovered(id);

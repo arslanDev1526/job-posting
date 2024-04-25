@@ -5,7 +5,7 @@ import Logo from "../assets/images/logoo.png";
 
 const DetailJobPage = () => {
   const {id} = useParams();
-  const location = useLocation();
+  // const location = useLocation();
   const { item } = location.state || {};
 
   if (!item) {

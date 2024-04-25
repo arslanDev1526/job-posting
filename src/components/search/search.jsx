@@ -5,7 +5,7 @@ import CardsChagerBtn from './cardschagerbtn'
 const Search = () => {
   return (
    <> 
-   <div className='flex justify-between py-10'> 
+   <div className='flex justify-between py-10 '> 
    <div> 
    <h1 className='text-2xl'> 
        <span className='font-bold'>ALL  </span>POSITIONS
@@ -16,6 +16,7 @@ const Search = () => {
    <SearchInput/>
    </div>
    </div>
+  
    </>
   )
 }
