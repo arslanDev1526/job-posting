@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import supabase from "../config/client.jsx";
 
 const Items = ({ currentItems, searchedJob, filterTags }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const[hoverCardId, setHoverCardId] = useState(null);
+  const [isHovered, setIsHovered] = useState(null);
 
   const navigate = useNavigate();
 
