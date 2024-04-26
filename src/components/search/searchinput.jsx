@@ -12,12 +12,10 @@ const SearchInput = () => {
 
   const handleSearch = () => { 
     const filteredData = data.filter((filteredItem) => {
-    console.log(filteredItem,"filteredItem")
       return filteredItem.post_name
         .toLowerCase()
         .includes(searchedJob.toLowerCase());
     })
-    console.log("i am working ok ok",filteredData)
   }
 
   const handleSearchedJob = (e) => {
