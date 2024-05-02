@@ -1,22 +1,20 @@
 import { CiSearch } from "react-icons/ci";
 import DataContext from "../../contexts/dataContext.jsx";
-import React, { useContext,useState } from "react";
-
+import React, { useContext, useState } from "react";
 
 const SearchInput = () => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [searchedJob, setSearchedJob] = useState("");
   const data = useContext(DataContext);
-  console.log(data.post_name,"data on serachpage");
+  console.log(data.post_name, "data on serachpage");
 
-
-  const handleSearch = () => { 
+  const handleSearch = () => {
     const filteredData = data.filter((filteredItem) => {
       return filteredItem.post_name
         .toLowerCase()
         .includes(searchedJob.toLowerCase());
-    })
-  }
+    });
+  };
 
   const handleSearchedJob = (e) => {
     setSearchedJob(e.target.value);
@@ -45,13 +43,12 @@ const SearchInput = () => {
           onBlur={handleOnBlur}
           value={searchedJob}
           onChange={handleSearchedJob}
-            // still i have to manage the search functionality
+          // still i have to manage the search functionality
         />
 
-        <button onClick={handleSearch}> 
-        <CiSearch />
-          
-           </button>
+        <button onClick={handleSearch}>
+          <CiSearch />
+        </button>
       </div>
     </>
   );

@@ -7,8 +7,7 @@ const CardsChagerBtn = () => {
     <>
       <div className="flex gap-4">
         <button>
-          {" "}
-          <Hamburger />{" "}
+          <Hamburger />
         </button>
         <button>
           <Menu />

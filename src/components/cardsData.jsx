@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext  } from "react";
 import PaginatedItems from "./paginatedItems";
 import DataContext from "../contexts/dataContext";
-import Search from "./search/search";
+import Search from "./search";
 
 const CardsData = ({filterTags}) => {
 const data = useContext(DataContext);

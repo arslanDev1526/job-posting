@@ -1,6 +1,6 @@
 import React from 'react'
-import SearchInput from './searchinput'
-import CardsChagerBtn from './cardschagerbtn'
+import SearchInput from '../maindata/searchinput'
+import CardsChagerBtn from '../maindata/cardschagerbtn'
 
 const Search = () => {
   return (

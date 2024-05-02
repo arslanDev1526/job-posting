@@ -7,7 +7,7 @@ const CardListing = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="flex flex-wrap justify-center sm:justify-between lg:justify-start gap-4">
         {data.map((item, index) => (
           <Card item={item} key={index} />
         ))}

@@ -6,9 +6,9 @@ import JobApply from "./components/jobApply";
 import FileUpload from "./components/fileUpload";
 import { DataProvider } from "./contexts/dataContext";
 import DetailJobPage from "./components/detailJobPage";
-import Navbar from "./components/navbar/navbar.jsx";
+import Navbar from "./components/navbar/index.jsx";
 import Index from "./components/maindata/index.jsx";
-import Search from "./components/search/search.jsx";
+import Filters from "./components/sidebar/filters.jsx";
 
 function App() {
   const [filterTags, setFilterTags] = useState([]);
@@ -28,7 +28,11 @@ function App() {
       <DataProvider>
         <div>
           <Navbar />
-          <Index/>
+          <div className="flex gap-4 px-12 mt-5">
+            <Filters />
+            <Index />
+          </div>
+
           {/* <CardsData filterTags={filterTags} /> */}
           {/* <DetailJobPage /> */}
           {/* <div className="container mx-auto px-4 py-8">
