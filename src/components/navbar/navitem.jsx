@@ -19,7 +19,7 @@ const NavItem = (props) => {
       </div>
 
       <div className="flex items-center gap-3 relative">
-        <h2 className="text-white text-lg sm:block hidden">david cornay</h2>
+        <h2 className="text-white text-lg sm:block hidden">arslan younas</h2>
         <div
           ref={buttonRef}
           onClick={toggle}

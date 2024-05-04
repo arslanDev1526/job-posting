@@ -1,10 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import DataContext from "../../contexts/dataContext.jsx";
 import Card from "./card";
 
 const CardListing = ({searchedData, filteredData}) => {
   const data = useContext(DataContext);
-// console.log(searchedData,"searchedData in cardListing")
   let displayData = [];
 
   if (searchedData.length > 0) {

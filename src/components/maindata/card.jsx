@@ -10,7 +10,6 @@ const Card = ({ item }) => {
 
   const handleTooltipToggle = () => {
     setShowToolTip(!showToolTip);
-    console.log("i am hoveredddd");
   };
 
   const hoverMe = (id) => {
@@ -21,25 +20,44 @@ const Card = ({ item }) => {
     setIsHovered(null);
   };
 
-  const handleCardClick = async (id) => {
+  const handleCardClick = async (id, department) => {
     try {
-      const { data, error } = await supabase
+      const { data: detailData, error: detailError } = await supabase
         .from("job_data")
         .select("*")
         .eq("id", id)
         .single();
-      if (error) {
+      if (detailError) {
         throw error;
       }
-      console.log(data, "single data");
-      navigate(`/detail/${id}`, { state: { item: data } });
+
+      const { data: departmentData, error: departmentError } = await supabase
+        .from("job_data")
+        .select("*")
+        .eq("department", department)
+        .not("id", "eq", id);
+      if (departmentError) {
+        throw detailError;
+      }
+      
+      navigate(`/detail/${id}`, {
+        state: { item: detailData, departmentData: departmentData },
+      });
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
     } catch (error) {
       console.log(error, "error");
     }
   };
   return (
     <>
-      <div key={item.id} onClick={() => handleCardClick(item.id)}>
+      <div
+        key={item.id}
+        onClick={() => handleCardClick(item.id, item.department)}
+      >
         <div
           onMouseEnter={() => hoverMe(item.id)}
           onMouseLeave={unHoverMe}

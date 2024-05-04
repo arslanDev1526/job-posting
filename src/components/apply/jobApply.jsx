@@ -3,6 +3,7 @@ import supabase from "../../config/client.jsx";
 import Loader from "../loader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 import {
   skillOptions,
   sourceOptions,
@@ -11,6 +12,7 @@ import {
 
 const JobApply = () => {
 
+  const navigate = useNavigate();
   const dropdownMenue = useRef(null);
   const inputRef = useRef(null);
 
@@ -131,7 +133,14 @@ const JobApply = () => {
   console.log(selectedFile, "beforeselectedFile");
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
 
     let hasError = false;
     const newErrors = {};
@@ -173,13 +182,14 @@ const JobApply = () => {
       try {
         setLoading(true);
 
+       
+
         const { data, error } = await supabase.storage
           .from("cv_data")
           .upload(`applicants_cv/${selectedFile.name}`, selectedFile);
 
         if (error) {
           console.log("Error uploading file:", error);
-          // return;
         }
 
         console.log(formData, "formData");
@@ -197,6 +207,11 @@ const JobApply = () => {
 
         console.log("Data inserted successfully:", insertData);
         toast.success("Applied Successfully");
+
+        setTimeout(() => {
+        navigate("/");
+        }, 5000);
+
         setSelectedFile(null);
         inputRef.current.value = null;
         setProgress(0);
