@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext  } from "react";
-import { CiSearch } from "react-icons/ci";
 import PaginatedItems from "./paginatedItems";
 import DataContext from "../contexts/dataContext";
+import Search from "./search";
 
 const CardsData = ({filterTags}) => {
 const data = useContext(DataContext);
@@ -27,7 +27,7 @@ setSearchedJob(e.target.value);
   return (
     <>
       <div>
-        <div className="flex justify-between">
+        {/* <div className="flex justify-between">
           <h1>
             <span>ALL</span> POSITIONS
           </h1>
@@ -44,7 +44,9 @@ setSearchedJob(e.target.value);
             />
             <CiSearch />
           </div>
-        </div>
+        </div> */}
+
+        <Search/>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <PaginatedItems

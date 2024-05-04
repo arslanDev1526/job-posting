@@ -16,9 +16,10 @@ export const DataProvider = ({children}) => {
           if (error) {
             console.error('Error fetching todos:', error.message);
           } else {
-            console.log(data,"cardsData");
           }
           setCardsData(data);
+          // console.log(data,"cardsData");
+
     }
 
     return ( 
