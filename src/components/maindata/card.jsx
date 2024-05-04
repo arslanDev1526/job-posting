@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import supabase from "../../config/client.jsx";
 
 const Card = ({ item }) => {
   const [isHovered, setIsHovered] = useState(null);
   const [showToolTip, setShowToolTip] = useState(false);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleTooltipToggle = () => {
     setShowToolTip(!showToolTip);

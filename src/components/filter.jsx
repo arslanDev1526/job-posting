@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 const Filter = ({filterHandler}) => {
 
+  
+
   return (
     <>
       <div>

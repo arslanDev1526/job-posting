@@ -1,63 +1,16 @@
 import { useState, useRef, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
-const supabaseUrl = "https://blnncmgalhqgaetzdtms.supabase.co";
-const supabaseKey =
-  " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsbm5jbWdhbGhxZ2FldHpkdG1zIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMjQwNDIxOSwiZXhwIjoyMDI3OTgwMjE5fQ.OwcosZCrJxCYQaqE6L9eGdXsN4oZGK4xQYUE3-ragBA";
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-import FileUpload from "../components/fileUpload";
-import Loader from "./loader";
-
+import supabase from "../../config/client.jsx";
+import Loader from "../loader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  skillOptions,
+  sourceOptions,
+  genderOptions,
+} from "../../assets/data/jobsdata.jsx";
 
 const JobApply = () => {
-  const skillOptions = [
-    "JavaScript",
-    "Python",
-    "Java",
-    "C++",
-    "C#",
-    "Ruby",
-    "Swift",
-    "Go",
-    "PHP",
-    "TypeScript",
-    "HTML",
-    "CSS",
-    "React.js",
-    "Angular",
-    "Vue.js",
-    "Bootstrap",
-    "Tailwind CSS",
-    "Node.js",
-    "Express.js",
-    "Django",
-    "Flask",
-    "Spring Boot",
-    "Laravel",
-    "ASP.NET Core",
-    "SQL",
-    "MySQL",
-    "PostgreSQL",
-    "MongoDB",
-    "Firebase",
-    "Docker",
-    "Kubernetes",
-    "Jenkins",
-    "Terraform",
-  ];
 
-  const sourceOptions = [
-    "Referral",
-    "Company Website",
-    "Job Board",
-    "Social Media",
-    "Other",
-    "Search Firm",
-    "External Referral",
-  ];
-  const genderOptions = ["Male", "Female", "other"];
   const dropdownMenue = useRef(null);
   const inputRef = useRef(null);
 
@@ -177,7 +130,6 @@ const JobApply = () => {
 
   console.log(selectedFile, "beforeselectedFile");
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -261,18 +213,16 @@ const JobApply = () => {
         });
 
         console.log(selectedFile, "selectedFile");
-
       } catch (error) {
         console.error("Unexpected error:", error);
       }
     }
-
   };
 
   return (
     <>
       {loading ? <Loader /> : null}
-      <div className={`${loading ? "blur-[1px] pointer-events-none": ""}`}>
+      <div className={`${loading ? "blur-[1px] pointer-events-none" : ""}`}>
         <h2 className="text-center my-5 text-2xl">Job Application</h2>
         <form className="flex gap-4 flex-col items-center">
           {/* <FileUpload/> */}

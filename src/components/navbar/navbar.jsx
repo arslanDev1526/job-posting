@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import NavItem from './navitem'
 import Dropdown from './dropdown'
 
-const index = () => {
+const Navbar = () => {
     const myRef = useRef();
     const buttonRef = useRef();
   const [show, setShow] = useState(false);
@@ -32,4 +32,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Navbar

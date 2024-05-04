@@ -2,22 +2,43 @@ import { CiSearch } from "react-icons/ci";
 import DataContext from "../../contexts/dataContext.jsx";
 import React, { useContext, useState } from "react";
 
-const SearchInput = () => {
+const SearchInput = ({ handleSearchedData, filteredData }) => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [searchedJob, setSearchedJob] = useState("");
   const data = useContext(DataContext);
-  console.log(data.post_name, "data on serachpage");
+  // console.log(filteredData, "filteredData in the serachfolder");
+
 
   const handleSearch = () => {
-    const filteredData = data.filter((filteredItem) => {
-      return filteredItem.post_name
-        .toLowerCase()
-        .includes(searchedJob.toLowerCase());
-    });
+    let searchData;
+    if (filteredData.length > 0) {
+      searchData = filteredData.filter((item) =>
+        item.post_name.toLowerCase().includes(searchedJob.toLowerCase())
+      );
+      handleSearchedData(searchData);
+      // console.log(searchData, "searchData of filtered data");
+    } else {
+      searchData = data.filter((item) =>
+        item.post_name.toLowerCase().includes(searchedJob.toLowerCase())
+      );
+      handleSearchedData(searchData);
+    // console.log(searchData, "searchData for data");
+
+    }
+  };
+
+  const handleEnterHit = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
 
   const handleSearchedJob = (e) => {
-    setSearchedJob(e.target.value);
+    const value = e.target.value;
+    setSearchedJob(value);
+    if (value === "") {
+      handleSearchedData([]);
+    }
   };
 
   const handleOnFocus = () => {
@@ -43,7 +64,7 @@ const SearchInput = () => {
           onBlur={handleOnBlur}
           value={searchedJob}
           onChange={handleSearchedJob}
-          // still i have to manage the search functionality
+          onKeyDown={handleEnterHit}
         />
 
         <button onClick={handleSearch}>

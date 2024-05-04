@@ -1,17 +1,21 @@
 import React from "react";
-import { useParams,useLocation } from "react-router-dom";
-import HeaderImg from "../assets/images/webpack.png";
-import Logo from "../assets/images/logoo.png";
+import { useLocation,useNavigate } from "react-router-dom";
+import HeaderImg from "../../assets/images/webpack.png";
+import Logo from "../../assets/images/logoo.png";
 
 const DetailJobPage = () => {
-  const {id} = useParams();
-  // const location = useLocation();
+  const navigate = useNavigate();
+
+  const location = useLocation();
   const { item } = location.state || {};
 
   if (!item) {
     return <div>Item not found!</div>;
   }
-
+  
+const handleJobClick = ( ) => { 
+      navigate("/job_apply");
+}
   return (
     <>
       <div
@@ -38,7 +42,7 @@ const DetailJobPage = () => {
             </div>
           </div>
           <div>
-            <button className="bg-green-500 px-4 py-2 rounded">
+            <button onClick={handleJobClick} className="bg-green-500 px-4 py-2 rounded">
               {" "}
               APPLY NOW{" "}
             </button>
