@@ -4,6 +4,10 @@ import Index from "./components/details/index.jsx";
 import Navbar from "./components/navbar/navbar.jsx";
 import Main from "./components/mian/main.jsx";
 import JobApply from "./components/apply/jobApply.jsx";
+import Register from "./components/auth/register.jsx";
+import Login from "./components/auth/login.jsx";
+import AuthRoute from "./components/auth/authroute.jsx";
+
 
 function App() {
   return (
@@ -13,9 +17,14 @@ function App() {
           <div>
             <Navbar />
             <Routes>
-              <Route path="/" element={<Main />} />
+              <Route path="/" element={<Register/>}/>
+              <Route path="/login" element={<Login/>}/>
+              <Route element={<AuthRoute/>}> 
+              <Route path="main" element={<Main />} />
               <Route path="/detail/:id" element={<Index />} />
               <Route path="/job_apply" element={<JobApply />} />
+              </Route>
+            
             </Routes>
           </div>
         </DataProvider>
