@@ -49,12 +49,12 @@ const Filters = ({ handleFilteredData }) => {
 
   return (
     <>
-      <div className="mt-10">
-        <h1 className="text-2xl">
+      <div className="pt-5 lg_2:pt-7 lg_2:w-[30%] xl:w-1/5">
+        <h1 className="">
           <span className="font-bold"> SHOW </span>RESULTS BY
         </h1>
-        <div className="mt-12 bg-white shadow-md">
-          <div className="pl-5 py-10 flex flex-col gap-2">
+        <div className="mt-5 shadow-lg rounded bg-white lg_2:mt-8">
+          <div className="w-full gap-4 flex flex-col pl-5 py-5 lg_2:w-48">
             {Object.keys(departmentCount).map((department) => (
               <label
                 key={department}
@@ -68,7 +68,7 @@ const Filters = ({ handleFilteredData }) => {
                   value={department}
                   id={department}
                 />
-                <span className="text-sm w-52">
+                <span className="text-xs text-gray-400">
                   {department} ({departmentCount[department]})
                 </span>
               </label>

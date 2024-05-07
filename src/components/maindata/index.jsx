@@ -13,13 +13,11 @@ const Index = ({ filteredData }) => {
 
   return (
     <>
-      <div>
-        <div className="flex justify-between py-10 ">
-          <div>
-            <h1 className="text-2xl">
+      <div className="lg_2:w-[70%]">
+        <div className="flex justify-between flex-col md_2:flex-row md_2:items-center py-5 lg_2:pb-1">
+            <h1 className="">
               <span className="font-bold">ALL </span>POSITIONS
             </h1>
-          </div>
           <div className="flex gap-4">
             <CardsChagerBtn />
             <SearchInput filteredData={filteredData} handleSearchedData={handleSearchedData} />

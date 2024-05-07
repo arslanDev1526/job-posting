@@ -24,8 +24,8 @@ const Navbar = () => {
     setShow(!show);
   };
   return (
-   <> 
-    <NavItem toggle={toggleMenu} buttonRef={buttonRef}/>
+   <>
+   <NavItem toggle={toggleMenu} buttonRef={buttonRef}/>
     <Dropdown show = {show} myRef = {myRef}/>
    </>
   

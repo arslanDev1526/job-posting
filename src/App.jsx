@@ -10,14 +10,12 @@ function App() {
     <>
       <Router>
         <DataProvider>
-          <div>
             <Navbar />
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/detail/:id" element={<Index />} />
               <Route path="/job_apply" element={<JobApply />} />
             </Routes>
-          </div>
         </DataProvider>
       </Router>
     </>
