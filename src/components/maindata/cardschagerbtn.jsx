@@ -5,7 +5,7 @@ import { Menu } from "../../assets/svgs/menu.jsx";
 const CardsChagerBtn = () => {
   return (
     <>
-      <div className="flex gap-4">
+      <div className="hidden gap-4">
         <button>
           <Hamburger />
         </button>

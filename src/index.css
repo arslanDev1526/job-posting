@@ -4,6 +4,10 @@
 
 @import 'flowbite/dist/flowbite.min.css';
 
+body { 
+  background:  rgb(243, 244, 246);
+}
+
 .skillDropdown::-webkit-scrollbar {
     width: 10px;
   }
