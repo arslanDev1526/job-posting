@@ -96,7 +96,7 @@ const Register = () => {
                     ref={passwordRef}
                   />
                 </div>
-                {/* <div>
+                <div>
                   <label
                     for="confirm-password"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -112,7 +112,7 @@ const Register = () => {
                     required=""
                     ref={confirmPasswordRef}
                   />
-                </div> */}
+                </div>
                 {errorMsg && 
                 alert(errorMsg)}
                 {msg && 
