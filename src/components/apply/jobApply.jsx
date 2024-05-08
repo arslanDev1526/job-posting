@@ -11,7 +11,6 @@ import {
 } from "../../assets/data/jobsdata.jsx";
 
 const JobApply = () => {
-
   const navigate = useNavigate();
   const dropdownMenue = useRef(null);
   const inputRef = useRef(null);
@@ -133,7 +132,6 @@ const JobApply = () => {
   console.log(selectedFile, "beforeselectedFile");
 
   const handleSubmit = async (e) => {
-    
     e.preventDefault();
 
     window.scrollTo({
@@ -182,8 +180,6 @@ const JobApply = () => {
       try {
         setLoading(true);
 
-       
-
         const { data, error } = await supabase.storage
           .from("cv_data")
           .upload(`applicants_cv/${selectedFile.name}`, selectedFile);
@@ -209,7 +205,7 @@ const JobApply = () => {
         toast.success("Applied Successfully");
 
         setTimeout(() => {
-        navigate("/");
+          navigate("/");
         }, 5000);
 
         setSelectedFile(null);
@@ -238,7 +234,9 @@ const JobApply = () => {
     <>
       {loading ? <Loader /> : null}
       <div className={`${loading ? "blur-[1px] pointer-events-none" : ""}`}>
-        <h2 className="text-center my-5 text-2xl">Job Application</h2>
+        <h2 className="text-center my-5 text-lg font-bold lg:text-xl">
+          Job Application
+        </h2>
         <form className="flex gap-4 flex-col items-center">
           {/* <FileUpload/> */}
           <div className="flex items-center justify-center w-5/6">
@@ -285,7 +283,7 @@ const JobApply = () => {
             />
             <label
               for="fullname_input"
-              class={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
+              class={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-5 bg-white z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
                 errors.fullName
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
@@ -302,7 +300,7 @@ const JobApply = () => {
                 errors.email
                   ? "border-red-500"
                   : "focus:ring-0 focus:border-blue-600"
-              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
+              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer `}
               placeholder=" "
               name="email"
               value={formData.email}
@@ -314,7 +312,7 @@ const JobApply = () => {
                 errors.email
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 bg-white`}
             >
               Email
             </label>
@@ -339,7 +337,7 @@ const JobApply = () => {
                 errors.phone
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-white absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Phone
             </label>
@@ -364,7 +362,7 @@ const JobApply = () => {
                 errors.address
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-white absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Address
             </label>
@@ -389,7 +387,7 @@ const JobApply = () => {
                 errors.city
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-white absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               City
             </label>
@@ -415,7 +413,7 @@ const JobApply = () => {
                 errors.skills
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-white absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Skills
             </label>
@@ -459,7 +457,7 @@ const JobApply = () => {
                 errors.gender
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-1 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-white absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-1 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Gender
             </label>
@@ -499,7 +497,7 @@ const JobApply = () => {
                 errors.source
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-white absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Source
             </label>
@@ -538,20 +536,20 @@ const JobApply = () => {
                 errors.professionalExperience
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-white absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Professional Experience
             </label>
           </div>
 
           <div className="w-5/6 flex gap-3 justify-end py-10">
-            <button className="bg-gray-600 px-5 py-1 rounded-lg text-white">
+            <button className="bg-gray-400 text-sm font-semibold px-8 py-2 rounded cursor-pointer">
               Cancel
             </button>
             <button
               onClick={handleSubmit}
               type="submit"
-              className="bg-green-500 px-5 py-1 rounded-lg text-white cursor-pointer"
+              className="bg-[#3AD8B6] text-sm font-semibold px-8 py-2 rounded cursor-pointer"
               disabled={loading}
             >
               {loading ? "Loading" : "Save"}

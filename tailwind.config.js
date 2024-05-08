@@ -6,7 +6,8 @@ export default {
   ],
   theme: {
     extend: {
-      screens:{ 
+      screens:{
+        sm_2: "320",
         md_2: "600px",
         lg_2: "960px",
       }
