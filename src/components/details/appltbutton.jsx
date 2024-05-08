@@ -9,33 +9,32 @@ const ApplyButton = ({ item }) => {
   };
   return (
     <>
-      <div className="px-5">
-        <div className="py-8 flex justify-between border-b-[1px] grey-green-500">
-          <div className="">
-            <h1 className="text-blue-700 text-3xl font-semibold">
+        <div className="p-10 flex flex-col items-center md_2:items-start md_2:px-0">
+          <div className="flex flex-col items-center md_2:items-start">
+            <h1 className="text-blue-700 text-lg font-bold text-center lg:text-xl md_2:text-start">
               {item.post_name}
             </h1>
-            <div className="flex gap-2 mt-1">
-              <p>{item.department}</p>
+            <div className="flex flex-wrap gap-1 justify-center text-xs mt-3 md_2:justify-start">
+              <p className="lg:text-sm">{item.department}</p>
               <span>-</span>
-              <p>{item.address}</p>
+              <p className="text-gray-400 text-center lg:text-sm">{item.address}</p>
             </div>
           </div>
-          <div>
+          <div className="flex justify-center mt-5">
             <button
               onClick={handleJobClick}
-              className="bg-green-500 px-4 py-2 rounded"
+              className="bg-[#3AD8B6] text-sm font-semibold px-4 py-2 rounded"
             >
               {" "}
               APPLY NOW{" "}
             </button>
-            <button className="bg-green-500 px-4 py-2 rounded ml-5">
+            {/* <button className="bg-green-500 px-4 py-2 rounded ml-5">
               {" "}
               REFER CANDIDATE{" "}
-            </button>
+            </button> */}
           </div>
         </div>
-      </div>
+
     </>
   );
 };
