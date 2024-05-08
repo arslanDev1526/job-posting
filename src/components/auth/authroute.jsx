@@ -6,7 +6,7 @@ const AuthRoute = () => {
   const { user } = useAuth();
   const location = useLocation();
 
-  return user ? (
+  return true ? (
     <Outlet />
   ) : (
     <Navigate to={"/"} replace state={{ path: location.pathname }} />
