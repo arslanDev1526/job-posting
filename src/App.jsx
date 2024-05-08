@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { DataProvider } from "./contexts/dataContext";
 import Index from "./components/details/index.jsx";
 import Navbar from "./components/navbar/navbar.jsx";
@@ -17,14 +17,15 @@ function App() {
           <div>
             <Navbar />
             <Routes>
-              <Route path="/" element={<Register/>}/>
+              <Route path="/register" element={<Register/>}/>
               <Route path="/login" element={<Login/>}/>
               <Route element={<AuthRoute/>}> 
-              <Route path="main" element={<Main />} />
+              <Route path="/" element={<Main />} />
+              <Route path="/main" element={<Main />} />
               <Route path="/detail/:id" element={<Index />} />
               <Route path="/job_apply" element={<JobApply />} />
               </Route>
-            
+            <Route path="*" element={<Navigate to="/main" />} />
             </Routes>
           </div>
         </DataProvider>
