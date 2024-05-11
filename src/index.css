@@ -4,6 +4,11 @@
 
 @import 'flowbite/dist/flowbite.min.css';
 
+/* 
+input:-internal-autofill-selected { 
+  background: transparent !important;
+} */
+
 .skillDropdown::-webkit-scrollbar {
     width: 10px;
   }

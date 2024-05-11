@@ -1,159 +1,278 @@
-import React, { useRef, useState } from "react";
-import {Link} from "react-router-dom"
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import supabase from "../../config/client.jsx";
+import { Icon } from "react-icons-kit";
+import { eyeOff } from "react-icons-kit/feather/eyeOff";
+import { eye } from "react-icons-kit/feather/eye";
 
 const Register = () => {
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const confirmPasswordRef = useRef(null);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [msg, setMsg] = useState("");
+  const [passwordType, setPasswordType] = useState("password");
+  const [confirmPasswordType, setConfirmPasswordType] = useState("password");
+  const [passwordIcon, setPasswordIcon] = useState(eyeOff);
+  const [confirmPasswordIcon, setConfirmPasswordIcon] = useState(eyeOff);
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState("");
 
-  const register = (email, password) =>
-    supabase.auth.signUp({ email, password });
+  const [registerData, setRegisterData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (
-      !passwordRef.current?.value ||
-      !emailRef.current?.value ||
-      !confirmPasswordRef.current?.value
-    ) {
-      setErrorMsg("Please fill all the fields");
-      return;
-    }
+  const togglePasswordVisibility = (type, setType, setIcon) => {
+    setType(type === "password" ? "text" : "password");
+    setIcon(type === "password" ? eye : eyeOff);
+  };
 
-    if (passwordRef.current.value !== confirmPasswordRef.current.value) {
-      setErrorMsg("Password doesn't match");
-      return;
-    }
+  const hanldeInputChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterData({
+      ...registerData,
+      [name]: value,
+    });
+    setErrors({ ...errors, [name]: undefined });
+  };
 
+  const register = async (email, password) => {
     try {
-      setErrorMsg("");
-      setLoading(true);
-      setTimeout(async() => { 
-        
-      })
-      const { data, error } = await register(
-        emailRef.current.value,
-        passwordRef.current.value
-      );
+      const { data, error } = await supabase.auth.signUp({ email, password });
       if (!error && data) {
         setMsg(
           "Registration Successful. Check your email to confirm your account"
         );
       }
     } catch (error) {
-      setErrorMsg("Error in Creaeting Account");
-    }finally { 
-    setLoading(false);
+      throw new Error("Error in Creating Account");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    let hasError = false;
+    const newErrors = {};
+
+    for (const input in registerData) {
+      if (!registerData[input]) {
+        hasError = true;
+        newErrors[input] = "This field is required";
+      }
+      if (registerData.fullName.length === 0) {
+        hasError = true;
+        newErrors.fullName = "Enter a full name";
+      }
+      if (registerData.email.length === 0) {
+        hasError = true;
+        newErrors.email = "Enter an email address";
+      }
+      if (registerData.password.length < 8) {
+        hasError = true;
+        newErrors.password = "Enter a Strong Password (minimum 8 characters)";
+      }
+      if (
+        registerData.confirmPassword.length === 0 ||
+        registerData.confirmPassword !== registerData.password
+      ) {
+        hasError = true;
+        newErrors.confirmPassword = "Passwords do not match";
+      }
+    }
+
+    setErrors(newErrors);
+
+    if (!hasError) {
+      try {
+        setLoading(true);
+        await register(registerData.email, registerData.password);
+      } catch (error) {
+        setMsg("Error in Creating Account");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
     <>
-      <section class="bg-gray-50 dark:bg-gray-900">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl mb-5">
-                Register
-              </h1>
-          <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-             
-              <form class="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-                <div>
-                  <label
-                    for="email"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Your email
-                  </label>
+      <section className="bg-gradient-to-r from-teal-500 to-indigo-800 h-screen flex">
+        <div className="w-full px-6 py-8 mx-auto md:h-screen lg:py-0 flex-col items-center justify-center flex">
+          <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+                <div className="relative">
                   <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@company.com"
-                    required=""
-                    ref={emailRef}
+                    type="text"
+                    id="fullname_input"
+                    className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
+                      errors.fullName
+                        ? "border-red-500"
+                        : "focus:ring-0 focus:border-blue-600"
+                    }`}
+                    placeholder=" "
+                    name="fullName"
+                    onChange={hanldeInputChange}
+                    value={registerData.fullName}
                   />
-                </div>
-                <div>
                   <label
-                    for="password"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    htmlFor="fullname_input"
+                    className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
+                      errors.fullName
+                        ? "peer-focus:px-2 peer-focus:text-red-600"
+                        : "peer-focus:px-2 peer-focus:text-blue-600"
+                    }`}
+                  >
+                    Full name
+                  </label>
+                  {errors.fullName && (
+                    <span className="text-red-500 text-sm">
+                      {errors.fullName}
+                    </span>
+                  )}
+                </div>
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="email"
+                    autoComplete="new-email"
+                    className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 focus:bg-white rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
+                      errors.email
+                        ? "border-red-500"
+                        : "focus:ring-0 focus:border-blue-600"
+                    }`}
+                    placeholder=" "
+                    name="email"
+                    onChange={hanldeInputChange}
+                    value={registerData.email}
+                  />
+                  <label
+                    htmlFor="email"
+                    className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
+                      errors.email
+                        ? "peer-focus:px-2 peer-focus:text-red-600"
+                        : "peer-focus:px-2 peer-focus:text-blue-600"
+                    }`}
+                  >
+                    Email
+                  </label>
+                  {errors.email && (
+                    <span className="text-red-500 text-sm">{errors.email}</span>
+                  )}
+                </div>
+                <div className="relative">
+                  <input
+                    type={passwordType}
+                    id="password"
+                    placeholder=" "
+                    name="password"
+                    onChange={hanldeInputChange}
+                    value={registerData.password}
+                    className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
+                      errors.password
+                        ? "border-red-500"
+                        : "focus:ring-0 focus:border-blue-600"
+                    }`}
+                  />
+                  <span
+                    className="flex justify-around items-center"
+                    onClick={() =>
+                      togglePasswordVisibility(
+                        passwordType,
+                        setPasswordType,
+                        setPasswordIcon
+                      )
+                    }
+                  >
+                    {" "}
+                    <Icon
+                      className="absolute right-6 top-[.5rem]"
+                      icon={passwordIcon}
+                      size={20}
+                    />{" "}
+                  </span>
+                  <label
+                    htmlFor="password"
+                    className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
+                      errors.password
+                        ? "peer-focus:px-2 peer-focus:text-red-600"
+                        : "peer-focus:px-2 peer-focus:text-blue-600"
+                    }`}
                   >
                     Password
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="••••••••"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
-                    ref={passwordRef}
-                  />
+                  {errors.password && (
+                    <span className="text-red-500 text-sm">
+                      {errors.password}
+                    </span>
+                  )}
                 </div>
-                <div>
+                <div className="relative">
+                  <input
+                    type={confirmPasswordType}
+                    name="confirmPassword"
+                    id="confirm-password"
+                    placeholder=" "
+                    className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
+                      errors.password
+                        ? "border-red-500"
+                        : "focus:ring-0 focus:border-blue-600"
+                    }`}
+                    onChange={hanldeInputChange}
+                    value={registerData.confirmPassword}
+                  />
+                  <span
+                    className="flex justify-around items-center"
+                    onClick={() =>
+                      togglePasswordVisibility(
+                        confirmPasswordType,
+                        setConfirmPasswordType,
+                        setConfirmPasswordIcon
+                      )
+                    }
+                  >
+                    {" "}
+                    <Icon
+                      className="absolute right-6 top-[.5rem]"
+                      icon={confirmPasswordIcon}
+                      size={20}
+                    />{" "}
+                  </span>
                   <label
-                    for="confirm-password"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    htmlFor="confirm-password"
+                    className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
+                      errors.confirmPassword
+                        ? "peer-focus:px-2 peer-focus:text-red-600"
+                        : "peer-focus:px-2 peer-focus:text-blue-600"
+                    }`}
                   >
                     Confirm Password
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="confirm-password"
-                    placeholder="••••••••"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
-                    ref={confirmPasswordRef}
-                  />
+                  {errors.confirmPassword && (
+                    <span className="text-red-500 text-sm">
+                      {errors.confirmPassword}
+                    </span>
+                  )}
                 </div>
-                {errorMsg && 
-                alert(errorMsg)}
-                {msg && 
-                alert(msg)}
-                {/* <div class="flex items-center justify-between">
-                  <div class="flex items-start">
-                    <div class="flex items-center h-5">
-                      <input
-                        id="remember"
-                        aria-describedby="remember"
-                        type="checkbox"
-                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                        required=""
-                      />
-                    </div>
-                    <div class="ml-3 text-sm">
-                      <label
-                        for="remember"
-                        class="text-gray-500 dark:text-gray-300"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-                  </div>
-                  <a
-                    href="#"
-                    class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div> */}
+
+                {msg && <span className="text-green-500 text-sm">{msg}</span>}
+
                 <button
                   type="submit"
-                  class="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  className="w-full bg-[#3AD8B6] hover:bg-primary-700 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                   disabled={loading}
                 >
-                  Register
+                  {loading ? "Registering..." : "Register"}
                 </button>
-                <p class="text-sm font-light text-gray-500 text-center">
-                  Aleardy a user?{" "}
-                  <Link className="font-medium text-blue-600 hover:underline dark:text-primary-500" to={"/login"}> Login </Link>
+                <p className="text-sm font-light text-gray-500 text-center">
+                  Already a user?{" "}
+                  <Link
+                    className="font-medium text-blue-600 hover:underline dark:text-primary-500"
+                    to={"/login"}
+                  >
+                    {" "}
+                    Login{" "}
+                  </Link>
                 </p>
               </form>
             </div>

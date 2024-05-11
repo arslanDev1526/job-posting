@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth } from "../../contexts/authprovider.jsx";
-import {Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const AuthRoute = () => {
   const { user } = useAuth();
@@ -9,7 +9,7 @@ const AuthRoute = () => {
   return user ? (
     <Outlet />
   ) : (
-    <Navigate to={"/"} replace state={{ path: location.pathname }} />
+    <Navigate to={"/login"} replace state={{ path: location.pathname }} />
   );
 };
 
