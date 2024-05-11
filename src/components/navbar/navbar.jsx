@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import NavItem from './navitem'
 import Dropdown from './dropdown'
+import { Outlet } from "react-router-dom";
 
 const Navbar = () => {
     const myRef = useRef();
@@ -27,6 +28,7 @@ const Navbar = () => {
    <>
    <NavItem toggle={toggleMenu} buttonRef={buttonRef}/>
     <Dropdown show = {show} myRef = {myRef}/>
+    <Outlet/>
    </>
   
   )
