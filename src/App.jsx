@@ -19,7 +19,6 @@ function App() {
     <>
       <Router>
         <DataProvider>
-          <div>
             <Routes>
               <Route element={<AuthRoute />}>
                 <Route element={<Navbar />}>
@@ -32,7 +31,6 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<Navigate to="/login" />} />
             </Routes>
-          </div>
         </DataProvider>
       </Router>
     </>

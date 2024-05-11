@@ -17,6 +17,10 @@ body {
   background:  rgb(243, 244, 246);
 }
 
+body { 
+  background:  rgb(243, 244, 246);
+}
+
 .skillDropdown::-webkit-scrollbar {
     width: 10px;
   }
@@ -39,9 +43,9 @@ input::file-selector-button {
     cursor: pointer;
     color: white;
     padding: 0.5em;
-    border: thin solid grey;
+    border: thin solid #3AD8B6;
     border-radius: 3px;
-    background-color: rgb(88, 161, 88);
+    background-color: #3AD8B6;
   }
 
   .Toastify__toast-container { 

@@ -57,16 +57,19 @@ const Card = ({ item }) => {
       <div
         key={item.id}
         onClick={() => handleCardClick(item.id, item.department)}
+        className="md_2:w-[48%] xl:w-[31%]"
       >
         <div
           onMouseEnter={() => hoverMe(item.id)}
           onMouseLeave={unHoverMe}
-          className="bg-white relative shadow-md p-5 rounded-md max-w-sm w-64 h-full flex flex-col items-center cursor-pointer gap-4"
+          className="bg-white relative shadow-md p-5 rounded-md h-full flex flex-col items-center cursor-pointer gap-4"
         >
           <h2
             onMouseOver={handleTooltipToggle}
             onMouseOut={handleTooltipToggle}
-            className={` text-lg font-semibold text-blue-600 text-center overflow-ellipsis whitespace-nowrap overflow-hidden w-40 ${
+            className={` text-sm font-semibold text-blue-600 text-center
+            md_2:overflow-ellipsis md_2:whitespace-nowrap md_2:overflow-hidden md_2:w-40
+              ${
               isHovered === item.id ? "text-emerald-400" : ""
             }`}
           >
@@ -90,12 +93,15 @@ const Card = ({ item }) => {
                 : ""
             }`}
           ></span>
-          <p className="text-gray-600 text-sm w-56 text-center">
+          <div className="w-full"> 
+          <p className="text-gray-600 text-xs text-center">
             {item.department}
           </p>
-          <p className="text-gray-400 text-sm text-center mt-1 w-56">
+          <p className="text-gray-400 text-xs text-center mt-2">
             {item.address}
           </p>
+          </div>
+         
         </div>
       </div>
     </>

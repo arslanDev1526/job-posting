@@ -17,7 +17,7 @@ const CardListing = ({searchedData, filteredData}) => {
 
   return (
     <>
-      <div className="flex flex-wrap justify-center sm:justify-between lg:justify-start gap-4">
+      <div className="flex flex-col md_2:flex-row md_2:flex-wrap mt-4 mb-4 gap-5 justify-between">
         {displayData.map((item, index) => (
           <Card item={item} key={index} />
         ))}
