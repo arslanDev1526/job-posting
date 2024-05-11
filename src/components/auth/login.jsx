@@ -69,9 +69,7 @@ const Login = () => {
           error,
         } = await login(loginData.email, loginData.password);
         if (error) setMsg("Invalid username or eamil");
-        if (user && session) navigate("/");
-        console.log(user , session , "user && session")
-        navigate("/")
+        if (user && session) navigate("/main");
       } catch (error) {
         setMsg("invalid username or eamil");
       }
