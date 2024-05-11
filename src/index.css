@@ -9,6 +9,10 @@ input:-internal-autofill-selected {
   background: transparent !important;
 } */
 
+body { 
+  background:  rgb(243, 244, 246);
+}
+
 .skillDropdown::-webkit-scrollbar {
     width: 10px;
   }
