@@ -133,10 +133,9 @@ const Register = () => {
                 </div>
                 <div className="relative">
                   <input
-                    type="text"
+                    type="email"
                     id="email"
-                    autoComplete="new-email"
-                    className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 focus:bg-white rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
+                    className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
                       errors.email
                         ? "border-red-500"
                         : "focus:ring-0 focus:border-blue-600"
@@ -145,6 +144,7 @@ const Register = () => {
                     name="email"
                     onChange={hanldeInputChange}
                     value={registerData.email}
+                    autoComplete="off"
                   />
                   <label
                     htmlFor="email"

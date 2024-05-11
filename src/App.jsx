@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import React from "react";
+import { useAuth } from "./contexts/authprovider.jsx";
 
 import { DataProvider } from "./contexts/dataContext";
 import Index from "./components/details/index.jsx";
@@ -12,12 +13,13 @@ import AuthRoute from "./components/auth/authroute.jsx";
 
 
 function App() {
+  console.log(useAuth(), "useAuth");
   return (
     <>
       <Router>
         <DataProvider>
           <div>
-            <Navbar />
+            {/* <Navbar /> */}
             <Routes>
               <Route element={<AuthRoute />}>
                 <Route path="/" element={<Main />} />
@@ -26,7 +28,7 @@ function App() {
               </Route>
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path="*" element={<Navigate to="/main" />} />
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>
         </DataProvider>

@@ -6,7 +6,7 @@ const AuthContext = createContext({});
 export const useAuth = () => useContext(AuthContext);
 
 const login = (email, password) => 
-    supabase.auth.signInWithPassword({ email, password})
+  supabase.auth.signInWithPassword({ email, password})
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -16,6 +16,7 @@ const AuthProvider = ({ children }) => {
     const {data} = supabase.auth.onAuthStateChange((event,session)=> { 
         if(event === "SIGNES_IN"){ 
             setUser(session.user); 
+            console.log(user,"user in auth provider"); 
             setAuth(true); 
         }
     })
