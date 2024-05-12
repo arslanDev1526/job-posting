@@ -31,6 +31,7 @@ const JobApply = () => {
   const [isGenderDropdownOpen, setIsGenderDropdownOpen] = useState(false);
   const [isSourceOpen, setIsSourceOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [fileName , setFileName] = useState(null);
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -46,6 +47,7 @@ const JobApply = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
+    setFileName(file.name);
     setErrors({ ...errors, selected: undefined });
     simulateUpload();
   };
@@ -196,17 +198,15 @@ const JobApply = () => {
 
         setLoading(false);
         if (insertError) {
-          console.log("Error inserting data:", insertError);
           toast.error("Error loading data!");
           return;
         }
 
-        console.log("Data inserted successfully:", insertData);
         toast.success("Applied Successfully");
 
-        setTimeout(() => {
-          navigate("/");
-        }, 5000);
+        // setTimeout(() => {
+        //   navigate("/detail/:id");
+        // }, 5000);
 
         setSelectedFile(null);
         inputRef.current.value = null;
@@ -238,28 +238,35 @@ const JobApply = () => {
           Job Application
         </h2>
         <form className="flex gap-4 flex-col items-center">
-          {/* <FileUpload/> */}
           <div className="flex items-center justify-center w-5/6">
             <div
               className={`border border-dotted  rounded-md flex flex-col justify-center w-full h-32 ${
                 errors.selected ? "border-red-500" : "border-gray-500"
               }`}
             >
-              <input
-                id="cv-upload"
-                type="file"
-                className={`mx-auto w-56 ${
-                  progress === 100 ? "text-blue-400" : "text-gray-700"
-                }`}
-                onChange={handleFileChange}
-                accept=".pdf,.doc,.docx"
-                ref={inputRef}
-              />
+              <label
+                htmlFor="cv-upload"
+                className={`mx-auto w-auto ${
+                  progress === 100
+                    ? "bg-[#3AD8B6] text-gray-700"
+                    : "bg-gray-300 text-gray-700"
+                } cursor-pointer p-2 rounded-md flex justify-center items-center mx-auto w-auto px-4 py-2`}
+              >
+                <input
+                  id="cv-upload"
+                  type="file"
+                  className="hidden"
+                  onChange={handleFileChange}
+                  accept=".pdf,.doc,.docx"
+                  ref={inputRef}
+                />
+                <span>{ fileName || "Upload CV"}</span>
+              </label>
 
               {progress > 0 && progress < 100 && (
                 <div className=" rounded-lg px-4 mt-5">
                   <div
-                    className="h-2 bg-green-500"
+                    className="h-2 bg-[#3AD8B6]"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
@@ -273,7 +280,7 @@ const JobApply = () => {
               id="fullname_input"
               class={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
                 errors.fullName
-                  ? "border-red-500"
+                  ? "border-red-500 focus:border-red-600"
                   : "focus:ring-0 focus:border-blue-600"
               }`}
               placeholder=" "
@@ -283,7 +290,7 @@ const JobApply = () => {
             />
             <label
               for="fullname_input"
-              class={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-5 bg-white z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
+              class={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-5 bg-gray-100 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
                 errors.fullName
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
@@ -298,8 +305,8 @@ const JobApply = () => {
               id="email_input"
               class={`${
                 errors.email
-                  ? "border-red-500"
-                  : "focus:ring-0 focus:border-blue-600"
+                  ? "border-red-500 focus:border-red-600"
+                  : ""
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer `}
               placeholder=" "
               name="email"
@@ -312,7 +319,7 @@ const JobApply = () => {
                 errors.email
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 bg-white`}
+              } absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 bg-gray-100`}
             >
               Email
             </label>
@@ -323,9 +330,9 @@ const JobApply = () => {
               id="phone_input"
               class={`${
                 errors.phone
-                  ? "border-red-500"
-                  : "focus:ring-0 focus:border-blue-600"
-              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none  focus:outline-none peer`}
+                  ? "border-red-500 focus:border-red-600"
+                  : "focus:ring-0"
+              } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
               name="phone"
               value={formData.phone}
@@ -337,7 +344,7 @@ const JobApply = () => {
                 errors.phone
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } bg-white absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-gray-100 absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Phone
             </label>
@@ -348,7 +355,7 @@ const JobApply = () => {
               id="address_input"
               class={`${
                 errors.address
-                  ? "border-red-500"
+                  ? "border-red-500 focus:border-red-600"
                   : "focus:ring-0 focus:border-blue-600"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
@@ -362,7 +369,7 @@ const JobApply = () => {
                 errors.address
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } bg-white absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-gray-100 absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Address
             </label>
@@ -373,7 +380,7 @@ const JobApply = () => {
               id="city_input"
               class={`${
                 errors.city
-                  ? "border-red-500"
+                  ? "border-red-500 focus:border-red-600"
                   : "focus:ring-0 focus:border-blue-600"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
@@ -387,7 +394,7 @@ const JobApply = () => {
                 errors.city
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } bg-white absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-gray-100 absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               City
             </label>
@@ -399,7 +406,7 @@ const JobApply = () => {
               id="skill_input"
               class={`${
                 errors.skills
-                  ? "border-red-500"
+                  ? "border-red-500 focus:border-red-600"
                   : "focus:ring-0 focus:border-blue-600"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
@@ -413,13 +420,13 @@ const JobApply = () => {
                 errors.skills
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } bg-white absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-gray-100 absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Skills
             </label>
 
             {isSkillDropdownOpen && (
-              <ul className="skillDropdown absolute top-full left-0 w-full border border-gray-300 bg-white shadow-lg z-10 h-48 overflow-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-200">
+              <ul className="skillDropdown absolute top-full left-0 w-full border border-gray-300 bg-gray-100 shadow-lg z-10 h-48 overflow-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-200">
                 {skillOptions.map((option, index) => (
                   <li
                     key={index}
@@ -442,7 +449,7 @@ const JobApply = () => {
               id="gender_input"
               className={`${
                 errors.gender
-                  ? "border-red-500"
+                  ? "border-red-500 focus:border-red-600"
                   : "focus:ring-0 focus:border-blue-600"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
@@ -457,12 +464,12 @@ const JobApply = () => {
                 errors.gender
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } bg-white absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-1 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-gray-100 absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-1 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Gender
             </label>
             {isGenderDropdownOpen && (
-              <ul className="genderDropdown absolute top-full left-0 w-full border border-gray-300 bg-white shadow-lg z-10">
+              <ul className="genderDropdown absolute top-full left-0 w-full border border-gray-300 bg-gray-100 shadow-lg z-10">
                 {genderOptions.map((gender) => (
                   <li
                     key={gender}
@@ -482,7 +489,7 @@ const JobApply = () => {
               id="source_input"
               className={`${
                 errors.source
-                  ? "border-red-500"
+                  ? "border-red-500 focus:border-red-600"
                   : "focus:ring-0 focus:border-blue-600"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
@@ -497,12 +504,12 @@ const JobApply = () => {
                 errors.source
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } bg-white absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-gray-100 absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Source
             </label>
             {isSourceOpen && (
-              <ul className="sourceDropdown absolute top-full left-0 w-full border border-gray-300 bg-white shadow-lg z-10">
+              <ul className="sourceDropdown absolute top-full left-0 w-full border border-gray-300 bg-gray-100 shadow-lg z-10">
                 {sourceOptions.map((source) => (
                   <li
                     key={source}
@@ -522,7 +529,7 @@ const JobApply = () => {
               id="experience_input"
               class={`${
                 errors.professionalExperience
-                  ? "border-red-500"
+                  ? "border-red-500 focus:border-red-600"
                   : "focus:ring-0 focus:border-blue-600"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
@@ -536,7 +543,7 @@ const JobApply = () => {
                 errors.professionalExperience
                   ? "peer-focus:px-2 peer-focus:text-red-600"
                   : "peer-focus:px-2 peer-focus:text-blue-600"
-              } bg-white absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
+              } bg-gray-100 absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Professional Experience
             </label>

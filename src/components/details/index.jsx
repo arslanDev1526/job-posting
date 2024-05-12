@@ -19,7 +19,7 @@ const Index = () => {
         <JobsDetail info={info} key={index} />
       ))}
       <h1 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start mt-8"> Related Jobs </h1>
-      <div className="flex flex-wrap justify-center sm:justify-between lg:justify-center gap-4 mt-5 mb-5">
+      <div className="flex flex-wrap justify-center gap-4 mt-5 mb-5">
         {departmentData.map((item, index) => (
           <Card item={item} key={index} />
         ))}

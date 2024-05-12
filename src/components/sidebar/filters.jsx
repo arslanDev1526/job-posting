@@ -2,17 +2,18 @@ import React, { useContext, useState, useEffect } from "react";
 import DataContext from "../../contexts/dataContext.jsx";
 
 const Filters = ({ handleFilteredData }) => {
-  const data = useContext(DataContext);
+  const {cardsData , isLoading} = useContext(DataContext);
   const [filterTags, setFilterTags] = useState([]);
   const [departmentCount, setDepartmentCount] = useState({});
 
   useEffect(() => {
-    const departmentCount = data.reduce((acc, value) => {
-      acc[value.department] = (acc[value.department] || 0) + 1;
+    const departmentCount = cardsData.reduce((acc, value) => {
+      const department = value.department.trim();
+      acc[department] = (acc[department] || 0) + 1;
       return acc;
     }, {});
     setDepartmentCount(departmentCount);
-  }, [data]);
+  }, [cardsData]);
  
 
   const handleFilter = (event) => {
@@ -35,7 +36,7 @@ const Filters = ({ handleFilteredData }) => {
   };
 
   useEffect(() => {
-    const filteredData = data.filter((item) => {
+    const filteredData = cardsData.filter((item) => {
       if (filterTags.length > 0) {
         return filterTags.some((filterTag) => {
           return item.department.includes(filterTag);
@@ -58,12 +59,12 @@ const Filters = ({ handleFilteredData }) => {
             {Object.keys(departmentCount).map((department) => (
               <label
                 key={department}
-                className="flex gap-2"
+                className="flex gap-2 items-center"
                 htmlFor={department}
               >
                 <input
                   onChange={handleFilter}
-                  className="accent-green-600 w-3 shadow-sm filter_input"
+                  className="filter_input w-3 h-3"
                   type="checkbox"
                   value={department}
                   id={department}
