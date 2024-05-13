@@ -77,7 +77,7 @@ const Card = ({ item }) => {
             onMouseOut={handleTooltipToggle}
             className={` text-sm font-semibold text-blue-600 text-center
           md_2:overflow-ellipsis md_2:whitespace-nowrap md_2:overflow-hidden md_2:w-40
-            ${isHovered === item.id ? "text-[#3AD8B6]" : ""}`}
+            ${isHovered === item.id ? "text-green-400" : ""}`}
           >
             {item.post_name}
           </h2>
@@ -95,7 +95,7 @@ const Card = ({ item }) => {
           <span
             className={`h-[2.5px] w-16 bg-gray-200 ${
               isHovered === item.id
-                ? "bg-[#54cbb1] transform scale-x-125 transition-all duration-300 ease-in-out"
+                ? "bg-green-400 transform scale-x-125 transition-all duration-300 ease-in-out"
                 : ""
             }`}
           ></span>

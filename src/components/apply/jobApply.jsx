@@ -550,9 +550,9 @@ const JobApply = () => {
           </div>
 
           <div className="w-5/6 flex gap-3 justify-end py-10">
-            <button className="bg-gray-400 text-sm font-semibold px-8 py-2 rounded cursor-pointer">
+            {/* <button className="bg-gray-400 text-sm font-semibold px-8 py-2 rounded cursor-pointer">
               Cancel
-            </button>
+            </button> */}
             <button
               onClick={handleSubmit}
               type="submit"
