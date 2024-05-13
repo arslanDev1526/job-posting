@@ -52,7 +52,7 @@ const SearchInput = ({ handleSearchedData, filteredData }) => {
   return (
     <>
       <div
-        className={`flex justify-between mt-5 md_2:mt-0 w-full px-3 py-2 border rounded ${
+        className={`flex justify-between mt-5 md_2:mt-0 lg_2:mt-0 w-full px-3 border rounded ${
           isInputFocused ? "border-blue-400" : "border-gray-400"
         }`}
       >

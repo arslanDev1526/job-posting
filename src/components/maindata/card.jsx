@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import supabase from "../../config/client.jsx";
+import Loader from "../loader.jsx";
 
 const Card = ({ item }) => {
   const [isHovered, setIsHovered] = useState(null);
   const [showToolTip, setShowToolTip] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,6 +24,7 @@ const Card = ({ item }) => {
 
   const handleCardClick = async (id, department) => {
     try {
+      setIsLoading(true);
       const { data: detailData, error: detailError } = await supabase
         .from("job_data")
         .select("*")
@@ -39,7 +42,7 @@ const Card = ({ item }) => {
       if (departmentError) {
         throw detailError;
       }
-      
+      setIsLoading(false);
       navigate(`/detail/${id}`, {
         state: { item: detailData, departmentData: departmentData },
       });
@@ -57,8 +60,13 @@ const Card = ({ item }) => {
       <div
         key={item.id}
         onClick={() => handleCardClick(item.id, item.department)}
-        className="md_2:w-[48%] xl:w-[31%]"
+        className="w-full max-w-[34rem] md_2:w-[48%] xl:w-[31%]"
       >
+        {isLoading && (
+          <div className="">
+            <Loader />
+          </div>
+        )}
         <div
           onMouseEnter={() => hoverMe(item.id)}
           onMouseLeave={unHoverMe}
@@ -68,10 +76,8 @@ const Card = ({ item }) => {
             onMouseOver={handleTooltipToggle}
             onMouseOut={handleTooltipToggle}
             className={` text-sm font-semibold text-blue-600 text-center
-            md_2:overflow-ellipsis md_2:whitespace-nowrap md_2:overflow-hidden md_2:w-40
-              ${
-              isHovered === item.id ? "text-emerald-400" : ""
-            }`}
+          md_2:overflow-ellipsis md_2:whitespace-nowrap md_2:overflow-hidden md_2:w-40
+            ${isHovered === item.id ? "text-green-400" : ""}`}
           >
             {item.post_name}
           </h2>
@@ -89,19 +95,18 @@ const Card = ({ item }) => {
           <span
             className={`h-[2.5px] w-16 bg-gray-200 ${
               isHovered === item.id
-                ? "bg-emerald-200 transform scale-x-125 transition-all duration-300 ease-in-out"
+                ? "bg-green-400 transform scale-x-125 transition-all duration-300 ease-in-out"
                 : ""
             }`}
           ></span>
-          <div className="w-full"> 
-          <p className="text-gray-600 text-xs text-center">
-            {item.department}
-          </p>
-          <p className="text-gray-400 text-xs text-center mt-2">
-            {item.address}
-          </p>
+          <div className="w-full">
+            <p className="text-gray-600 text-xs text-center">
+              {item.department}
+            </p>
+            <p className="text-gray-400 text-xs text-center mt-2">
+              {item.address}
+            </p>
           </div>
-         
         </div>
       </div>
     </>

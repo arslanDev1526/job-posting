@@ -5,22 +5,27 @@ const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const [cardsData, setCardsData] = useState([]);
+  const[isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
+    setIsLoading(true);
     fetchData();
   }, []);
 
   async function fetchData() {
     const { data, error } = await supabase.from("job_data").select("*");
     if (error) {
-      console.error("Error fetching todos:", error.message);
+      console.error("Error fetching job data:", error.message);
     } else {
-    }
     setCardsData(data);
+    setIsLoading(false);
+
+    }
   }
 
   return (
-    <DataContext.Provider value={cardsData}>{children}</DataContext.Provider>
+    <DataContext.Provider value={{ cardsData: cardsData, isLoading: isLoading }}>{children}</DataContext.Provider>
   );
 };
 

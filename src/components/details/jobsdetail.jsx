@@ -1,4 +1,5 @@
 import React from "react";
+import { GoDotFill } from "react-icons/go";
 
 const JobsDetail = ({ info }) => {
   return (
@@ -6,49 +7,71 @@ const JobsDetail = ({ info }) => {
       <div className="w-full">
         <div className="flex flex-col gap-7">
           <div>
-            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">Summary</h2>
+            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">
+              Summary
+            </h2>
             <p className="text-base lg:text-lg">{info.summary}</p>
           </div>
           <div className="">
-            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">Prerequisites</h2>
-            <div>
+            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">
+              Prerequisites
+            </h2>
+            <ul>
               {info.prerequisites.map((prereq, index) => (
-                <li className="mb-1 text-base lg:text-lg" key={index}>
-                  {" "}
-                  {prereq}{" "}
-                </li>
+                <div className="flex gap-3" key={index}>
+                  <div className="mt-2">
+                    <GoDotFill className="w-3" />
+                  </div>
+                  <li className="text-base lg:text-lg">{prereq}</li>
+                </div>
               ))}
-            </div>
+            </ul>
           </div>
           <div className="">
-            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">Required</h2>
-            <div>
+            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">
+              Required
+            </h2>
+            <ul>
               {info.required.map((require, index) => (
-                <li className="mb-1 text-base lg:text-lg" key={index}>
-                  {require}
-                </li>
+                <div className="flex gap-3" key={index}>
+                  <div className="mt-2">
+                    <GoDotFill className="w-3" />
+                  </div>
+                  <li className="text-base lg:text-lg">{require}</li>
+                </div>
               ))}
-            </div>
+            </ul>
           </div>
           <div className="">
-            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">Skills</h2>
-            <div>
+            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">
+              Skills
+            </h2>
+            <ul>
               {info.skills.map((skill, index) => (
-                <li className="mb-1 text-base lg:text-lg" key={index}>
-                  {skill}
-                </li>
+                <div className="flex gap-3" key={index}>
+                  <div className="mt-2">
+                    <GoDotFill className="w-3" />
+                  </div>
+                  <li className="text-base lg:text-lg">{skill}</li>
+                </div>
               ))}
-            </div>
+            </ul>
           </div>
           <div>
-            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start"> Responsibilities</h2>
-            <div>
+            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">
+              {" "}
+              Responsibilities
+            </h2>
+            <ul>
               {info.responsibilities.map((responsibility, index) => (
-                <li className="mb-1 text-base lg:text-lg" key={index}>
-                  {responsibility}
-                </li>
+               <div className="flex gap-3" key={index}>
+               <div className="mt-2">
+                 <GoDotFill className="w-3" />
+               </div>
+               <li className="text-base lg:text-lg">{responsibility}</li>
+             </div>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </div>
