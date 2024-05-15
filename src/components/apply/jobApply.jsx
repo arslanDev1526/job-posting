@@ -131,8 +131,6 @@ const JobApply = () => {
     setIsGenderDropdownOpen(false);
   };
 
-  console.log(selectedFile, "beforeselectedFile");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -173,11 +171,6 @@ const JobApply = () => {
 
     setErrors(newErrors);
 
-    console.log(errors, "errors");
-    console.log(newErrors, "newErrors");
-    console.log(errors.selectedFile, "selectedFile error");
-    console.log(errors.fullName, "fullnME error");
-
     if (!hasError) {
       try {
         setLoading(true);
@@ -185,13 +178,6 @@ const JobApply = () => {
         const { data, error } = await supabase.storage
           .from("cv_data")
           .upload(`applicants_cv/${selectedFile.name}`, selectedFile);
-
-        if (error) {
-          console.log("Error uploading file:", error);
-        }
-
-        console.log(formData, "formData");
-
         const { data: insertData, error: insertError } = await supabase
           .from("applications_data")
           .insert(formData);
@@ -223,9 +209,8 @@ const JobApply = () => {
           professionalExperience: "",
         });
 
-        console.log(selectedFile, "selectedFile");
       } catch (error) {
-        console.error("Unexpected error:", error);
+        //add toast here
       }
     }
   };

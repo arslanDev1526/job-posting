@@ -25,21 +25,16 @@ const Items = ({ currentItems, searchedJob, filterTags }) => {
       if (error) {
         throw error;
       }
-      console.log(data, "single data");
       navigate(`/detail/${id}`, { state: { item: data } });
     } catch (error) {
-      console.log(error, "error");
     }
   };
-  console.log("searchedJob:", searchedJob);
   return (
     <>
       {currentItems
         .filter((inboxFilteredItem) => {
           if (filterTags.length > 0) {
             return filterTags.every((filterTag) => {
-              console.log(inboxFilteredItem.department, "department data");
-              console.log(filterTag, "filterTag");
               return inboxFilteredItem.department.includes(filterTag);
             });
           } else {

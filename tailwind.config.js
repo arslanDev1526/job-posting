@@ -5,15 +5,30 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-      screens:{
-        'sm' : {'min':'640px'},
-        'sm_2': {'min':'320px'},
-        'md_2': {'max':'1280px','min': '600px'  },
-        'md': { 'min' : '768px' },
-        'lg_2': {'min': '960px'},
-        'xl' : { 'min' : '1280px'}
+    screens: {
+      'sm': '640px',
+      'sm_2': '320px',
+      'md': '768px',
+      'md_2': {'max':'1280px','min': '600px'  },
+      'lg': '960px',
+      'lg_2': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
+    container: {
+      center: true,
+      padding: '1rem',
+      screens: {
+        'sm': '640px',
+        'sm_2': '320px',
+        'md': '768px',
+        'md_2': '768px',
+        'lg': '960px',
+        'lg_2': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+      },
     },
   },
   plugins: [],
 }
-

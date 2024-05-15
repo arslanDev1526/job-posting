@@ -16,7 +16,7 @@ export const DataProvider = ({ children }) => {
   async function fetchData() {
     const { data, error } = await supabase.from("job_data").select("*");
     if (error) {
-      console.error("Error fetching job data:", error.message);
+      //add toast here to show
     } else {
     setCardsData(data);
     setIsLoading(false);

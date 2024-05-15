@@ -52,7 +52,7 @@ const Card = ({ item }) => {
         behavior: "smooth",
       });
     } catch (error) {
-      console.log(error, "error");
+      //add toast here
     }
   };
   return (

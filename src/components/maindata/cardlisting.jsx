@@ -10,11 +10,7 @@ const CardListing = ({ searchedData, filteredData }) => {
   const [pageNumber, setPageNumber] = useState(0);
 
   const {cardsData, isLoading} = useContext(DataContext);
-  console.log(isLoading,"Loading in cardListing...");
-
-  console.log(cardsData, "data in card list")
   let displayData = [];
-
   if (searchedData.length > 0) {
     displayData = searchedData;
   } else if (filteredData.length > 0) {
@@ -26,10 +22,16 @@ const CardListing = ({ searchedData, filteredData }) => {
   const itemsPerPage = 9;
   const pageVisted = pageNumber * itemsPerPage;
   const pageCount = Math.ceil(displayData.length / itemsPerPage);
-  const paginatedData = displayData.slice(
-    pageVisted,
-    pageVisted + itemsPerPage
-  );
+  let paginatedData = [];
+  if (displayData.length > itemsPerPage){
+    paginatedData = displayData.slice(
+      pageVisted,
+      pageVisted + itemsPerPage
+    );
+  } else {
+    paginatedData = displayData;
+  }
+  displayData = paginatedData;
   const handlePageChange = ({ selected }) => {
     window.scrollTo({
       top: 0,
@@ -43,20 +45,21 @@ const CardListing = ({ searchedData, filteredData }) => {
     { isLoading ? <Loader/> : 
      <div className="flex flex-col justify-between min-h-[500px]">
         <div className="flex flex-col md_2:flex-row md_2:flex-wrap lg_2:flex-row lg_2:flex-wrap mt-4 mb-4 gap-5">
-          {paginatedData.map((item, index) => (
+          {displayData.map((item, index) => (
             <Card item={item} key={index} />
           ))}
         </div>
         <ReactPaginate
-        className="flex justify-center gap-5 items-center font-semibold text-lg py-2 my-10 "
+        className="flex justify-center gap-5 items-center py-2 my-10  "
           breakLabel="..."
           nextLabel={<GrNext/>}
           onPageChange={handlePageChange}
           pageCount={pageCount}
           previousLabel={<GrPrevious/>}
           renderOnZeroPageCount={null}
-          activeClassName="border border-gray-300 px-3 rounded-sm"
-          disabledClassName="text-gray-400 cursor-not-allowed"
+          activeClassName="border border-gray-300 px-3 rounded-sm text-green-500 text-lg font-semibold"
+          disabledClassName="text-gray-400"
+          pageClassName="hover:text-green-500"
         />
       </div>  }
      
