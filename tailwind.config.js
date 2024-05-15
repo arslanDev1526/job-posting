@@ -15,20 +15,7 @@ export default {
       'xl': '1280px',
       '2xl': '1536px',
     },
-    container: {
-      center: true,
-      padding: '1rem',
-      screens: {
-        'sm': '640px',
-        'sm_2': '320px',
-        'md': '768px',
-        'md_2': '768px',
-        'lg': '960px',
-        'lg_2': '1024px',
-        'xl': '1280px',
-        '2xl': '1536px',
-      },
-    },
+   
   },
   plugins: [],
 }

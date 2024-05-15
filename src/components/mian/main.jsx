@@ -16,12 +16,9 @@ const Main = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        
-        <div className="flex justify-center">
-          <div className="container flex flex-col justify-center gap-4 pt-5 px-5 md_2:px-12 lg_2:flex-row">
+          <div className="flex flex-col justify-center gap-4 pt-5 px-5 md_2:px-12 lg_2:flex-row">
             <Filters handleFilteredData={handleFilteredData} />
             <Index filteredData={filteredData} />
-          </div>
         </div>
       )}
     </>

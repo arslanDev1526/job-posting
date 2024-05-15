@@ -50,7 +50,7 @@ const CardListing = ({ searchedData, filteredData }) => {
           ))}
         </div>
         <ReactPaginate
-        className="flex justify-center gap-5 items-center py-2 my-10  "
+        className="flex justify-center gap-5 items-center py-2 my-10"
           breakLabel="..."
           nextLabel={<GrNext/>}
           onPageChange={handlePageChange}
