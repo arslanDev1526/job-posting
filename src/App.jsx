@@ -29,7 +29,7 @@ function App() {
               </Route>
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path="*" element={<Navigate to="/login" />} />
+              <Route path="*" element={<Navigate to="/register" />} />
             </Routes>
         </DataProvider>
       </Router>
