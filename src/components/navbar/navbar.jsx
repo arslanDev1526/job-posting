@@ -27,7 +27,7 @@ const Navbar = () => {
   return (
    <>
    <NavItem toggle={toggleMenu} buttonRef={buttonRef}/>
-    {/* <Dropdown show = {show} myRef = {myRef}/> */}
+    <Dropdown show = {show} myRef = {myRef}/>
     <Outlet/>
    </>
   

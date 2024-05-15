@@ -1,44 +1,52 @@
 import { CiSearch } from "react-icons/ci";
 import DataContext from "../../contexts/dataContext.jsx";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useCallback, useRef } from "react";
 
 const SearchInput = ({ handleSearchedData, filteredData }) => {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [searchedJob, setSearchedJob] = useState("");
   const data = useContext(DataContext);
-  // console.log(filteredData, "filteredData in the serachfolder");
 
+  const debounceTimeoutRef = useRef(null);
 
-  const handleSearch = () => {
+  const debounce = (func, wait) => {
+    return (...args) => {
+      clearTimeout(debounceTimeoutRef.current);
+      debounceTimeoutRef.current = setTimeout(() => func(...args), wait);
+    };
+  };
+
+  const handleSearch = (value) => {
     let searchData;
     if (filteredData.length > 0) {
       searchData = filteredData.filter((item) =>
-        item.post_name.toLowerCase().includes(searchedJob.toLowerCase())
+        item.post_name.toLowerCase().includes(value.toLowerCase())
       );
       handleSearchedData(searchData);
-      // console.log(searchData, "searchData of filtered data");
     } else {
       searchData = data.filter((item) =>
-        item.post_name.toLowerCase().includes(searchedJob.toLowerCase())
+        item.post_name.toLowerCase().includes(value.toLowerCase())
       );
       handleSearchedData(searchData);
-    // console.log(searchData, "searchData for data");
-
     }
   };
 
+  const debouncedHandleSearch = useCallback(debounce(handleSearch, 300), [
+    filteredData,
+    data,
+    handleSearchedData,
+  ]);
+
   const handleEnterHit = (e) => {
     if (e.key === "Enter") {
-      handleSearch();
+      handleSearch(searchedJob);
     }
   };
 
   const handleSearchedJob = (e) => {
     const value = e.target.value;
     setSearchedJob(value);
-    if (value === "") {
-      handleSearchedData([]);
-    }
+    debouncedHandleSearch(value);
   };
 
   const handleOnFocus = () => {
@@ -63,11 +71,14 @@ const SearchInput = ({ handleSearchedData, filteredData }) => {
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
           value={searchedJob}
-          onChange={handleSearchedJob}
+          onChange={(e) => {
+            handleSearchedJob(e);
+            debouncedHandleSearch(e.target.value);
+          }}
           onKeyDown={handleEnterHit}
         />
 
-        <button onClick={handleSearch}>
+        <button onClick={() => handleSearch(searchedJob)}>
           <CiSearch />
         </button>
       </div>
