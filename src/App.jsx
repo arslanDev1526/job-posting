@@ -1,3 +1,4 @@
+
 import {
   BrowserRouter as Router,
   Route,
@@ -13,6 +14,8 @@ import JobApply from "./components/apply/jobApply.jsx";
 import Register from "./components/auth/register.jsx";
 import Login from "./components/auth/login.jsx";
 import AuthRoute from "./components/auth/authroute.jsx";
+import AdminIndex from "./components/admin/index.jsx";
+import Landing from "./components/landingpage/landing.jsx";
 
 function App() {
   return (
@@ -22,6 +25,8 @@ function App() {
             <Routes>
               <Route element={<AuthRoute />}>
                 <Route element={<Navbar />}>
+                <Route path="/myDasboard" element={<AdminIndex />} />
+
                   <Route path="/main" element={<Main />} />
                   <Route path="/detail/:id" element={<Index />} />
                   <Route path="/job_apply" element={<JobApply />} />
@@ -30,6 +35,8 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<Navigate to="/register" />} />
+              <Route path="/" element={<Landing />} />
+
             </Routes>
         </DataProvider>
       </Router>

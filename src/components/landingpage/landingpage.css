@@ -1,0 +1,26 @@
+@keyframes rotate-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .circle-rotate {
+    animation: rotate-slow 20s linear infinite;
+  }
+  
+  .circle-rotate:hover {
+    animation-play-state: paused;
+  }
+
+  /* // testimonals css // */
+
+  .slick-dots li.slick-active div {
+    background-color: rgba(34, 34, 34, 0.8) !important; /* Dark grey for active dot */
+  }
+
+ 
+
+ 

@@ -14,10 +14,10 @@ const Navbar = () => {
             setShow(false);
         }
     }
-    document.addEventListener("mousedown",checkIfClickedOutsie )
+    document.addEventListener("click",checkIfClickedOutsie )
 
     return () => {
-        document.removeEventListener("mousedown", checkIfClickedOutsie)
+        document.removeEventListener("click", checkIfClickedOutsie)
       }
   },[show])
 
