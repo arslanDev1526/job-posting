@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
 import { MdOutlineArrowDropDown } from "react-icons/md";
+import Logo from "../../assets/images/logoo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,16 +13,21 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+
   return (
     <nav className="bg-white shadow-md fixed w-full z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
-            <img
+            {/* <img
               className="h-8 w-auto"
-              src="https://via.placeholder.com/50"
+              // src={Logo}
               alt="Logo"
-            />
+            /> */}
+            <h1 className="text-2xl font-bold text-green-800 italic">
+              {" "}
+              PixelPulse{" "}
+            </h1>
           </div>
           <div className="hidden md:flex space-x-4 items-center">
             <a
@@ -55,7 +61,7 @@ const Navbar = () => {
               <div
                 className={`${
                   isCategoriesHovered ? "block" : "hidden"
-                } absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10`}
+                } absolute left-0 top-7 mt-2 w-48 bg-white shadow-lg rounded-md py-2`}
               >
                 <a
                   href="#"
@@ -95,7 +101,7 @@ const Navbar = () => {
               <div
                 className={`${
                   isLocationHovered ? "block" : "hidden"
-                } absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10`}
+                } absolute left-0 top-7 mt-2 w-48 bg-white shadow-lg rounded-md py-2`}
               >
                 <a
                   href="#"
@@ -134,7 +140,7 @@ const Navbar = () => {
               <div
                 className={`${
                   isPageHovered ? "block" : "hidden"
-                } absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10`}
+                } absolute left-0 top-7 mt-2 w-48 bg-white shadow-lg rounded-md py-2`}
               >
                 <a
                   href="#"
@@ -158,7 +164,7 @@ const Navbar = () => {
             </div>
           </div>
           <div className="hidden md:flex items-center">
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+            <button className="bg-green-700 text-white px-5 py-2 rounded-md text-sm font-medium">
               Login
             </button>
           </div>
@@ -177,8 +183,8 @@ const Navbar = () => {
         </div>
       </div>
       {isOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className={`md:hidden`}>
+          <div className="px-4 pt-2 pb-3 space-y-1 sm:px-3">
             <a
               href="#"
               className="block text-gray-700 hover:text-gray-900 py-2 rounded-md text-sm font-medium"
@@ -311,7 +317,7 @@ const Navbar = () => {
                 </a>
               </div>
             </div>
-            <button className="w-full bg-blue-600 text-white px-4 py-2 rounded-md text-base font-medium">
+            <button className="w-9/12 mt-12 bg-green-700 text-white px-4 py-2 rounded-md text-base font-medium mx-auto block">
               Login
             </button>
           </div>

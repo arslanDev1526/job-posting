@@ -13,12 +13,13 @@ const Location = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="px-6 md:px-8 lg:px-14 py-4 bg-green-50">
+      <p className="text-center mb-16 text-lg font-medium"> Select by Location </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
         {locations.map((location) => (
           <div
             key={location.name}
-            className="relative overflow-hidden rounded-lg shadow-lg transform transition-transform duration-300 hover:-translate-y-2"
+            className="relative overflow-hidden rounded-md shadow-lg transform transition-transform duration-300 hover:-translate-y-2"
           >
             <img
               src={location.image}

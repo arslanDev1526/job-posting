@@ -18,7 +18,7 @@ const InfiniteSlider = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
           dots: false,
@@ -48,6 +48,7 @@ const InfiniteSlider = () => {
 
   return (
     <div className="slider-container mx-auto px-4 py-8">
+      <p className='text-center text-xl'>These companies partnered with us to drive growth</p>
       <Slider {...settings}>
         <div className="flex justify-center items-center">
           <img className='md:w-48 md:h-48 w-32 h-32 object-contain' src="https://assets-global.website-files.com/61139ac7385e74ae2ca2c6fd/6113b77c6152e23039c18256_logo-4.png" alt="Logo 1" />

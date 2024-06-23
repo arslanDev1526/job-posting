@@ -9,20 +9,19 @@ const Hero = () => {
     "https://assets-global.website-files.com/61139ac7385e74ae2ca2c6fd/6113dc4167bb8d2612498d5b_team-7.jpg",
   ];
   return (
-    <section className="flex flex-col-reverse md:flex-row items-center justify-between p-8 bg-gray-100 h-screen">
-      <div className="md:w-1/2 space-y-4 text-center md:text-left">
-        <p className="text-lg text-gray-700">Welcome to Our Website</p>
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-900">
+    <div className="w-full flex flex-col lg:pt-16 py-10 lg:flex-row items-center justify-between bg-green-50">
+      <div className="w-full lg:w-1/2 px-5 space-y-4 text-center md:text-left mt-20 lg:mt-0">
+        <p className="text-lg text-gray-700 text-center">Welcome to Our Website</p>
+        <h1 className="text-3xl md:text-4xl md:text-center font-bold text-gray-900">
           Innovative Solutions
         </h1>
-        <p className="text-md md:text-lg text-gray-600">
+        <p className="text-md md:text-center md:text-lg text-gray-600">
           We provide the best tech solutions to help you grow your business.
         </p>
       </div>
-      <div className="md:w-1/2 mt-8 md:mt-0 flex justify-center">
-        <div className="flex justify-center items-center h-screen">
+      <div className="hidden md:block lg:w-1/2 mt-8 lg:flex lg:justify-center">
           <div
-            className={`h-96 w-96 border-2 border-yellow-900 rounded-full relative circle-rotate `}
+            className={`h-80 w-80 md:h-96 md:w-96 border-2 border-yellow-900 rounded-full relative circle-rotate`}
           >
            
             {imageUrls.map((url, index) => (
@@ -44,8 +43,7 @@ const Hero = () => {
             ))}
           </div>
         </div>
-      </div>
-    </section>
+    </div>
   );
 };
 

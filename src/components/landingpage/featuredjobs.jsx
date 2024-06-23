@@ -6,24 +6,26 @@ const FeaturedJobs = () => {
   const featuredJobs = cardsData.slice(0, 6);
 
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="flex justify-between items-center mb-8">
+    <div className="px-6 py-16 bg-green-50">
+      <div className="flex flex-col justify-between mb-8 md:flex-row md:px-2 lg:px-7">
         <div>
           <h1 className="text-3xl font-bold">Featured Jobs</h1>
-          <p className="mt-2 text-gray-600">
-            Discover exciting job opportunities.
+          <p className="mt-2 text-lg font-medium md:w-96 lg:w-full">
+          Know your worth and find the job that qualify your life
           </p>
         </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg transition duration-300 hover:bg-blue-600">
+        <div> 
+        <button className="bg-green-700 text-white mt-8 md:mt-0 px-8 py-3 rounded-md font-medium">
           View All Jobs
         </button>
+        </div>
       </div>
-      <div className="flex flex-col md_2:flex-row md_2:flex-wrap lg_2:flex-row lg_2:flex-wrap mt-4 mb-4 gap-5">
+      <div className="mt-10 flex flex-col justify-center md_2:flex-row md_2:flex-wrap lg_2:flex-row lg_2:flex-wrap mb-4 gap-5">
         {featuredJobs.map((item,job) => (
           <div
             key={job.id}
             onClick={() => handleCardClick(job.id, job.department)}
-            className="w-full max-w-[34rem] md_2:w-[48%] xl:w-[31%] transform transition duration-500 hover:scale-105 hover:shadow-2xl"
+            className="w-full max-w-[34rem] md_2:w-[48%] xl:w-[31%] transform transition duration-500 hover:scale-105"
           >
             {isLoading && (
               <div className="">
@@ -45,7 +47,7 @@ const FeaturedJobs = () => {
                   {item.department}
                 </p>
 
-                <button className="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg transition duration-300 hover:bg-green-600">
+                <button className="block mx-auto mt-4 bg-green-700 font-medium text-white px-4 py-2 rounded-md">
                   Apply Now
                 </button>
               </div>
