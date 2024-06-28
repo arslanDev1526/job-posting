@@ -29,7 +29,7 @@ export const DataProvider = ({ children }) => {
     }
   }
 
-  // console.log(cardsData,"cardsData")
+  console.log(cardsData,"cardsData")
   // created_at
 
   return (

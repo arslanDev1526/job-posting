@@ -11,17 +11,17 @@ const FeaturedJobs = () => {
         <div>
           <h1 className="text-3xl font-bold">Featured Jobs</h1>
           <p className="mt-2 text-lg font-medium md:w-96 lg:w-full">
-          Know your worth and find the job that qualify your life
+            Know your worth and find the job that qualify your life
           </p>
         </div>
-        <div> 
-        <button className="bg-green-700 text-white mt-8 md:mt-0 px-8 py-3 rounded-md font-medium">
-          View All Jobs
-        </button>
+        <div>
+          <button className="bg-green-700 text-white mt-8 md:mt-0 px-8 py-3 rounded-md font-medium">
+            View All Jobs
+          </button>
         </div>
       </div>
       <div className="mt-10 flex flex-col justify-center md_2:flex-row md_2:flex-wrap lg_2:flex-row lg_2:flex-wrap mb-4 gap-5">
-        {featuredJobs.map((item,job) => (
+        {featuredJobs.map((item, job) => (
           <div
             key={job.id}
             onClick={() => handleCardClick(job.id, job.department)}
@@ -33,26 +33,45 @@ const FeaturedJobs = () => {
               </div>
             )}
             <div className="bg-white relative shadow-md p-5 rounded-md h-full flex flex-col items-center cursor-pointer gap-4">
+              <div className="flex justify-between w-full">
+                <span
+                  className={`${
+                    item.featured ? "visible" : "invisible"
+                  } bg-pink-100 text-pink-900 px-2 py-1 rounded-sm text-sm`}
+                >
+                  {item.featured}
+                </span>
+
+                <span
+                  className={`${
+                    item.timing ? "visible" : "invisible"
+                  } bg-green-100 px-2 py-1 rounded-sm text-sm text-green-900`}
+                >
+                  {item.timing}
+                </span>
+              </div>
+              <div className="w-14 flex flex-col items-center"> 
+                <img  src={item.img_url} alt="logo" />
+                <span className="mt-2 font-medium text-lg text-green-900">{item.company_name}</span>
+              </div>
               <h2
-                className={` text-sm font-semibold text-blue-600 text-center
-          md_2:overflow-ellipsis md_2:whitespace-nowrap md_2:overflow-hidden md_2:w-40`}
+                className={`text-xl text-green-900 font-bold  text-center`}
+          //  md_2:overflow-ellipsis md_2:whitespace-nowrap md_2:overflow-hidden
               >
                 {item.post_name}
               </h2>
 
-              <p className="text-gray-600 text-xs">{item.positions}</p>
+              {/* <p className="text-gray-600 text-xs">{item.positions}</p> */}
 
-              <div className="w-full">
-                <p className="text-gray-600 text-xs text-center">
+                <p className="text-green-900 text-base text-center">
                   {item.department}
                 </p>
 
-                <button className="block mx-auto mt-4 bg-green-700 font-medium text-white px-4 py-2 rounded-md">
-                  Apply Now
+                <button className="block my-2 mx-auto bg-green-900 font-medium text-white px-4 py-2 rounded-sm">
+                  Apply For Job
                 </button>
-              </div>
             </div>
-              {/* <div key={index} className="card1">
+            {/* <div key={index} className="card1">
             <h3 className="h3">{job.title}</h3>
             <p className="p">{job.description}</p>
             <div className="go-corner">
