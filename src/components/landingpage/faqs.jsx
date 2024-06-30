@@ -33,9 +33,9 @@ const Faqs = () => {
   ];
 
   return (
-    <div className="bg-green-50 flex flex-col items-center py-10">
-      <span className="px-3 py-1 rounded-md bg-white">F.A.Q</span>
-      <h1 className="text-3xl md:text-4xl font-bold my-5 text-center">
+    <div className="bg-green-50 flex flex-col items-center pt-16">
+      <span className="bg-white text-green-900 px-3 py-1 text-sm rounded-md">F.A.Q</span>
+      <h1 className="text-3xl md:text-4xl text-green-900 font-bold my-5 text-center">
         Things people often ask about
       </h1>
 

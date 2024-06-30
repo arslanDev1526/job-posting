@@ -6,21 +6,22 @@ const FeaturedJobs = () => {
   const featuredJobs = cardsData.slice(0, 6);
 
   return (
-    <div className="px-6 py-16 bg-green-50">
-      <div className="flex flex-col justify-between mb-8 md:flex-row md:px-2 lg:px-7">
-        <div>
-          <h1 className="text-3xl font-bold">Featured Jobs</h1>
-          <p className="mt-2 text-lg font-medium md:w-96 lg:w-full">
+    <div className="py-10 bg-green-50">
+      <div className="max-w-7xl w-full mx-auto px-6 md:px-8 xl:px-10"> 
+      <div className="flex flex-col justify-between md:flex-row">
+        <div className="space-y-5">
+          <h1 className="text-3xl font-bold text-green-900">Featured Jobs</h1>
+          <p className="text-green-900 text-lg font-medium md:w-96 lg:w-full">
             Know your worth and find the job that qualify your life
           </p>
         </div>
-        <div>
-          <button className="bg-green-700 text-white mt-8 md:mt-0 px-8 py-3 rounded-md font-medium">
-            View All Jobs
-          </button>
+        <div className="mt-5 md:mt-0">
+        <button className="bg-green-900 text-white hover:opacity-75 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold">
+              View All Jobs
+            </button>
         </div>
       </div>
-      <div className="mt-10 flex flex-col justify-center md_2:flex-row md_2:flex-wrap lg_2:flex-row lg_2:flex-wrap mb-4 gap-5">
+      <div className="mt-10 flex flex-col justify-between md_2:flex-row md_2:flex-wrap lg_2:flex-row lg_2:flex-wrap mb-4 gap-5">
         {featuredJobs.map((item, job) => (
           <div
             key={job.id}
@@ -67,7 +68,7 @@ const FeaturedJobs = () => {
                   {item.department}
                 </p>
 
-                <button className="block my-2 mx-auto bg-green-900 font-medium text-white px-4 py-2 rounded-sm">
+                <button className="bg-green-900 text-white hover:opacity-75 px-5 py-2.5 rounded-md text-sm font-medium">
                   Apply For Job
                 </button>
             </div>
@@ -81,6 +82,8 @@ const FeaturedJobs = () => {
           </div>
         ))}
       </div>
+      </div>
+     
     </div>
   );
 };

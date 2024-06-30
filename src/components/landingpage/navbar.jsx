@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
 import { MdOutlineArrowDropDown } from "react-icons/md";
-import Logo from "../../assets/images/logoo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,31 +12,44 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const handlePageDropdown = () => {
+    setIsPageHovered(!isPageHovered);
+    setIsCategoriesHovered(false);
+    setIsLocationHovered(false);
+  };
+
+  const handleCatogreyDropdown = () => {
+    setIsCategoriesHovered(!isCategoriesHovered);
+    setIsPageHovered(false);
+    setIsLocationHovered(false);
+  };
+
+  const handleLocationDropdown = () => {
+    setIsLocationHovered(!isLocationHovered);
+    setIsCategoriesHovered(false);
+    setIsPageHovered(false);
+  };
+
   return (
     <nav className="bg-white shadow-md fixed w-full z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 xl:px-10">
+        <div className="flex justify-between h-16 md:h-20 mx-4 md:mx-0">
           <div className="flex-shrink-0 flex items-center">
-            {/* <img
-              className="h-8 w-auto"
-              src={Logo}
-              alt="Logo"
-            /> */}
             <h1 className="text-2xl font-bold text-green-800 italic">
-              {" "}
-              PixelPulse{" "}
+            
+              PixelPulse
             </h1>
           </div>
-          <div className="hidden md:flex space-x-4 items-center">
+          <div className="hidden md:flex space-x-3 lg:space-x-10 items-center">
             <a
               href="#"
-              className="text-gray-700 hover:text-gray-900 py-2 rounded-md text-sm font-medium"
+              className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
             >
               Home
             </a>
             <a
               href="#"
-              className="text-gray-700 hover:text-gray-900 py-2 rounded-md text-sm font-medium"
+              className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
             >
               Jobs
             </a>
@@ -50,7 +62,7 @@ const Navbar = () => {
               <div className="flex items-center">
                 <a
                   href="#"
-                  className="text-gray-700 hover:text-gray-900 py-2 rounded-md text-sm font-medium"
+                  className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
                 >
                   Categories
                 </a>
@@ -60,26 +72,46 @@ const Navbar = () => {
               <div
                 className={`${
                   isCategoriesHovered ? "block" : "hidden"
-                } absolute left-0 top-7 mt-2 w-48 bg-white shadow-lg rounded-md py-2`}
+                } absolute left-0 top-7 mt-2 w-52 bg-white shadow-lg rounded-sm py-2`}
               >
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  Category 1
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  Category 2
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  Category 3
-                </a>
+                <div className="flex flex-col gap-1 px-6 py-2">
+                  <a
+                    href="#"
+                    className="block text-start text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Customer Services
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Project Management
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Development
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Design
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Marketing
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Accounting
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -91,7 +123,7 @@ const Navbar = () => {
               <div className="flex items-center">
                 <a
                   href="#"
-                  className="text-gray-700 hover:text-gray-900 py-2 rounded-md text-sm font-medium"
+                  className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
                 >
                   Location
                 </a>
@@ -100,26 +132,34 @@ const Navbar = () => {
               <div
                 className={`${
                   isLocationHovered ? "block" : "hidden"
-                } absolute left-0 top-7 mt-2 w-48 bg-white shadow-lg rounded-md py-2`}
+                } absolute left-0 top-7 mt-2 w-36 bg-white shadow-lg rounded-sm py-2`}
               >
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  Location 1
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  Location 2
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  Location 3
-                </a>
+                <div className="flex flex-col gap-1 px-6 py-2">
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Lahore
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Karachi
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Gujranwala
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Remote
+                  </a>
+                </div>
               </div>
             </div>
             <div
@@ -130,7 +170,7 @@ const Navbar = () => {
               <div className="flex items-center">
                 <a
                   href="#"
-                  className="text-gray-700 hover:text-gray-900 py-2 rounded-md text-sm font-medium"
+                  className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
                 >
                   Pages
                 </a>
@@ -139,84 +179,83 @@ const Navbar = () => {
               <div
                 className={`${
                   isPageHovered ? "block" : "hidden"
-                } absolute left-0 top-7 mt-2 w-48 bg-white shadow-lg rounded-md py-2`}
+                } absolute left-0 top-7 mt-2 w-32 bg-white shadow-lg rounded-sm py-2`}
               >
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  Page 1
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  Page 2
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  Page 3
-                </a>
+                <div className="flex flex-col gap-1 px-6 py-2">
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Pricing
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Sign In
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Sign Up
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Forget
+                  </a>
+                </div>
               </div>
             </div>
           </div>
           <div className="hidden md:flex items-center">
-            <button className="bg-green-700 text-white px-5 py-2 rounded-md text-sm font-medium">
-              Login
+            <button className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold">
+              Login In / Rgeister
             </button>
           </div>
           <div className="flex md:hidden items-center">
-            <input
-              type="checkbox"
-              className="peer hidden"
-              id="navbar-open"
-              checked={isOpen}
-              onChange={toggleMenu}
-            />
-            <label
+            <button
+              onClick={toggleMenu}
               className="text-gray-700 hover:text-gray-900 focus:outline-none focus:text-gray-900"
-              htmlFor="navbar-open"
             >
               {isOpen ? (
                 <RxCross1 className="h-6 w-6" />
               ) : (
                 <RxHamburgerMenu className="h-6 w-6" />
               )}
-            </label>
+            </button>
           </div>
         </div>
       </div>
+
       {/* // mobile navbe // */}
+
       <div
         className={`${
-          isOpen ? "max-h-screen pt-4" : "max-h-0"
-        } transition-all duration-500 ease-in-out overflow-hidden md:hidden`}
+          isOpen ? "max-h-screen" : "max-h-0"
+        }  ${isPageHovered || isLocationHovered || isCategoriesHovered ? "overflow-visible" : "overflow-hidden" } transition-all duration-500 ease-in-out md:hidden`}
       >
-        <div className="px-4 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="px-8 pt-2 pb-3 space-y-1">
           <a
             href="#"
-            className="block text-gray-700 hover:text-gray-900 py-2 rounded-md text-sm font-medium"
+            className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
           >
             Home
           </a>
           <a
             href="#"
-            className="block text-gray-700 hover:text-gray-900 py-2 rounded-md text-sm font-medium"
+            className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
           >
             Jobs
           </a>
 
-          <div
-            className="relative"
-            onMouseEnter={() => setIsCategoriesHovered(true)}
-            onMouseLeave={() => setIsCategoriesHovered(false)}
-          >
-            <div className="flex items-center">
+          <div className="relative">
+            <div className="flex items-center w-32" onClick={handleCatogreyDropdown}>
               <a
                 href="#"
-                className="text-gray-700 hover:text-gray-900 py-2 rounded-md text-sm font-medium"
+                className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
               >
                 Categories
               </a>
@@ -228,36 +267,52 @@ const Navbar = () => {
                 isCategoriesHovered ? "block" : "hidden"
               } absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10`}
             >
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Category 1
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Category 2
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Category 3
-              </a>
+            <div className="flex flex-col gap-1 px-6 py-2">
+                  <a
+                    href="#"
+                    className="block text-start text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Customer Services
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Project Management
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Development
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Design
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Marketing
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Accounting
+                  </a>
+                </div>
             </div>
           </div>
 
-          <div
-            className="relative"
-            onMouseEnter={() => setIsLocationHovered(true)}
-            onMouseLeave={() => setIsLocationHovered(false)}
-          >
-            <div className="flex items-center">
+          <div className="relative">
+            <div className="flex items-center w-32" onClick={handleLocationDropdown}>
               <a
                 href="#"
-                className="text-gray-700 hover:text-gray-900 py-2 rounded-md text-sm font-medium"
+                className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
               >
                 Location
               </a>
@@ -268,35 +323,39 @@ const Navbar = () => {
                 isLocationHovered ? "block" : "hidden"
               } absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10`}
             >
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Location 1
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Location 2
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Location 3
-              </a>
+              <div className="flex flex-col gap-1 px-6 py-2">
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Lahore
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Karachi
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Gujranwala
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Remote
+                  </a>
+                </div>
             </div>
           </div>
-          <div
-            className="relative"
-            onMouseEnter={() => setIsPageHovered(true)}
-            onMouseLeave={() => setIsPageHovered(false)}
-          >
-            <div className="flex items-center">
+          <div className="relative">
+            <div className="flex items-center w-32" onClick={handlePageDropdown}>
               <a
                 href="#"
-                className="text-gray-700 hover:text-gray-900 py-2 rounded-md text-sm font-medium"
+                className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
               >
                 Pages
               </a>
@@ -307,29 +366,39 @@ const Navbar = () => {
                 isPageHovered ? "block" : "hidden"
               } absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10`}
             >
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Page 1
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Page 2
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                Page 3
-              </a>
+              <div className="flex flex-col gap-1 px-6 py-2">
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Pricing
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Sign In
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Sign Up
+                  </a>
+                  <a
+                    href="#"
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Forget
+                  </a>
+                </div>
             </div>
           </div>
-          <button className="w-9/12 mt-12 bg-green-700 text-white px-4 py-2 rounded-md text-base font-medium mx-auto block">
-            Login
-          </button>
+          <div className="flex justify-center items-center py-3">
+            <button className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold">
+              Login In / Rgeister
+            </button>
+          </div>
         </div>
       </div>
     </nav>

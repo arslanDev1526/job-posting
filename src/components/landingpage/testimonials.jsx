@@ -1,9 +1,11 @@
 
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import "./landingpage.css";
 
 const Testimonials = () => {
+
+
   const settings = {
     arrows:false,
     dots: true,
@@ -50,17 +52,17 @@ const Testimonials = () => {
   ];
 
   return (
-    <div className="mt-5 md:mt-10">
+    <div className="mt-12 md:mt-30">
       <div className="text-center space-y-7">
-        <span className="bg-green-50 py-3 px-4 font">What They Think</span>
-        <h1 className="text-3xl md:text-6xl font-semibold">Testimonials</h1>
+        <span className="bg-green-100 text-green-900 px-3 py-2 text-sm rounded-md">What They Think</span>
+        <h1 className="text-3xl md:text-5xl text-green-900 font-semibold">Testimonials</h1>
       </div>
 
       <div className="slider-container">
         <Slider {...settings}>
           {testimonials.map((testimonial, index) => (
             <div key={index}>
-              <div className="flex flex-col justify-between items-center mt-14 mb-8">
+              <div className="flex flex-col justify-between items-center mt-10 md:mt-14 mb-8">
                 <div className="border-4 border-green-200 rounded-full">
                   <img
                     className="w-20 h-20 rounded-full"
@@ -68,11 +70,11 @@ const Testimonials = () => {
                     alt={`${testimonial.name}`}
                   />
                 </div>
-                <h1 className="text-xl w-full md:w-1/2 text-center px-5 mt-7">
+                <h1 className="text-2xl font-normal text-green-900 w-full md:w-10/12 lg:w-[600px] text-center px-5 mt-7">
                   {testimonial.text}
                 </h1>
-                <span className="mt-7">{testimonial.name}</span>
-                <span className="mt-1">{testimonial.position}</span>
+                <span className="mt-7 text-green-900">{testimonial.name}</span>
+                <span className="mt-1 text-green-900">{testimonial.position}</span>
               </div>
             </div>
           ))}
