@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useAuth } from "../../contexts/authprovider";
 import { useNavigate } from "react-router-dom";
@@ -9,12 +8,16 @@ const Dropdown = (props) => {
 
   const navigate = useNavigate();
 
+  const handleNavigate = () => {
+    navigate("/myDasboard");
+  };
+
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
       await signOut();
       console.log("Logged out successfully");
-      navigate("/login")
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
@@ -24,7 +27,7 @@ const Dropdown = (props) => {
     <>
       {show && (
         <div
-          // ref={myRef}
+          ref={myRef}
           id="dropdown"
           className={`absolute right-5 top-16 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-38 dark:bg-gray-700
         `}
@@ -35,7 +38,7 @@ const Dropdown = (props) => {
           >
             <li>
               <a
-                href="#"
+                href=""
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 My Application
@@ -43,23 +46,32 @@ const Dropdown = (props) => {
             </li>
             <li>
               <a
-                href="#"
+                href=""
                 className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 Profile
               </a>
             </li>
-           
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </a>
-              </li>
-         
+
+            <li>
+              <a
+                href=""
+                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={handleNavigate}
+              >
+                My Dashboard
+              </a>
+            </li>
+
+            <li>
+              <a
+                href=""
+                className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                onClick={handleLogout}
+              >
+                Logout
+              </a>
+            </li>
           </ul>
         </div>
       )}

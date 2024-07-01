@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import supabase from "../config/client";
+import Loader from "../components/loader";
 
 const AuthContext = createContext({});
 
 export const useAuth = () => useContext(AuthContext);
 
-const login = (email, password) =>
+const login = async (email, password) =>
   supabase.auth.signInWithPassword({ email, password });
 
 const signOut = () => supabase.auth.signOut();
@@ -13,9 +14,26 @@ const signOut = () => supabase.auth.signOut();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [auth, setAuth] = useState(false);
+  const [loading, setLoading] = useState(true); // Add a loading state
 
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (error) {
+        console.error("Error fetching user:", error);
+        setUser(null);
+        setAuth(false);
+      } else {
+        setUser(data.user);
+        setAuth(!!data.user);
+        //!! used to convert a value to a boolean
+      }
+      setLoading(false);
+    };
+
+    fetchUser();
+
+    const { data: subscription } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN") {
         setUser(session.user);
         setAuth(true);
@@ -24,10 +42,16 @@ const AuthProvider = ({ children }) => {
         setAuth(false);
       }
     });
+
     return () => {
-      data.subscription.unsubscribe();
+      subscription.subscription.unsubscribe();
     };
   }, []);
+
+  if (loading) {
+    return <Loader/>; // Render a loading state while checking session
+  }
+
   return (
     <AuthContext.Provider value={{ user, login, signOut, auth }}>
       {children}

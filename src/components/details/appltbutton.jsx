@@ -1,4 +1,5 @@
 import React from "react";
+import ShareButton from "./sharebutton";
 import { useNavigate } from "react-router-dom";
 
 const ApplyButton = ({ item }) => {
@@ -9,7 +10,7 @@ const ApplyButton = ({ item }) => {
   };
   return (
     <>
-        <div className="p-10 flex flex-col items-center md_2:items-start md_2:px-0">
+        <div className="sm:p-10 py-5 flex flex-col items-center md_2:items-start md_2:px-0">
           <div className="flex flex-col items-center md_2:items-start">
             <h1 className="text-blue-700 text-lg font-bold text-center lg:text-xl md_2:text-start">
               {item.post_name}
@@ -20,7 +21,7 @@ const ApplyButton = ({ item }) => {
               <p className="text-gray-400 text-center lg:text-sm">{item.address}</p>
             </div>
           </div>
-          <div className="flex justify-center mt-5">
+          <div className="flex gap-5 mt-5">
             <button
               onClick={handleJobClick}
               className="bg-[#3AD8B6] text-sm font-semibold px-4 py-2 rounded"
@@ -32,6 +33,8 @@ const ApplyButton = ({ item }) => {
               {" "}
               REFER CANDIDATE{" "}
             </button> */}
+        <ShareButton />
+
           </div>
         </div>
 

@@ -23,37 +23,42 @@ const Card = ({ item }) => {
   };
 
   const handleCardClick = async (id, department) => {
-    try {
-      setIsLoading(true);
-      const { data: detailData, error: detailError } = await supabase
-        .from("job_data")
-        .select("*")
-        .eq("id", id)
-        .single();
-      if (detailError) {
-        throw error;
-      }
 
-      const { data: departmentData, error: departmentError } = await supabase
-        .from("job_data")
-        .select("*")
-        .eq("department", department)
-        .not("id", "eq", id);
-      if (departmentError) {
-        throw detailError;
-      }
-      setIsLoading(false);
-      navigate(`/detail/${id}`, {
-        state: { item: detailData, departmentData: departmentData },
-      });
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "smooth",
-      });
-    } catch (error) {
-      //add toast here
-    }
+    setIsLoading(true);
+    navigate(`/detail/${id}?department=${department}`);
+    setIsLoading(false);
+
+    // try {
+    //   setIsLoading(true);
+    //   const { data: detailData, error: detailError } = await supabase
+    //     .from("job_data")
+    //     .select("*")
+    //     .eq("id", id)
+    //     .single();
+    //   if (detailError) {
+    //     throw error;
+    //   }
+
+    //   const { data: departmentData, error: departmentError } = await supabase
+    //     .from("job_data")
+    //     .select("*")
+    //     .eq("department", department)
+    //     .not("id", "eq", id);
+    //   if (departmentError) {
+    //     throw detailError;
+    //   }
+    //   setIsLoading(false);
+    //   navigate(`/detail/${id}`, {
+    //     state: { item: detailData, departmentData: departmentData },
+    //   });
+    //   window.scrollTo({
+    //     top: 0,
+    //     left: 0,
+    //     behavior: "smooth",
+    //   });
+    // } catch (error) {
+    //   //add toast here
+    // }
   };
   return (
     <>
