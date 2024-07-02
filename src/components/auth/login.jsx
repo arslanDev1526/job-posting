@@ -69,7 +69,7 @@ const Login = () => {
           error,
         } = await login(loginData.email, loginData.password);
         if (error) setMsg("Invalid username or eamil");
-        if (user && session) navigate("/main");
+        if (user && session) navigate("/jobs");
       } catch (error) {
         setMsg("invalid username or eamil");
       }
@@ -195,7 +195,7 @@ const Login = () => {
                   type="submit"
                   class="w-full bg-[#3AD8B6] hover:bg-primary-700 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                   disabled={loading}
-                  // to={"/main"}
+                  to={"/jobs"}
                 >
                   {loading ? "Loading..." : "Login"}
                 </button>

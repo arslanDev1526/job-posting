@@ -25,7 +25,15 @@ const Card = ({ item }) => {
   const handleCardClick = async (id, department) => {
 
     setIsLoading(true);
-    navigate(`/detail/${id}?department=${department}`);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    console.log(user, "user");
+    if (user) {
+      navigate(`/detail/${id}?department=${department}`);
+    } else {
+      navigate("/register");
+    }
     setIsLoading(false);
 
     // try {

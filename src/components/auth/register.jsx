@@ -35,13 +35,22 @@ const Register = () => {
     setErrors({ ...errors, [name]: undefined });
   };
 
-  const register = async (email, password) => {
+  const register = async (email,password, fullName ) => {
     try {
-      const { data, error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            displayName: fullName,
+          },
+        },
+      });
       if (!error && data) {
         setMsg(
           "Registration Successful. Check your email to confirm your account"
         );
+        // await supabase.from("user").insert([{id: data.user.id, full_name: fullName,}]);
       }
     } catch (error) {
       throw new Error("Error in Creating Account");
@@ -85,7 +94,7 @@ const Register = () => {
     if (!hasError) {
       try {
         setLoading(true);
-        await register(registerData.email, registerData.password);
+        await register(registerData.email, registerData.password, registerData.fullName);
       } catch (error) {
         setMsg("Error in Creating Account");
       } finally {

@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
 import { MdOutlineArrowDropDown } from "react-icons/md";
+import { Outlet, Link } from "react-router-dom";
+import supabase from "../../config/client";
+import Dropdown from "../navbar/dropdown.jsx";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isPageHovered, setIsPageHovered] = useState(false);
   const [isLocationHovered, setIsLocationHovered] = useState(false);
   const [isCategoriesHovered, setIsCategoriesHovered] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => { 
+    const fetchUser = async ( ) => { 
+    const { data: {user}} = await supabase.auth.getUser();
+    setUser(user)
+    }
+    fetchUser()
+  },[user]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -31,7 +43,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-md fixed w-full z-10">
+    <> 
+      <nav className="bg-white shadow-md fixed w-full z-10">
       <div className="max-w-7xl mx-auto px-4 md:px-8 xl:px-10">
         <div className="flex justify-between h-16 md:h-20 mx-4 md:mx-0">
           <div className="flex-shrink-0 flex items-center">
@@ -211,9 +224,13 @@ const Navbar = () => {
             </div>
           </div>
           <div className="hidden md:flex items-center">
-            <button className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold">
-              Login In / Rgeister
-            </button>
+            {
+              user ? <Dropdown/> : <Link className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold"
+              to={"/register"}> 
+              Login / Register
+              </Link>
+            }
+           
           </div>
           <div className="flex md:hidden items-center">
             <button
@@ -395,13 +412,16 @@ const Navbar = () => {
             </div>
           </div>
           <div className="flex justify-center items-center py-3">
-            <button className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold">
-              Login In / Rgeister
-            </button>
+          <Link className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold"
+            to={"/register"}> 
+            Login / Register
+            </Link>
           </div>
         </div>
       </div>
     </nav>
+    <Outlet/>
+    </>
   );
 };
 

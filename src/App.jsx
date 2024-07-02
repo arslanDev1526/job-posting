@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { DataProvider } from "./contexts/dataContext";
 import Index from "./components/details/index.jsx";
-import Navbar from "./components/navbar/navbar.jsx";
+import Navbar from "./components/landingpage/navbar.jsx";
 import Main from "./components/mian/main.jsx";
 import JobApply from "./components/apply/jobApply.jsx";
 import Register from "./components/auth/register.jsx";
@@ -26,11 +26,10 @@ function App() {
               <Route element={<AuthRoute />}>
                 <Route element={<Navbar />}>
                 <Route path="/myDasboard" element={<AdminIndex />} />
-
-                  <Route path="/main" element={<Main />} />
+                  <Route path="/jobs" element={<Main />} />
                   <Route path="/detail/:id" element={<Index />} />
-                  <Route path="/job_apply" element={<JobApply />} />
                 </Route>
+                <Route path="/job_apply" element={<JobApply />} />
               </Route>
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />

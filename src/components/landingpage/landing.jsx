@@ -1,5 +1,4 @@
 import Navbar from "./navbar";
-import MobileNav from "./mobilenav";
 import Hero from "./hero";
 import InfiniteSlider from "./infinteslider";
 import FeaturedJobs from "./featuredjobs";

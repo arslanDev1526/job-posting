@@ -218,7 +218,7 @@ const JobApply = () => {
   return (
     <>
       {loading ? <Loader /> : null}
-      <div className={`${loading ? "blur-[1px] pointer-events-none" : ""}`}>
+      <div className={`${loading ? "blur-[1px] pointer-events-none mt-30" : ""}`}>
         <h2 className="text-center my-5 text-lg font-bold lg:text-xl">
           Job Application
         </h2>
