@@ -73,7 +73,7 @@ const Card = ({ item }) => {
       <div
         key={item.id}
         onClick={() => handleCardClick(item.id, item.department)}
-        className="w-full max-w-[34rem] md_2:w-[48%] xl:w-[31%]"
+        className="w-full max-w-[34rem] md_2:w-[48%] xl:w-[31.5%]"
       >
         {isLoading && (
           <div className="">

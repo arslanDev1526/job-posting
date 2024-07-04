@@ -28,8 +28,8 @@ function App() {
                 <Route path="/myDasboard" element={<AdminIndex />} />
                   <Route path="/jobs" element={<Main />} />
                   <Route path="/detail/:id" element={<Index />} />
-                </Route>
                 <Route path="/job_apply" element={<JobApply />} />
+                </Route>
               </Route>
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />

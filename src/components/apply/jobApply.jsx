@@ -218,8 +218,10 @@ const JobApply = () => {
   return (
     <>
       {loading ? <Loader /> : null}
-      <div className={`${loading ? "blur-[1px] pointer-events-none mt-30" : ""}`}>
-        <h2 className="text-center my-5 text-lg font-bold lg:text-xl">
+      <div className="max-w-7xl w-full mx-auto px-5"> 
+
+      <div className={`${loading ? "blur-[1px] pointer-events-none" : ""}`}>
+        <h2 className="text-center mb-10 md:mb-20 text-lg md:text-xl font-bold text-green-700 lg:text-3xl pt-28 md:pt-40">
           Job Application
         </h2>
         <form className="flex gap-4 flex-col items-center">
@@ -233,8 +235,8 @@ const JobApply = () => {
                 htmlFor="cv-upload"
                 className={`mx-auto w-auto ${
                   progress === 100
-                    ? "bg-[#3AD8B6] text-gray-700"
-                    : "bg-gray-300 text-gray-700"
+                    ? "hover:bg-green-200 hover:text-green-900 bg-green-900 text-white px-5 py-2.5 rounded-md text-md font-semibold"
+                    : "bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold"
                 } cursor-pointer p-2 rounded-md flex justify-center items-center mx-auto w-auto px-4 py-2`}
               >
                 <input
@@ -251,7 +253,7 @@ const JobApply = () => {
               {progress > 0 && progress < 100 && (
                 <div className=" rounded-lg px-4 mt-5">
                   <div
-                    className="h-2 bg-[#3AD8B6]"
+                    className="h-2 bg-green-600"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
@@ -266,7 +268,7 @@ const JobApply = () => {
               class={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
                 errors.fullName
                   ? "border-red-500 focus:border-red-600"
-                  : "focus:ring-0 focus:border-blue-600"
+                  : "focus:ring-0 focus:border-green-500"
               }`}
               placeholder=" "
               name="fullName"
@@ -278,7 +280,7 @@ const JobApply = () => {
               class={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-5 bg-gray-100 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
                 errors.fullName
                   ? "peer-focus:px-2 peer-focus:text-red-600"
-                  : "peer-focus:px-2 peer-focus:text-blue-600"
+                  : "peer-focus:px-2 peer-focus:text-green-600"
               }`}
             >
               Full name
@@ -291,7 +293,7 @@ const JobApply = () => {
               class={`${
                 errors.email
                   ? "border-red-500 focus:border-red-600"
-                  : ""
+                  : "focus:ring-0 focus:border-green-500"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer `}
               placeholder=" "
               name="email"
@@ -303,7 +305,7 @@ const JobApply = () => {
               class={`${
                 errors.email
                   ? "peer-focus:px-2 peer-focus:text-red-600"
-                  : "peer-focus:px-2 peer-focus:text-blue-600"
+                  : "peer-focus:px-2 peer-focus:text-green-600"
               } absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 bg-gray-100`}
             >
               Email
@@ -316,7 +318,7 @@ const JobApply = () => {
               class={`${
                 errors.phone
                   ? "border-red-500 focus:border-red-600"
-                  : "focus:ring-0"
+                  : "focus:ring-0 focus:border-green-500"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
               name="phone"
@@ -328,7 +330,7 @@ const JobApply = () => {
               class={`${
                 errors.phone
                   ? "peer-focus:px-2 peer-focus:text-red-600"
-                  : "peer-focus:px-2 peer-focus:text-blue-600"
+                  : "peer-focus:px-2 peer-focus:text-green-600"
               } bg-gray-100 absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Phone
@@ -341,7 +343,7 @@ const JobApply = () => {
               class={`${
                 errors.address
                   ? "border-red-500 focus:border-red-600"
-                  : "focus:ring-0 focus:border-blue-600"
+                  : "focus:ring-0 focus:border-green-500"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
               name="address"
@@ -353,7 +355,7 @@ const JobApply = () => {
               class={`${
                 errors.address
                   ? "peer-focus:px-2 peer-focus:text-red-600"
-                  : "peer-focus:px-2 peer-focus:text-blue-600"
+                  : "peer-focus:px-2 peer-focus:text-green-600"
               } bg-gray-100 absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Address
@@ -366,7 +368,7 @@ const JobApply = () => {
               class={`${
                 errors.city
                   ? "border-red-500 focus:border-red-600"
-                  : "focus:ring-0 focus:border-blue-600"
+                  : "focus:ring-0 focus:border-green-500"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
               name="city"
@@ -378,7 +380,7 @@ const JobApply = () => {
               class={`${
                 errors.city
                   ? "peer-focus:px-2 peer-focus:text-red-600"
-                  : "peer-focus:px-2 peer-focus:text-blue-600"
+                  : "peer-focus:px-2 peer-focus:text-green-600"
               } bg-gray-100 absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               City
@@ -392,7 +394,7 @@ const JobApply = () => {
               class={`${
                 errors.skills
                   ? "border-red-500 focus:border-red-600"
-                  : "focus:ring-0 focus:border-blue-600"
+                  : "focus:ring-0 focus:border-green-500"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
               onClick={handleSkillDropdown}
@@ -404,7 +406,7 @@ const JobApply = () => {
               class={`${
                 errors.skills
                   ? "peer-focus:px-2 peer-focus:text-red-600"
-                  : "peer-focus:px-2 peer-focus:text-blue-600"
+                  : "peer-focus:px-2 peer-focus:text-green-600"
               } bg-gray-100 absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Skills
@@ -435,7 +437,7 @@ const JobApply = () => {
               className={`${
                 errors.gender
                   ? "border-red-500 focus:border-red-600"
-                  : "focus:ring-0 focus:border-blue-600"
+                  : "focus:ring-0 focus:border-green-500"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
               name="gender"
@@ -448,7 +450,7 @@ const JobApply = () => {
               className={`${
                 errors.gender
                   ? "peer-focus:px-2 peer-focus:text-red-600"
-                  : "peer-focus:px-2 peer-focus:text-blue-600"
+                  : "peer-focus:px-2 peer-focus:text-green-600"
               } bg-gray-100 absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-1 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Gender
@@ -475,7 +477,7 @@ const JobApply = () => {
               className={`${
                 errors.source
                   ? "border-red-500 focus:border-red-600"
-                  : "focus:ring-0 focus:border-blue-600"
+                  : "focus:ring-0 focus:border-green-500"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
               name="source"
@@ -488,7 +490,7 @@ const JobApply = () => {
               className={`${
                 errors.source
                   ? "peer-focus:px-2 peer-focus:text-red-600"
-                  : "peer-focus:px-2 peer-focus:text-blue-600"
+                  : "peer-focus:px-2 peer-focus:text-green-600"
               } bg-gray-100 absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Source
@@ -515,7 +517,7 @@ const JobApply = () => {
               class={`${
                 errors.professionalExperience
                   ? "border-red-500 focus:border-red-600"
-                  : "focus:ring-0 focus:border-blue-600"
+                  : "focus:ring-0 focus:border-green-500"
               } block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer`}
               placeholder=" "
               name="professionalExperience"
@@ -527,7 +529,7 @@ const JobApply = () => {
               class={`${
                 errors.professionalExperience
                   ? "peer-focus:px-2 peer-focus:text-red-600"
-                  : "peer-focus:px-2 peer-focus:text-blue-600"
+                  : "peer-focus:px-2 peer-focus:text-green-600"
               } bg-gray-100 absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-0 origin-[0] px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1`}
             >
               Professional Experience
@@ -541,15 +543,17 @@ const JobApply = () => {
             <button
               onClick={handleSubmit}
               type="submit"
-              className="bg-[#3AD8B6] text-sm font-semibold px-8 py-2 rounded cursor-pointer"
+              className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2 rounded-md text-md font-semibold cursor-pointer"
               disabled={loading}
             >
-              {loading ? "Loading" : "Save"}
+              {loading ? "Loading" : "Apply"}
             </button>
           </div>
         </form>
         <ToastContainer />
       </div>
+      </div>
+
     </>
   );
 };

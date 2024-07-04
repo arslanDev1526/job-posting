@@ -51,8 +51,8 @@ const Filters = ({ handleFilteredData }) => {
   return (
     <>
       <div className="pt-5 lg_2:pt-7 lg_2:w-[30%] xl:w-1/5">
-        <h1 className="">
-          <span className="font-bold"> SHOW </span>RESULTS BY
+        <h1 className="text-sm md:text-base font-semibold text-green-700 lg:text-lg">
+           SHOW RESULTS BY
         </h1>
         <div className="mt-5 shadow-lg rounded bg-white lg_2:mt-8">
           <div className="w-full gap-4 flex flex-col pl-5 py-5 lg_2:w-48">

@@ -6,6 +6,7 @@ import Location from "./location";
 import Faqs from "./faqs";
 import Testimonials from "./testimonials";
 import Contact from "./contact";
+import SolarSystem from "./solarsystem";
 
 
 const Landing = () => {
@@ -15,6 +16,7 @@ const Landing = () => {
       <Hero />
       <InfiniteSlider />
       <FeaturedJobs />
+      <SolarSystem/>
       <Location />
       <Faqs />
       <Testimonials />

@@ -16,10 +16,13 @@ const Main = () => {
       {isLoading ? (
         <Loader />
       ) : (
-          <div className="flex flex-col justify-center gap-4 pt-28 px-5 md_2:px-12 lg_2:flex-row">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 xl:px-10"> 
+           <div className="flex flex-col justify-center gap-4 pt-20 md:pt-28 lg_2:flex-row">
             <Filters handleFilteredData={handleFilteredData} />
             <Index filteredData={filteredData} />
         </div>
+        </div>
+         
       )}
     </>
   );

@@ -69,7 +69,7 @@ const Login = () => {
           error,
         } = await login(loginData.email, loginData.password);
         if (error) setMsg("Invalid username or eamil");
-        if (user && session) navigate("/jobs");
+        if (user && session) navigate("/");
       } catch (error) {
         setMsg("invalid username or eamil");
       }
@@ -80,7 +80,7 @@ const Login = () => {
 
   return (
     <>
-      <section class="bg-gradient-to-r from-teal-500 to-indigo-800 h-screen flex">
+      <section class="bg-green-200 h-screen flex">
         <div class="w-full px-6 py-8 mx-auto md:h-screen lg:py-0 flex-col items-center justify-center flex">
           <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -92,7 +92,7 @@ const Login = () => {
                     className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
                       errors.email
                         ? "border-red-500"
-                        : "focus:ring-0 focus:border-blue-600"
+                        : "focus:ring-0 focus:border-green-600"
                     }`}
                     placeholder=" "
                     name="email"
@@ -105,7 +105,7 @@ const Login = () => {
                     className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
                       errors.email
                         ? "peer-focus:px-2 peer-focus:text-red-600"
-                        : "peer-focus:px-2 peer-focus:text-blue-600"
+                        : "peer-focus:px-2 peer-focus:text-green-600"
                     }`}
                   >
                     Email
@@ -121,7 +121,7 @@ const Login = () => {
                     className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
                       errors.password
                         ? "border-red-500"
-                        : "focus:ring-0 focus:border-blue-600"
+                        : "focus:ring-0 focus:border-green-600"
                     }`}
                     placeholder=" "
                     name="password"
@@ -150,7 +150,7 @@ const Login = () => {
                     className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
                       errors.password
                         ? "peer-focus:px-2 peer-focus:text-red-600"
-                        : "peer-focus:px-2 peer-focus:text-blue-600"
+                        : "peer-focus:px-2 peer-focus:text-green-600"
                     }`}
                   >
                     Password
@@ -193,7 +193,7 @@ const Login = () => {
                 </div> */}
                 <button
                   type="submit"
-                  class="w-full bg-[#3AD8B6] hover:bg-primary-700 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  class="w-full hover:bg-green-200 hover:text-green-900 bg-green-900 text-white px-5 py-2.5 rounded-md text-md font-semibold text-center text-center"
                   disabled={loading}
                   to={"/jobs"}
                 >
@@ -202,7 +202,7 @@ const Login = () => {
                 <p class="text-sm font-light text-gray-500 text-center">
                   New User?{" "}
                   <Link
-                    className="font-medium text-blue-600 hover:underline dark:text-primary-500"
+                    className="font-medium text-green-600 hover:underline dark:text-primary-500"
                     to={"/register"}
                   >
                     {" "}
