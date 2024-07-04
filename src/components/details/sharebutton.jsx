@@ -1,4 +1,11 @@
 import React from "react";
+// import { useLocation, useParams } from "react-router-dom";
+
+// const { id } = useParams();
+// const location = useLocation();
+
+// const searchParams = new URLSearchParams(location.search);
+// const department = searchParams.get("department");
 
 const ShareButton = () => {
   const data = {
@@ -24,12 +31,8 @@ const ShareButton = () => {
 
   return (
     <div>
-      <button
-        onClick={handleShareClick}
-        className="bg-[#3AD8B6] text-sm font-semibold px-4 py-2 rounded"
-      >
-        {" "}
-        SHARE NOW{" "}
+      <button onClick={handleShareClick} className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold">
+        Share Now
       </button>
     </div>
   );

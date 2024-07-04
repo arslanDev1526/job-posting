@@ -4,16 +4,16 @@ import { GoDotFill } from "react-icons/go";
 const JobsDetail = ({ info }) => {
   return (
     <>
-      <div className="w-full">
+      <div className="w-full mt-10 md:mt-0">
         <div className="flex flex-col gap-7">
           <div>
-            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">
+            <h2 className="mb-3 text-lg md:text-xl font-bold text-green-700 md_2:text-start">
               Summary
             </h2>
             <p className="text-base lg:text-lg">{info.summary}</p>
           </div>
           <div className="">
-            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">
+            <h2 className="mb-3 text-lg md:text-xl font-bold text-green-700 lg:text-xl md_2:text-start">
               Prerequisites
             </h2>
             <ul>
@@ -28,7 +28,7 @@ const JobsDetail = ({ info }) => {
             </ul>
           </div>
           <div className="">
-            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">
+            <h2 className="mb-3 text-lg md:text-xl font-bold text-green-700 md_2:text-start">
               Required
             </h2>
             <ul>
@@ -43,7 +43,7 @@ const JobsDetail = ({ info }) => {
             </ul>
           </div>
           <div className="">
-            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">
+            <h2 className="mb-3 text-lg md:text-xl font-bold text-green-700 md_2:text-start">
               Skills
             </h2>
             <ul>
@@ -58,7 +58,7 @@ const JobsDetail = ({ info }) => {
             </ul>
           </div>
           <div>
-            <h2 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start">
+            <h2 className="mb-3 text-lg md:text-xl font-bold text-green-700 md_2:text-start">
               {" "}
               Responsibilities
             </h2>

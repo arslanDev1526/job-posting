@@ -18,7 +18,7 @@ const HeaderImg = () => {
         </div>
       </div> */}
 
-      <div className=''> 
+      <div className='pt-[4.1rem]'> 
         <img className='w-full' src={BannerImg} alt="banner img" />
       </div>
 

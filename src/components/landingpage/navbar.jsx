@@ -70,18 +70,32 @@ const Navbar = () => {
               </h1>
             </div>
             <div className="hidden md:flex space-x-3 lg:space-x-10 items-center">
-              <a
+              {/* <a
                 href="#"
                 className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
               >
                 Home
-              </a>
-              <a
+              </a> */}
+               <Link
+                to={'./'}
+                className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
+              >
+                Home
+              </Link>
+
+              {/* <a
                 href="#"
                 className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
               >
                 Jobs
-              </a>
+              </a> */}
+
+               <Link
+                to={'/jobs'}
+                className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
+              >
+                Jobs
+              </Link>
 
               <div
                 className="relative"

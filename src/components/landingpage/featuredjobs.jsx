@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import DataContext from "../../contexts/dataContext";
 import { useNavigate } from "react-router-dom";
-import supabase from "../../config/client";
 import Loader from "../loader";
 
 const FeaturedJobs = () => {
@@ -10,17 +9,11 @@ const FeaturedJobs = () => {
   const featuredJobs = cardsData.slice(0, 6);
   const navigate = useNavigate();
 
-  const handleNavigate = async () => {
+  const handleNavigate =  () => {
     setLoadingNavigation(true);
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    console.log(user, "user");
-    if (user) {
+ 
       navigate("/jobs");
-    } else {
-      navigate("/register");
-    }
+  
     setLoadingNavigation(false);
   };
 

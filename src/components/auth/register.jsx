@@ -105,7 +105,7 @@ const Register = () => {
 
   return (
     <>
-      <section className="bg-gradient-to-r from-teal-500 to-indigo-800 h-screen flex">
+      <section className="bg-green-200 h-screen flex">
         <div className="w-full px-6 py-8 mx-auto md:h-screen lg:py-0 flex-col items-center justify-center flex">
           <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -117,7 +117,7 @@ const Register = () => {
                     className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
                       errors.fullName
                         ? "border-red-500"
-                        : "focus:ring-0 focus:border-blue-600"
+                        : "focus:ring-0 focus:border-green-600"
                     }`}
                     placeholder=" "
                     name="fullName"
@@ -129,7 +129,7 @@ const Register = () => {
                     className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
                       errors.fullName
                         ? "peer-focus:px-2 peer-focus:text-red-600"
-                        : "peer-focus:px-2 peer-focus:text-blue-600"
+                        : "peer-focus:px-2 peer-focus:text-green-600"
                     }`}
                   >
                     Full name
@@ -147,7 +147,7 @@ const Register = () => {
                     className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
                       errors.email
                         ? "border-red-500"
-                        : "focus:ring-0 focus:border-blue-600"
+                        : "focus:ring-0 focus:border-green-600"
                     }`}
                     placeholder=" "
                     name="email"
@@ -160,7 +160,7 @@ const Register = () => {
                     className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
                       errors.email
                         ? "peer-focus:px-2 peer-focus:text-red-600"
-                        : "peer-focus:px-2 peer-focus:text-blue-600"
+                        : "peer-focus:px-2 peer-focus:text-green-600"
                     }`}
                   >
                     Email
@@ -180,7 +180,7 @@ const Register = () => {
                     className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
                       errors.password
                         ? "border-red-500"
-                        : "focus:ring-0 focus:border-blue-600"
+                        : "focus:ring-0 focus:border-green-600"
                     }`}
                   />
                   <span
@@ -205,7 +205,7 @@ const Register = () => {
                     className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
                       errors.password
                         ? "peer-focus:px-2 peer-focus:text-red-600"
-                        : "peer-focus:px-2 peer-focus:text-blue-600"
+                        : "peer-focus:px-2 peer-focus:text-green-600"
                     }`}
                   >
                     Password
@@ -225,7 +225,7 @@ const Register = () => {
                     className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
                       errors.password
                         ? "border-red-500"
-                        : "focus:ring-0 focus:border-blue-600"
+                        : "focus:ring-0 focus:border-green-600"
                     }`}
                     onChange={hanldeInputChange}
                     value={registerData.confirmPassword}
@@ -252,7 +252,7 @@ const Register = () => {
                     className={`absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${
                       errors.confirmPassword
                         ? "peer-focus:px-2 peer-focus:text-red-600"
-                        : "peer-focus:px-2 peer-focus:text-blue-600"
+                        : "peer-focus:px-2 peer-focus:text-green-600"
                     }`}
                   >
                     Confirm Password
@@ -268,7 +268,7 @@ const Register = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-[#3AD8B6] hover:bg-primary-700 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  className="w-full hover:bg-green-200 hover:text-green-900 bg-green-900 text-white px-5 py-2.5 rounded-md text-md font-semibold text-center"
                   disabled={loading}
                 >
                   {loading ? "Registering..." : "Register"}
@@ -276,7 +276,7 @@ const Register = () => {
                 <p className="text-sm font-light text-gray-500 text-center">
                   Already a user?{" "}
                   <Link
-                    className="font-medium text-blue-600 hover:underline dark:text-primary-500"
+                    className="font-medium text-green-600 hover:underline dark:text-primary-500"
                     to={"/login"}
                   >
                     {" "}

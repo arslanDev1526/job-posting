@@ -55,20 +55,21 @@ const Index = () => {
   return (
     <>
       <HeaderImg />
-      <div className="px-8 md_2:px-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 xl:px-10">
         {<ApplyButton item={item} />}
         {item.detail.map((info, index) => (
           <JobsDetail info={info} key={index} />
         ))}
-        <h1 className="mb-3 text-lg font-bold lg:text-xl md_2:text-start mt-8">
+        <h1 className="mb-3 text-lg md:text-xl font-bold text-green-700 md_2:text-start mt-8">
           {" "}
           Related Jobs{" "}
         </h1>
-        <div className="flex flex-wrap gap-4 mt-5 mb-5">
+        {departmentData.length > 0 ?  <div className="flex flex-wrap gap-4 mt-5 mb-5">
           {departmentData.map((item, index) => (
             <Card item={item} key={index} />
           ))}
-        </div>
+        </div> : <h1 className="p-20 text-lg md:text-5xl font-semibold  text-green-700 text-center"> No related Job </h1> }
+       
       </div>
     </>
   );

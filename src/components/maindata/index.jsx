@@ -16,8 +16,8 @@ const Index = ({ filteredData }) => {
     <>
       <div className="lg_2:w-[70%]">
         <div className="flex justify-between flex-col md_2:flex-row md_2:items-center lg_2:flex-row lg_2:items-center py-5 lg_2:pb-1">
-            <h1 className="">
-              <span className="font-bold">ALL </span>POSITIONS
+            <h1 className="text-sm md:text-base font-semibold text-green-700 lg:text-lg">
+              ALL POSITIONS
             </h1>
           <div className="flex gap-4">
             <CardsChagerBtn />

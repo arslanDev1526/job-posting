@@ -1,59 +1,141 @@
 @keyframes rotate-slow {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
   }
-  
-  .circle-rotate {
-    animation: rotate-slow 20s linear infinite;
+  to {
+    transform: rotate(360deg);
   }
-  
-  .circle-rotate:hover {
-    animation-play-state: paused;
-  }
+}
 
-  .circle-rotate .text-element {
-    transform: none; /* Prevent rotation */
-    /* Additional styles for the text element, like font, color, etc. */
-  }
+.circle-rotate {
+  animation: rotate-slow 20s linear infinite;
+}
 
-  /* // testimonals css // */
+.circle-rotate:hover {
+  animation-play-state: paused;
+}
 
-  .slick-dots li.slick-active div {
-    background-color: rgba(34, 34, 34, 0.8) !important; /* Dark grey for active dot */
-  }
+.circle-rotate .text-element {
+  transform: none; /* Prevent rotation */
+  /* Additional styles for the text element, like font, color, etc. */
+}
 
-  /* // navbar // */
+/* // testimonals css // */
 
-  @keyframes slideDown {
-    0% {
-      opacity: 0;
-      transform: translateY(-20%);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .mobile-menu-enter {
-    animation: slideDown 0.3s ease-out forwards;
-    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-    max-height: 1000px; /* Adjust based on the content's max height */
-    opacity: 1;
-  }
-  
-  .mobile-menu-exit {
-    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-    max-height: 0;
+.slick-dots li.slick-active div {
+  background-color: rgba(
+    34,
+    34,
+    34,
+    0.8
+  ) !important; /* Dark grey for active dot */
+}
+
+/* // navbar // */
+
+@keyframes slideDown {
+  0% {
     opacity: 0;
-    overflow: hidden;
+    transform: translateY(-20%);
   }
-  
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
- 
+.mobile-menu-enter {
+  animation: slideDown 0.3s ease-out forwards;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  max-height: 1000px; /* Adjust based on the content's max height */
+  opacity: 1;
+}
 
- 
+.mobile-menu-exit {
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* // solar system // */
+
+.development,
+.design,
+.hr,
+.marketing,
+.sales, .PM, .IT, .PA, .SM, .finance {
+  transform: translateX(0) translateY(0);
+  transition: transform 1s ease-in-out;
+}
+
+.finance-slide-in { 
+  transform: translateX(30px) translateY(-160px) rotate(10deg);
+}
+
+.PM-slide-in {
+  transform: translateX(190px) translateY(50px) rotate(10deg);
+}
+
+.IT-slide-in {
+  transform: translateX(-100px) translateY(120px) rotate(10deg);
+}
+
+.PA-slide-in {
+  transform: translateX(-150px) translateY(-50px) rotate(10deg);
+}
+
+.SM-slide-in {
+  transform: translateX(-239px) translateY(50px) rotate(10deg);
+}
+
+.development-slide-in {
+  transform: translateX(-100px) translateY(215px) rotate(10deg);
+}
+
+.design-slide-in {
+  transform: translateX(-50px) translateY(-194px) rotate(10deg);
+}
+
+.hr-slide-in {
+  transform: translateX(152px) translateY(-50px) rotate(10deg);
+}
+
+.marketing-slide-in {
+  transform: translateX(50px) translateY(192px) rotate(10deg);
+}
+
+.sales-slide-in {
+  transform: translateX(60px) translateY(50px) rotate(10deg);
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .sales-slide-in {
+    transform: translateX(70px) translateY(50px) rotate(10deg);
+  }
+
+  .marketing-slide-in {
+    transform: translateX(10px) translateY(112px) rotate(10deg);
+  }
+  .hr-slide-in {
+    transform: translateX(100px) translateY(-50px) rotate(10deg);
+  }
+  .design-slide-in {
+    transform: translateX(12px) translateY(-90px) rotate(10deg);
+  }
+  .development-slide-in {
+    transform: translateX(-80px) translateY(-100px) rotate(10deg);
+  }
+
+  .SM-slide-in {
+    transform: translateX(-120px) translateY(40px) rotate(10deg);
+  }
+
+  .PA-slide-in {
+  transform: translateX(-100px) translateY(-20px) rotate(10deg);
+}
+
+.PM-slide-in {
+  transform: translateX(150px) translateY(50px) rotate(10deg);
+}
+}
