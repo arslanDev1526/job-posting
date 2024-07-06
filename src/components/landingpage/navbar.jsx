@@ -3,8 +3,8 @@ import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { Outlet, Link } from "react-router-dom";
 import supabase from "../../config/client";
-import Dropdown from "../navbar/dropdown.jsx";
-import Loader from '../loader.jsx'
+import Dropdown from "./dropdown.jsx";
+import Loader from "../loader.jsx";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,11 +14,13 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useLayoutEffect(() => {  
+  useLayoutEffect(() => {
     const fetchUser = async () => {
       setLoading(true);
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         console.log(user, "user");
         setUser(user);
       } catch (error) {
@@ -31,10 +33,19 @@ const Navbar = () => {
     fetchUser();
   }, []);
 
- 
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error logging out:", error);
+    } else {
+      window.location.reload();
+    }
   };
 
   const handlePageDropdown = () => {
@@ -55,8 +66,8 @@ const Navbar = () => {
     setIsPageHovered(false);
   };
 
-  if(loading) { 
-    return <Loader/>
+  if (loading) {
+    return <Loader />;
   }
 
   return (
@@ -70,28 +81,14 @@ const Navbar = () => {
               </h1>
             </div>
             <div className="hidden md:flex space-x-3 lg:space-x-10 items-center">
-              {/* <a
-                href="#"
-                className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
-              >
-                Home
-              </a> */}
-               <Link
-                to={'./'}
+              <Link
+                to={"./"}
                 className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
               >
                 Home
               </Link>
-
-              {/* <a
-                href="#"
-                className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
-              >
-                Jobs
-              </a> */}
-
-               <Link
-                to={'/jobs'}
+              <Link
+                to={"/jobs"}
                 className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
               >
                 Jobs
@@ -255,7 +252,9 @@ const Navbar = () => {
             </div>
             <div className="hidden md:flex items-center">
               {user ? (
-                <Dropdown />
+                <div className="relative">
+                  <Dropdown handleLogout={handleLogout} />
+                </div>
               ) : (
                 <Link
                   className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold"
@@ -289,20 +288,21 @@ const Navbar = () => {
               : "overflow-hidden"
           } transition-all duration-500 ease-in-out md:hidden`}
         >
-          <div className="px-8 pt-2 pb-3 space-y-1">
-            <a
-              href="#"
-              className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
-            >
-              Home
-            </a>
-            <a
-              href="#"
-              className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
-            >
-              Jobs
-            </a>
-
+          <div className="px-8 pt-2 space-y-1 mb-3">
+            <div className="flex flex-col">
+              <Link
+                to={"./"}
+                className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
+              >
+                Home
+              </Link>
+              <Link
+                to={"/jobs"}
+                className="text-slate-600 hover:text-green-700 py-2 text-base font-bold"
+              >
+                Jobs
+              </Link>
+            </div>
             <div className="relative">
               <div
                 className="flex items-center w-32"
@@ -428,6 +428,18 @@ const Navbar = () => {
                 } absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10`}
               >
                 <div className="flex flex-col gap-1 px-6 py-2">
+                  <Link
+                    to={"./login"}
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to={"./register"}
+                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
+                  >
+                    Sign Up
+                  </Link>
                   <a
                     href="#"
                     className="block text-slate-600 hover:text-green-700 text-md font-semibold"
@@ -438,33 +450,19 @@ const Navbar = () => {
                     href="#"
                     className="block text-slate-600 hover:text-green-700 text-md font-semibold"
                   >
-                    Sign In
-                  </a>
-                  <a
-                    href="#"
-                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
-                  >
-                    Sign Up
-                  </a>
-                  <a
-                    href="#"
-                    className="block text-slate-600 hover:text-green-700 text-md font-semibold"
-                  >
                     Forget
                   </a>
                 </div>
               </div>
             </div>
-            <div className="flex justify-center items-center py-3">
-              {user ? null : (
-                <Link
-                  className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold"
-                  to={"/register"}
-                >
-                  Login / Register
-                </Link>
-              )}
-            </div>
+            {user && (
+              <button
+                onClick={handleLogout}
+                className="text-green-600 hover:text-slate-600-700 py-3 text-xl font-bold block"
+              >
+                Logout
+              </button>
+            )}
           </div>
         </div>
       </nav>

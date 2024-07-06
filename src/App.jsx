@@ -33,7 +33,7 @@ function App() {
               </Route>
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path="*" element={<Navigate to="/register" />} />
+              <Route path="*" element={<Navigate to="/jobs" />} />
               <Route path="/" element={<Landing />} />
 
             </Routes>
