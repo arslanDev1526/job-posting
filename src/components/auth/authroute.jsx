@@ -9,7 +9,7 @@ const AuthRoute = () => {
     <Outlet />
   ) : (
     <Navigate
-      to={"/register"}
+      to={"/jobs"}
       replace
       state={{ path: location.pathname }}
     />

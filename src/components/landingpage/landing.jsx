@@ -10,6 +10,7 @@ import SolarSystem from "./solarsystem";
 
 
 const Landing = () => {
+  
   return (
     <>
       <Navbar />

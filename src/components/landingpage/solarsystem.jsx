@@ -13,7 +13,7 @@ const SolarSystem = () => {
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);
       },
-      { rootMargin: "-300px" }
+      { rootMargin: "-500px" }
     );
     console.log(isIntersecting);
     observer.observe(ref.current);
@@ -54,10 +54,10 @@ const SolarSystem = () => {
   return (
     <>
       <div
-        ref={ref}
-        className="max-w-7xl mx-auto px-4 md:px-8 xl:px-10 bg-green-50"
+        
+        className=" bg-green-50"
       >
-        <div className="py-20"> 
+        <div className="py-20 max-w-7xl mx-auto px-4 md:px-8 xl:px-10"> 
 
         <div className="flex flex-col justify-between md:flex-row">
           <div className="space-y-5">
@@ -79,7 +79,7 @@ const SolarSystem = () => {
           </div>
         </div>
 
-        <div className="flex justify-center mt-10 ">
+        <div ref={ref} className="flex justify-center mt-10 ">
           <div className="border border-dotted border-green-700 h-[20rem] w-[20rem] md:h-[30rem] md:w-[30rem] rounded-full flex justify-center">
             <div className="border border-dotted border-green-700 h-[17rem] w-[17rem] md:h-[25rem] md:w-[25rem] rounded-full mx-auto my-auto flex justify-center">
               <div className="border border-dotted border-green-700 h-[14rem] w-[14rem] md:h-[20rem] md:w-[20rem] rounded-full mx-auto my-auto flex justify-center">
