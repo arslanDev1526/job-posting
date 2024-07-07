@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import supabase from "../../config/client.jsx";
 import { FaCircleUser } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
-const Dropdown = ({handleLogout}) => {
+const Dropdown = ({ handleLogout }) => {
   const [user, setUser] = useState(null);
   const [show, setShow] = useState(false);
 
   const dropdownRef = useRef();
   const buttonRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkIfClickedOutsie = (e) => {
@@ -26,10 +28,12 @@ const Dropdown = ({handleLogout}) => {
     };
   }, [show]);
 
- 
-
   const handleUserDropdown = () => {
     setShow(!show);
+  };
+
+  const handleNavigation = () => {
+    navigate("./myDasboard");
   };
 
   useEffect(() => {
@@ -78,19 +82,16 @@ const Dropdown = ({handleLogout}) => {
               </a>
             </li>
 
-            {/* <li>
-              <a
-                href=""
+            <li>
+              <button
                 className="block py-2 text-slate-600 hover:text-green-700 text-md font-semibold"
-                onClick={handleNavigate}
+                onClick={handleNavigation}
               >
                 My Dashboard
-              </a>
-            </li> */}
+              </button>
+            </li>
 
             <li>
-
-              
               <button
                 className="block py-2 text-slate-600 hover:text-green-700 text-md font-semibold"
                 onClick={handleLogout}

@@ -16,6 +16,7 @@ import Login from "./components/auth/login.jsx";
 import AuthRoute from "./components/auth/authroute.jsx";
 import AdminIndex from "./components/admin/index.jsx";
 import Landing from "./components/landingpage/landing.jsx";
+import CreateJob from "./components/admin/multistepform/createjob.jsx";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route element={<AuthRoute />}>
                 <Route element={<Navbar />}>
                 <Route path="/myDasboard" element={<AdminIndex />} />
+                <Route path="/create_job" element={<CreateJob />} />
                   <Route path="/jobs" element={<Main />} />
                   <Route path="/detail/:id" element={<Index />} />
                 <Route path="/job_apply" element={<JobApply />} />
@@ -35,7 +37,6 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="*" element={<Navigate to="/jobs" />} />
               <Route path="/" element={<Landing />} />
-
             </Routes>
         </DataProvider>
       </Router>
