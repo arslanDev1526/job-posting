@@ -23,19 +23,17 @@ function App() {
       <Router>
         <DataProvider>
             <Routes>
-              <Route element={<AuthRoute />}>
+              <Route element={<AuthRoute />}/>
                 <Route element={<Navbar />}>
                 <Route path="/myDasboard" element={<AdminIndex />} />
                   <Route path="/jobs" element={<Main />} />
                   <Route path="/detail/:id" element={<Index />} />
                 <Route path="/job_apply" element={<JobApply />} />
-                </Route>
               </Route>
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path="*" element={<Navigate to="/jobs" />} />
+              {/* <Route path="*" element={<Navigate to="/jobs" />} /> */}
               <Route path="/" element={<Landing />} />
-
             </Routes>
         </DataProvider>
       </Router>

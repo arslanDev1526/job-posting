@@ -5,6 +5,10 @@ import { Outlet, Link } from "react-router-dom";
 import supabase from "../../config/client";
 import Dropdown from "./dropdown.jsx";
 import Loader from "../loader.jsx";
+import { useAuth } from "../../contexts/authprovider.jsx";
+
+
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +17,9 @@ const Navbar = () => {
   const [isCategoriesHovered, setIsCategoriesHovered] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const { signOut } = useAuth();
+
 
   useLayoutEffect(() => {
     const fetchUser = async () => {
@@ -37,16 +44,16 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogout = async (e) => {
-    e.preventDefault();
+  // const handleLogout = async (e) => {
+  //   e.preventDefault();
 
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error("Error logging out:", error);
-    } else {
-      window.location.reload();
-    }
-  };
+  //   const { error } = await supabase.auth.signOut();
+  //   if (error) {
+  //     console.error("Error logging out:", error);
+  //   } else {
+  //     window.location.reload();
+  //   }
+  // };
 
   const handlePageDropdown = () => {
     setIsPageHovered(!isPageHovered);
@@ -253,7 +260,7 @@ const Navbar = () => {
             <div className="hidden md:flex items-center">
               {user ? (
                 <div className="relative">
-                  <Dropdown handleLogout={handleLogout} />
+                  <Dropdown />
                 </div>
               ) : (
                 <Link
@@ -457,7 +464,7 @@ const Navbar = () => {
             </div>
             {user && (
               <button
-                onClick={handleLogout}
+                onClick={signOut}
                 className="text-green-600 hover:text-slate-600-700 py-3 text-xl font-bold block"
               >
                 Logout

@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import supabase from "../../config/client.jsx";
 import { FaCircleUser } from "react-icons/fa6";
+import { useAuth } from "../../contexts/authprovider.jsx";
 
-const Dropdown = ({handleLogout}) => {
+
+const Dropdown = () => {
   const [user, setUser] = useState(null);
   const [show, setShow] = useState(false);
 
+  const { signOut } = useAuth();
   const dropdownRef = useRef();
   const buttonRef = useRef();
 
@@ -93,7 +96,7 @@ const Dropdown = ({handleLogout}) => {
               
               <button
                 className="block py-2 text-slate-600 hover:text-green-700 text-md font-semibold"
-                onClick={handleLogout}
+                onClick={signOut}
               >
                 Logout
               </button>

@@ -9,7 +9,18 @@ export const useAuth = () => useContext(AuthContext);
 const login = async (email, password) =>
   supabase.auth.signInWithPassword({ email, password });
 
-const signOut = () => supabase.auth.signOut();
+ const handleLogout = async (e) => {
+    e.preventDefault();
+
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error logging out:", error);
+    } else {
+      window.location.reload();
+    }
+  };
+
+// const signOut = () => supabase.auth.signOut();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -53,7 +64,7 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signOut, auth }}>
+    <AuthContext.Provider value={{ user, login, signOut:handleLogout, auth }}>
       {children}
     </AuthContext.Provider>
   );
