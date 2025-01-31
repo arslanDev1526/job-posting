@@ -10,6 +10,7 @@ import Loader from "../loader";
 
 const Index = () => {
   const { id } = useParams();
+  console.log(id,"id in details")
   const location = useLocation();
   const [item, setItem] = useState(null);
   const [departmentData, setDepartmentData] = useState([]);
@@ -56,7 +57,7 @@ const Index = () => {
     <>
       <HeaderImg />
       <div className="max-w-7xl mx-auto px-4 md:px-8 xl:px-10">
-        {<ApplyButton item={item} />}
+        {<ApplyButton item={item} id={id} />}
         {item.detail.map((info, index) => (
           <JobsDetail info={info} key={index} />
         ))}

@@ -1,13 +1,9 @@
 import React from "react";
 import ShareButton from "./sharebutton";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const ApplyButton = ({ item }) => {
-  const navigate = useNavigate();
+const ApplyButton = ({ item, id }) => {
 
-  const handleJobClick = () => {
-    navigate("/job_apply");
-  };
   return (
     <>
       <div className="sm:p-10 py-5 flex flex-col items-center md_2:items-start md_2:px-0">
@@ -24,9 +20,9 @@ const ApplyButton = ({ item }) => {
           </div>
         </div>
         <div className="flex gap-5 mt-5">
-          <button onClick={handleJobClick} className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold">
+          <Link to={`/job_apply/${id}`} className="bg-green-200 text-green-900 hover:bg-green-900 hover:text-white px-5 py-2.5 rounded-md text-md font-semibold">
             Apply Now
-          </button>
+          </Link>
           {/* <button className="bg-green-500 px-4 py-2 rounded ml-5">
               {" "}
               REFER CANDIDATE{" "}

@@ -13,6 +13,7 @@ const Register = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
+  const [role, setRole] = useState("applicant");
 
   const [registerData, setRegisterData] = useState({
     fullName: "",
@@ -35,7 +36,7 @@ const Register = () => {
     setErrors({ ...errors, [name]: undefined });
   };
 
-  const register = async (email,password, fullName ) => {
+  const register = async (email, password, fullName, role ) => {
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -43,6 +44,7 @@ const Register = () => {
         options: {
           data: {
             displayName: fullName,
+            role
           },
         },
       });
@@ -94,13 +96,17 @@ const Register = () => {
     if (!hasError) {
       try {
         setLoading(true);
-        await register(registerData.email, registerData.password, registerData.fullName);
+        await register(registerData.email, registerData.password, registerData.fullName, role);
       } catch (error) {
         setMsg("Error in Creating Account");
       } finally {
         setLoading(false);
       }
     }
+  };
+
+  const handleRoleChange = (e) => {
+    setRole(e.target.value);
   };
 
   return (
@@ -264,6 +270,20 @@ const Register = () => {
                   )}
                 </div>
 
+
+                <div className="relative">
+                  <select
+                    id="role"
+                    name="role"
+                    className="mt-1 w-full block py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                    value={role}
+                    onChange={handleRoleChange}
+                  >
+                    <option value="applicant">Applicant</option>
+                    <option value="HR">HR</option>
+                   
+                  </select>
+                </div>
                 {msg && <span className="text-green-500 text-sm">{msg}</span>}
 
                 <button

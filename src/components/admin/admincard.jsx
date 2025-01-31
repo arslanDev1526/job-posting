@@ -5,12 +5,12 @@ import supabase from "../../config/client.jsx";
 import DataContext from "../../contexts/dataContext.jsx";
 import Loader from "../loader.jsx";
 
-
 const AdminCard = ({ item }) => {
   const [isHovered, setIsHovered] = useState(null);
   const [showToolTip, setShowToolTip] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {handleDelete} = useContext(DataContext);
+  const navigate = useNavigate();
 
   const handleTooltipToggle = () => {
     setShowToolTip(!showToolTip);
@@ -24,8 +24,9 @@ const AdminCard = ({ item }) => {
     setIsHovered(null);
   };
 
-  const handleCardUpdate = async ( ) => { 
-    
+  const handleCardUpdate = async (id) => { 
+    console.log("i am clicked")
+    navigate(`/create_job?id=${id}`);
   }
 
   const handleCardDelete = async () => {
@@ -49,13 +50,14 @@ const AdminCard = ({ item }) => {
   };
 
   return (
-    <div className="w-full max-w-[34rem] md_2:w-[48%] xl:w-[31%] adminCard">
+    <div className="w-full max-w-[30rem] md_2:w-[48%] xl:w-[32%] adminCard">
       {isLoading && (
         <div className="">
           <Loader />
         </div>
       )}
       <div
+        key={item.id}
         onMouseEnter={() => hoverMe(item.id)}
         onMouseLeave={unHoverMe}
         className="bg-white relative shadow-md p-5 rounded-md h-full flex flex-col items-center cursor-pointer gap-4"
@@ -92,13 +94,13 @@ const AdminCard = ({ item }) => {
             {item.address}
           </p>
         </div>
-        <div className="flex justify-between w-2/3">
+        <div className="flex justify-between w-2/3 mt-5">
           <button
-          onClick={handleCardUpdate}
-          className="bg-green-400 px-5 py-2 rounded-md">Edit</button>
+          onClick={() => handleCardUpdate(item.id)}
+          className="hover:bg-green-200 hover:text-green-900 bg-green-700 text-white px-5 py-2.5 rounded-md text-md font-semibold">Edit</button>
           <button
             onClick={handleCardDelete}
-            className="bg-green-400 px-5 py-2 rounded-md"
+            className="hover:bg-green-200 hover:text-green-900 bg-green-700 text-white px-5 py-2.5 rounded-md text-md font-semibold"
             disabled={isLoading}
           >
             Delete

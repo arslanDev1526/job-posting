@@ -1,139 +1,139 @@
-import React, { useState } from 'react'
-import StepOne from './stepone';
-import StepTwo from './steptwo';
-
+import React, { useState, useEffect } from "react";
+import StepOne from "./stepone";
+import StepTwo from "./steptwo";
+import StepThree from "./stepthree";
+import { useLocation, useParams } from "react-router-dom";
+import supabase from "../../../config/client";
+import { useAuth } from "../../../contexts/authprovider";
 
 const CreateJob = () => {
-    const [step, setStep] = useState(1);
+  const {id:hr_id} = useAuth()
+
+  const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
-    const [formData, setFormData] = useState({
-        post_name: "",
-        positions: "",
-        department: "",
-        address: "",
-        detail: [],
-      });
+  const [formData, setFormData] = useState({
+    post_name: "",
+    company_name: "",
+    positions: "",
+    department: "",
+    address: "",
+    last_date: "",
+    // timing: null,
+    // featured: null,
+    // img_url: null,
+    detail: [],
+    summary: [],
+    prerequisites: [],
+    requirement: [],
+    skills: [],
+    perks: [],
+    responsibilities: [],
+    hr_id:hr_id
+  });
+  console.log(hr_id, "hr_id in createjob")
+  const { id } = useParams();
+  const location = useLocation();
 
-      const [newDetail, setNewDetail] = useState({
-        perks: [],
-        skills: [],
-        summary: '',
-        required: [],
-        prerequisites: [],
-        responsibilities: [],
-      });
+  console.log(formData, "form data");
 
-      const nextStep = () => { 
-        setStep(step + 1);
-      }
-
-      const prevStep = ( ) => { 
-        setStep(step - 1);
-
-      }
-
-      const hanldeInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
-        // setErrors({ ...errors, [name]: undefined });
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log("i am clicked");
-    
-        let hasError = false;
-        const newErrors = {};
-        for (const input in cardsData) {
-          if (!cardsData[input]) {
-            hasError = true;
-            newErrors[input] = "This field is required";
+  useEffect(() => {
+    const fetchData = async () => {
+     
+      const searchParams = new URLSearchParams(location.search);
+      const cardId = searchParams.get("id");
+      console.log(cardId, "card id");
+      try {
+        const { data, error } = await supabase
+          .from("job_data")
+          .select("*")
+          .eq("id", cardId)
+          .single();
+          if(data){ 
+            // Remove fields that should not be included
+          const { timing, featured, img_url, ...filteredData } = data;
+          setFormData(filteredData);
+        }
+          if(error){ 
+            console.log(error);
           }
-        }
-    
-        if (cardsData.post_name.length === 0) {
-          hasError = true;
-          newErrors["post_name"] = "At least one skill is required";
-        }
-    
-        if (cardsData.positions.length === 0) {
-          hasError = true;
-          newErrors["positions"] = "At least one gender is required";
-        }
-    
-        if (cardsData.department.length === 0) {
-          hasError = true;
-          newErrors["department"] = "At least one source is required";
-        }
-    
-        if (cardsData.address.length === 0) {
-          hasError = true;
-          newErrors["address"] = "At least one source is required";
-        }
-    
-        setErrors(newErrors);
-    
-        if (!hasError) {
-          try {
-            setLoading(true);
-    
-            const { data, error } = await supabase
-              .from("job_data")
-              .upsert(cardsData);
-    
-            console.log("i am ok");
-    
-            setLoading(false);
-            setShowModal(false);
-            if (error) {
-              console.error("Error posting data", error);
-              //   toast.error("Error loading data!");
-              return;
-            }
-    
-            console.log("data loded successfully", data);
-            // toast.success("Applied Successfully");
-    
-            setCardsData({
-              post_name: "",
-              positions: "",
-              department: "",
-              address: "",
-              detail: [],
-            });
-          } catch (error) {
-            //add toast here
-          }
-        }
-      };
-
-      switch (step) { 
-        case 1:
-        return ( 
-            <div> 
-                <StepOne nextStep={nextStep} handleFormData={hanldeInputChange} values={formData}/>
-            </div>
-        )
-
-        case 2:
-            return ( 
-                <div> 
-                    <StepTwo prevStep={prevStep} handleFormData={hanldeInputChange} values={formData}/>
-                </div>
-            );
-            default:
-                return (
-                  <div >
-                    i am by ddefault
-                  </div>
-                );
+        console.log(data, "single data in admin");
+      } catch (error) {
+        console.log(error);
       }
+    };
+      fetchData();
+  }, [id, location.search]);
 
-}
+  const nextStep = () => {
+    console.log("i am clicked");
+    setStep(step + 1);
+  };
 
+  const prevStep = () => {
+    setStep(step - 1);
+    console.log("i am prev step");
+  };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
-export default CreateJob
+    if (
+      name === "prerequisites" ||
+      name === "requirement" ||
+      name === "skills" ||
+      name === "perks" ||
+      name === "responsibilities" ||
+      name === "last_date"
+
+    ) {
+      setFormData({
+        ...formData,
+        [name]: value.split(","),
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
+  };
+
+  switch (step) {
+    case 1:
+      return (
+        <div>
+          <StepOne
+            nextStep={nextStep}
+            handleFormData={handleInputChange}
+            values={formData}
+          />
+        </div>
+      );
+
+    case 2:
+      return (
+        <div>
+          <StepTwo
+            prevStep={prevStep}
+            handleFormData={handleInputChange}
+            values={formData}
+            nextStep={nextStep}
+          />
+        </div>
+      );
+
+    case 3:
+      return (
+        <div>
+          <StepThree />
+        </div>
+      );
+  }
+};
+
+export default CreateJob;

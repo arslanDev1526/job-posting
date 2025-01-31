@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import supabase from "../../config/client.jsx";
 import { FaCircleUser } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/authprovider.jsx";
+import {
+ Link
+} from "react-router-dom";
 
-const Dropdown = ({ handleLogout }) => {
-  const [user, setUser] = useState(null);
+const Dropdown = () => {
   const [show, setShow] = useState(false);
 
   const dropdownRef = useRef();
   const buttonRef = useRef();
-  const navigate = useNavigate();
+
+  const {user, role, signOut} = useAuth()
 
   useEffect(() => {
     const checkIfClickedOutsie = (e) => {
@@ -32,26 +34,6 @@ const Dropdown = ({ handleLogout }) => {
     setShow(!show);
   };
 
-  const handleNavigation = () => {
-    navigate("./myDasboard");
-  };
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-
-      if (error) {
-        console.error(error);
-        return;
-      }
-
-      if (data) {
-        setUser(data.user);
-      }
-    };
-
-    fetchUser();
-  }, []);
   return (
     <>
       {show && (
@@ -70,7 +52,10 @@ const Dropdown = ({ handleLogout }) => {
                 // href=""
                 className="block py-2 text-slate-600 hover:text-green-700 text-md font-semibold"
               >
-                My Application
+                <Link to = '/applications'> 
+               {role === "HR" ? "Applications" : role === "applicant" ? "My Application" : ""}
+
+                </Link>
               </a>
             </li>
             <li>
@@ -85,16 +70,7 @@ const Dropdown = ({ handleLogout }) => {
             <li>
               <button
                 className="block py-2 text-slate-600 hover:text-green-700 text-md font-semibold"
-                onClick={handleNavigation}
-              >
-                My Dashboard
-              </button>
-            </li>
-
-            <li>
-              <button
-                className="block py-2 text-slate-600 hover:text-green-700 text-md font-semibold"
-                onClick={handleLogout}
+                onClick={signOut}
               >
                 Logout
               </button>

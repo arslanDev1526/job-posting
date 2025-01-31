@@ -1,52 +1,27 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState } from "react";
 import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { Outlet, Link } from "react-router-dom";
-import supabase from "../../config/client";
 import Dropdown from "./dropdown.jsx";
 import Loader from "../loader.jsx";
+import { useAuth } from "../../contexts/authprovider.jsx";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isPageHovered, setIsPageHovered] = useState(false);
   const [isLocationHovered, setIsLocationHovered] = useState(false);
   const [isCategoriesHovered, setIsCategoriesHovered] = useState(false);
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useLayoutEffect(() => {
-    const fetchUser = async () => {
-      setLoading(true);
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        console.log(user, "user");
-        setUser(user);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {signOut, user} = useAuth()
 
-    fetchUser();
-  }, []);
+
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogout = async (e) => {
-    e.preventDefault();
-
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error("Error logging out:", error);
-    } else {
-      window.location.reload();
-    }
-  };
+ 
 
   const handlePageDropdown = () => {
     setIsPageHovered(!isPageHovered);
@@ -253,7 +228,7 @@ const Navbar = () => {
             <div className="hidden md:flex items-center">
               {user ? (
                 <div className="relative">
-                  <Dropdown handleLogout={handleLogout} />
+                  <Dropdown />
                 </div>
               ) : (
                 <Link
@@ -457,7 +432,7 @@ const Navbar = () => {
             </div>
             {user && (
               <button
-                onClick={handleLogout}
+                onClick={signOut}
                 className="text-green-600 hover:text-slate-600-700 py-3 text-xl font-bold block"
               >
                 Logout

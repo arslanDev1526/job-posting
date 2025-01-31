@@ -3,14 +3,20 @@ import supabase from "../../config/client.jsx";
 import Loader from "../loader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   skillOptions,
   sourceOptions,
   genderOptions,
 } from "../../assets/data/jobsdata.jsx";
+import { useAuth } from '../../contexts/authprovider.jsx';
+
 
 const JobApply = () => {
+ const {id, role, user} = useAuth();
+ console.log(id, "id in applicant");
+ const {id:job_id} = useParams()
+
   const navigate = useNavigate();
   const dropdownMenue = useRef(null);
   const inputRef = useRef(null);
@@ -25,7 +31,11 @@ const JobApply = () => {
     gender: "",
     source: "",
     professionalExperience: "",
+    applicant_id:id,
+    job_id:job_id
   });
+
+  console.log(formData,"formData applicant")
 
   const [isSkillDropdownOpen, setIsSkillDropdownOpen] = useState(false);
   const [isGenderDropdownOpen, setIsGenderDropdownOpen] = useState(false);
@@ -175,16 +185,40 @@ const JobApply = () => {
       try {
         setLoading(true);
 
-        const { data, error } = await supabase.storage
+        const { data: fileData, error:fileError } = await supabase.storage
           .from("cv_data")
-          .upload(`applicants_cv/${selectedFile.name}`, selectedFile);
+          .upload(`applicants_cv/${selectedFile.name}`, selectedFile, { 
+            cacheControl:"3600",
+            upsert:false
+          });
+          if(fileError){ 
+            setLoading(false);
+            console.log(fileError,"fileError");
+            toast.error("Error uploading CV!");
+            return;
+          }
+          const {publicURL, error:urlError} = supabase.storage
+          .from("cv_data")
+          .getPublicUrl(`applicants_cv/${selectedFile.name}`);
+
+          if(urlError) { 
+            setLoading(false);
+            toast.error("Error generation CV URL!");
+            return;
+          }
+          
+          const formDataWithCv = { 
+            ...formData,
+            cv_url:publicURL,
+          }
         const { data: insertData, error: insertError } = await supabase
           .from("applications_data")
-          .insert(formData);
+          .insert(formDataWithCv);
 
         setLoading(false);
         if (insertError) {
           toast.error("Error loading data!");
+          console.log(error,"error in sending data")
           return;
         }
 
@@ -268,7 +302,7 @@ const JobApply = () => {
               class={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none peer ${
                 errors.fullName
                   ? "border-red-500 focus:border-red-600"
-                  : "focus:ring-0 focus:border-green-500"
+                  : "focus:ring-2 focus:border-green-500"
               }`}
               placeholder=" "
               name="fullName"
