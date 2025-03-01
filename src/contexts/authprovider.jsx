@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import supabase from "../config/client";
 import Loader from "../components/loader";
-
 const AuthContext = createContext({});
 
 export const useAuth = () => useContext(AuthContext);
@@ -9,17 +8,28 @@ export const useAuth = () => useContext(AuthContext);
 const login = async (email, password) => {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) { 
-      return {error: error.message}
+    if (error) {
+      return { error: error.message };
     }
     return { user: data.user, session: data.session };
   } catch (error) {
     console.error("Login error:", error);
     return { error: error.message };
   }
-}
+};
 
-const signOut = () => supabase.auth.signOut();
+const handleLogout = async (e) => {
+  e.preventDefault();
+
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.error("Error logging out:", error);
+  } else {
+    window.location.reload();
+  }
+};
+
+// const signOut = () => supabase.auth.signOut();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -27,11 +37,14 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState(null);
   const [id, setId] = useState(null);
-  console.log(id,"iddd")
+  console.log(id, "iddd");
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
       if (error) {
         console.error("Error fetching session:", error);
         setLoading(false);
@@ -52,7 +65,6 @@ const AuthProvider = ({ children }) => {
           setAuth(!!data.user);
           setRole(data.user.user_metadata.role);
           setId(data.user.id);
-
         }
       }
       setLoading(false);
@@ -82,7 +94,7 @@ const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signOut, auth, role, id }}>
+    <AuthContext.Provider value={{ user, login, signOut: handleLogout, auth, role, id }}>
       {children}
     </AuthContext.Provider>
   );

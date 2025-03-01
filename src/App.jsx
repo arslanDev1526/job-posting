@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import React from "react";
 import { DataProvider } from "./contexts/dataContext";
 import Index from "./components/details/index.jsx";
@@ -20,7 +15,6 @@ import AdminNav from "./components/admin/adminnav.jsx";
 import Applications from "./components/admin/applications/applications.jsx";
 import Details from "./components/admin/applications/details.jsx";
 
-
 function App() {
   return (
     <>
@@ -34,15 +28,15 @@ function App() {
                 <Route path="/applications_detail/:id" element={<Details />} />
                 <Route path="/create_job" element={<CreateJob />} />
               </Route>
-              </Route>
+            </Route>
 
-              <Route element={<AuthRoute role="applicant" />}>
-                <Route element={<Navbar />}>
-                  <Route path="/jobs" element={<Main />} />
-                  <Route path="/detail/:id" element={<Index />} />
-                  <Route path="/job_apply/:id" element={<JobApply />} />
-                </Route>
+            <Route element={<AuthRoute role="applicant" />}>
+              <Route element={<Navbar />}>
+                <Route path="/jobs" element={<Main />} />
+                <Route path="/detail/:id" element={<Index />} />
+                <Route path="/job_apply/:id" element={<JobApply />} />
               </Route>
+            </Route>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<Navigate to="/jobs" />} />
