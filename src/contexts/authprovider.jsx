@@ -1,43 +1,71 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import supabase from "../config/client";
 import Loader from "../components/loader";
-
 const AuthContext = createContext({});
 
 export const useAuth = () => useContext(AuthContext);
 
-const login = async (email, password) =>
-  supabase.auth.signInWithPassword({ email, password });
-
- const handleLogout = async (e) => {
-    e.preventDefault();
-
-    const { error } = await supabase.auth.signOut();
+const login = async (email, password) => {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
-      console.error("Error logging out:", error);
-    } else {
-      window.location.reload();
+      return { error: error.message };
     }
-  };
+    return { user: data.user, session: data.session };
+  } catch (error) {
+    console.error("Login error:", error);
+    return { error: error.message };
+  }
+};
+
+const handleLogout = async (e) => {
+  e.preventDefault();
+
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.error("Error logging out:", error);
+  } else {
+    window.location.reload();
+  }
+};
 
 // const signOut = () => supabase.auth.signOut();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [auth, setAuth] = useState(false);
-  const [loading, setLoading] = useState(true); // Add a loading state
+  const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState(null);
+  const [id, setId] = useState(null);
+  console.log(id, "iddd");
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
       if (error) {
-        console.error("Error fetching user:", error);
-        setUser(null);
-        setAuth(false);
-      } else {
-        setUser(data.user);
-        setAuth(!!data.user);
-        //!! used to convert a value to a boolean
+        console.error("Error fetching session:", error);
+        setLoading(false);
+        return;
+      }
+      if (session) {
+        const { data, error } = await supabase.auth.getUser();
+        console.log("user data", data);
+
+        if (error) {
+          console.error("Error fetching user:", error);
+          setUser(null);
+          setAuth(false);
+          setRole(null);
+          setId(null);
+        } else {
+          setUser(data.user);
+          setAuth(!!data.user);
+          setRole(data.user.user_metadata.role);
+          setId(data.user.id);
+        }
       }
       setLoading(false);
     };
@@ -48,9 +76,11 @@ const AuthProvider = ({ children }) => {
       if (event === "SIGNED_IN") {
         setUser(session.user);
         setAuth(true);
+        setRole(session.user.user_metadata.role);
       } else if (event === "SIGNED_OUT") {
         setUser(null);
         setAuth(false);
+        setRole(null);
       }
     });
 
@@ -60,11 +90,11 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   if (loading) {
-    return <Loader/>; // Render a loading state while checking session
+    return <Loader />;
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signOut:handleLogout, auth }}>
+    <AuthContext.Provider value={{ user, login, signOut: handleLogout, auth, role, id }}>
       {children}
     </AuthContext.Provider>
   );

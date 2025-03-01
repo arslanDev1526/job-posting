@@ -6,10 +6,6 @@ import { eyeOff } from "react-icons-kit/feather/eyeOff";
 import { eye } from "react-icons-kit/feather/eye";
 
 const Login = () => {
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-
-  // const [errorMsg, setErrorMsg] = useState("");
   const [passwordType, setPasswordType] = useState("password");
   const [passwordIcon, setPasswordIcon] = useState(eyeOff);
   const [loading, setLoading] = useState(false);
@@ -27,7 +23,11 @@ const Login = () => {
   };
 
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, role, user } = useAuth();
+  console.log(user,"user in logn")
+  console.log(role,"role in logn")
+
+
 
   const hanldeInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,40 +40,49 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     let hasError = false;
     const newErrors = {};
-
-    for (const input in loginData) {
-      if (!loginData[input]) {
-        hasError = true;
-        newErrors[input] = "This field is required";
-      }
-      if (loginData.email.length === 0) {
-        hasError = true;
-        newErrors.fullName = " Invalid Email";
-      }
-      if (loginData.password.length < 8) {
-        hasError = true;
-        newErrors.password = "Wrong Password";
-      }
+  
+    if (!loginData.email) {
+      hasError = true;
+      newErrors.email = "This field is required";
+    } else if (!/\S+@\S+\.\S+/.test(loginData.email)) {
+      hasError = true;
+      newErrors.email = "Invalid email";
     }
-
+  
+    if (!loginData.password) {
+      hasError = true;
+      newErrors.password = "This field is required";
+    } else if (loginData.password.length < 8) {
+      hasError = true;
+      newErrors.password = "Password must be at least 8 characters";
+    }
+  
     setErrors(newErrors);
-
+  
     if (!hasError) {
       try {
         setLoading(true);
-        const {
-          data: { user, session },
-          error,
-        } = await login(loginData.email, loginData.password);
-        if (error) setMsg("Invalid username or eamil");
-        if (user && session) navigate("/");
+        const response = await login(loginData.email, loginData.password);
+        console.log(response, "response from login");
+        if (response.error) {
+          setMsg(response.error);
+        } else {
+          if (response.user && response.session) {
+            console.log(role, "role after login");
+            if (role === 'HR') {
+              navigate("/myDasboard");
+            } else if (role === 'applicant') {
+              navigate("/");
+            }
+          }
+        }
       } catch (error) {
-        setMsg("invalid username or eamil");
+        setMsg("Invalid username or email");
       }
-
+    
       setLoading(false);
     }
   };
